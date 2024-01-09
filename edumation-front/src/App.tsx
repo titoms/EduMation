@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
 import Logout from './components/Logout';
+import Footer from './components/Footer';
 import Dashboard from './components/Dashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );
