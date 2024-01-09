@@ -1,6 +1,6 @@
-# StudyQuest - Educational App
+# EduMation - Educational App
 
-StudyQuest is an engaging educational app that offers a wide range of features to enhance your learning experience, streamline course management, and facilitate time management for schools and universities.
+EduMation is an engaging educational app that offers a wide range of features to enhance your learning experience, streamline course management, and facilitate time management for schools and universities.
 
 ## Features
 
@@ -58,9 +58,9 @@ StudyQuest is an engaging educational app that offers a wide range of features t
 
 ## Getting Started
 
-To get started with StudyQuest, follow these steps:
+To get started with EduMation, follow these steps:
 
-1. Sign up for an account on the StudyQuest platform.
+1. Sign up for an account on the EduMation platform.
 2. Explore the intuitive dashboard to access various features.
 3. Customize your profile and set your learning preferences.
 4. Start planning your courses, attending classes, and participating in quizzes.
@@ -68,10 +68,10 @@ To get started with StudyQuest, follow these steps:
 
 ## Feedback and Support
 
-We value your feedback! If you encounter any issues, have suggestions, or need assistance, please don't hesitate to [contact our support team](mailto:support@studyquest.com).
+We value your feedback! If you encounter any issues, have suggestions, or need assistance, please don't hesitate to [contact our support team](mailto:support@EduMation.com).
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
-Happy Learning with StudyQuest!
+Happy Learning with EduMation!

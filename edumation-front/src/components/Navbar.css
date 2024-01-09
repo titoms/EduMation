@@ -1,0 +1,23 @@
+.navbar {
+  background-color: #003366; /* Knowledgeable Navy Blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px; /* Adjust as needed */
+}
+
+.navbar-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #00a1b2; /* Energetic Teal for hover effect */
+}
