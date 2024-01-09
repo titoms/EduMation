@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar {
+  background-color: #003366; /* Knowledgeable Navy Blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px; /* Adjust as needed */
+}
+
+.navbar-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #00a1b2; /* Energetic Teal for hover effect */
+}
+
+.home {
+  color: #777777; /* Efficient Slate Gray */
+}
+
+.jumbotron {
+  background-image: url('./assets/hero.png'); /* Path to hero image */
+  background-size: cover;
+  background-position: center;
+  min-height: 300px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.jumbotron-content {
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+  padding: 20px;
+}
+
+.jumbotron-content h1 {
+  font-size: 2rem; /* Responsive font size */
+}
+
+.jumbotron-content p {
+  font-size: 1.2rem;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .jumbotron {
+    min-height: 500px;
+  }
+
+  .jumbotron-content h1 {
+    font-size: 3rem;
+  }
+
+  .jumbotron-content p {
+    font-size: 1.5rem;
+  }
+}

@@ -1,4 +1,3 @@
-import './Navbar.css'; // Importing the CSS file
 import logo from '../assets/logo.png';
 
 const Navbar: React.FC = () => {
