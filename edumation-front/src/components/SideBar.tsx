@@ -16,7 +16,7 @@ const SideBar = () => {
 
   return (
     <div className="xl:w-48 sm:w-18 bg-gray-800 text-white">
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col py-4 px-4">
         <Link
           to="/dashboard/"
           className="transition-all p-2 hover:bg-gray-700 rounded-full flex items-center"

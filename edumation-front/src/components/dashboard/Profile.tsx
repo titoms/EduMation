@@ -54,7 +54,7 @@ const Profile = () => {
   return (
     <div>
       <h1 className="text-2xl font-semibold">Profile</h1>
-      <div className="container mx-auto p-4">
+      <div className="h-screen container mt-8">
         {userProfile && (
           <div className="bg-white shadow rounded-lg p-6">
             <div className="flex items-center space-x-6 mb-4">
@@ -67,12 +67,12 @@ const Profile = () => {
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-gray-800 my-4">
-                  {userProfile.name}
+                  Name : {userProfile.name}
                 </h2>
-                <p className="text-sm text-gray-600 my-4">
+                <p className="text-sm text-gray-600 mt-4">
+                  <b>Email : </b>
                   {userProfile.email}
                 </p>
-                <p className="text-sm text-gray-600 my-4">{userProfile.role}</p>
               </div>
             </div>
             {/* Add additional profile data here */}
