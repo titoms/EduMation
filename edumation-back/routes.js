@@ -1,11 +1,13 @@
 const express = require('express');
-const userRoutes = require('./routes/userRoutes'); // Update the path as necessary
+const userRoutes = require('./routes/userRoutes');
+const schoolRoutes = require('./routes/schoolRoutes');
 const router = express.Router();
 
 // Welcome message
 router.get('/', (req, res) => res.send('Welcome to the API'));
 
 router.use('/users', userRoutes);
+router.use('/schools', schoolRoutes);
 
 // Schools API Routes
 router.post('/schools', (req, res) => res.send('Create School'));
