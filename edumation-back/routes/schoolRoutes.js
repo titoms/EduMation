@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const School = require('../models/school'); // Adjust the path as per your project structure
+const School = require('../models/school');
 const verifyToken = require('../middlewares/verifyToken');
 const { body, validationResult, param } = require('express-validator');
 

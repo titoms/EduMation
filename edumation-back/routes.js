@@ -1,6 +1,7 @@
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 const router = express.Router();
 
 // Welcome message
@@ -8,12 +9,7 @@ router.get('/', (req, res) => res.send('Welcome to the API'));
 
 router.use('/users', userRoutes);
 router.use('/schools', schoolRoutes);
-
-// Schools API Routes
-router.post('/schools', (req, res) => res.send('Create School'));
-router.get('/schools/:id', (req, res) => res.send('Get School Details'));
-router.put('/schools/:id', (req, res) => res.send('Update School'));
-router.delete('/schools/:id', (req, res) => res.send('Delete School'));
+router.use('/courses', courseRoutes);
 
 // Courses API Routes
 router.post('/courses', (req, res) => res.send('Create Course'));

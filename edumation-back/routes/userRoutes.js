@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user'); // Update the path as necessary
-const verifyToken = require('../middlewares/verifyToken'); // Update the path as necessary
-const { body, validationResult, param } = require('express-validator'); // Validator
+const User = require('../models/user');
+const verifyToken = require('../middlewares/verifyToken');
+const { body, validationResult, param } = require('express-validator');
 
 const saltRounds = 10;
 
