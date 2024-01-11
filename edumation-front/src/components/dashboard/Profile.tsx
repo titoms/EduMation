@@ -52,11 +52,11 @@ const Profile = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <>
       <h1 className="text-2xl font-semibold">Profile</h1>
-      <div className="h-screen container mt-8">
+      <div className="container h-screen mt-8">
         {userProfile && (
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-white w-full shadow rounded-lg p-6">
             <div className="flex items-center space-x-6 mb-4">
               <div className="flex-shrink-0">
                 {/* <img
@@ -79,7 +79,7 @@ const Profile = () => {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
