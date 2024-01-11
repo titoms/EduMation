@@ -1,6 +1,5 @@
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
-const schoolRoutes = require('./routes/schoolRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const router = express.Router();
 
@@ -8,7 +7,6 @@ const router = express.Router();
 router.get('/', (req, res) => res.send('Welcome to the API'));
 
 router.use('/users', userRoutes);
-router.use('/schools', schoolRoutes);
 router.use('/courses', courseRoutes);
 
 // Courses API Routes
