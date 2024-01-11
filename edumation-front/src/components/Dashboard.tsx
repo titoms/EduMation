@@ -11,11 +11,11 @@ import Settings from './dashboard/Settings';
 
 const Dashboard = () => {
   return (
-    <div className="flex">
+    <div className="flex bg-gray-100">
       <Sidebar />
       <div className="flex-grow p-4">
         <Routes>
-          <Route path="mainDashboard" element={<MainDashboard />} />
+          <Route path="/" element={<MainDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="schools" element={<Schools />} />
           <Route path="courses" element={<Courses />} />
