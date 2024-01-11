@@ -1,45 +1,11 @@
 const express = require('express');
+const userRoutes = require('./routes/userRoutes'); // Update the path as necessary
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('./models/user');
-const saltRounds = 10;
 
-// const getUsers = (req, res) => res.send('Get Users');
-// const createUser = (req, res) => res.send('Create User');
+// Welcome message
 router.get('/', (req, res) => res.send('Welcome to the API'));
 
-router.get('/users/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.post('/users/register', async (req, res) => {
-  console.log(req.body);
-  try {
-    // const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-    const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      passwordHash: req.body.password,
-      role: req.body.role,
-      schoolId: req.body.schoolId,
-    });
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-router.post('/users/login', (req, res) => res.send('User Login'));
-router.get('/users/:id', (req, res) => res.send('Get User Details'));
-router.put('/users/:id', (req, res) => res.send('Update User'));
-router.delete('/users/:id', (req, res) => res.send('Delete User'));
-
+router.use('/users', userRoutes);
 // Schools API Routes
 router.post('/schools', (req, res) => res.send('Create School'));
 router.get('/schools/:id', (req, res) => res.send('Get School Details'));
