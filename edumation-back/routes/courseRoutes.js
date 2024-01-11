@@ -29,6 +29,17 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    // A TESTER
+    // if (req.user.role !== 'school' || req.user.role === 'admin') {
+    //   return res
+    //     .status(403)
+    //     .send('Access Denied: Only school users can create courses');
+    // }
+    // if (req.user.schoolId !== req.body.schoolId) {
+    //   return res
+    //     .status(403)
+    //     .send('Access Denied: You can only create courses for your own school');
+    // }
 
     try {
       const newCourse = new Course({
