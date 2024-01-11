@@ -30,7 +30,7 @@ const Login = () => {
       if (axios.isAxiosError(err) && err.response) {
         setErrorMessage(err.response.data);
       } else {
-        setErrorMessage('Registration failed. Please try again.');
+        setErrorMessage('Login failed. Please try again.');
       }
     }
   };

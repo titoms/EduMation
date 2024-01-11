@@ -115,12 +115,19 @@ router.put(
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long'),
   ],
+  verifyToken,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    if (req.user._id !== req.params.id && req.user.role !== 'admin') {
+    if (!req.user || !req.user._id) {
+      return res.status(403).send('Access Denied: User information is missing');
+    }
+    if (
+      req.user._id.toString() !== req.params.id &&
+      req.user.role !== 'admin'
+    ) {
       return res
         .status(403)
         .send('Access Denied: You can only update your own account');
@@ -144,7 +151,9 @@ router.put(
       if (!updatedUser) return res.status(404).send('User not found.');
       res.json(updatedUser);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
     }
   }
 );

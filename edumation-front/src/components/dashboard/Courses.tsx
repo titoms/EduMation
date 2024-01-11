@@ -49,7 +49,7 @@ const Courses: React.FC = () => {
           {courses.map((course) => (
             <div key={course._id} className="bg-white shadow rounded-lg p-4">
               <h3 className="text-lg font-semibold">{course.title}</h3>
-              <p className="mt-4">{course.description}</p>
+              <p className="font-bold mt-4">{course.description}</p>
               <p className="text-sm mt-4">School ID: {course.schoolId}</p>
               <p className="text-sm mt-2">Teacher ID: {course.teacherId}</p>
               <p className="text-sm mt-2">

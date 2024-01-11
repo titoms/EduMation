@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
+const schoolRoutes = require('./routes/schoolRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const quizRoutes = require('./routes/quizRoutes');
@@ -11,6 +12,7 @@ const router = express.Router();
 router.get('/', (req, res) => res.send('Welcome to the API'));
 
 router.use('/users', userRoutes);
+router.use('/schools', schoolRoutes);
 router.use('/courses', courseRoutes);
 router.use('/groups', groupRoutes);
 router.use('/quizz', quizRoutes);
