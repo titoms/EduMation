@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 // Middlewares
-app.use(express.json()); // for parsing application/json
+app.use(express.json());
 
 // Test Route
 app.get('/', (req, res) => {

@@ -1,15 +1,40 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const User = require('./models/user');
+const saltRounds = 10;
 
-// Placeholder controller functions
-// These will be replaced with actual implementations
-const getUsers = (req, res) => res.send('Get Users');
-const createUser = (req, res) => res.send('Create User');
-// ... Add similar placeholder functions for all endpoints
-// Users API Routes
+// const getUsers = (req, res) => res.send('Get Users');
+// const createUser = (req, res) => res.send('Create User');
 router.get('/', (req, res) => res.send('Welcome to the API'));
-router.get('/users', getUsers);
-router.post('/users/register', createUser);
+
+router.get('/users/', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.post('/users/register', async (req, res) => {
+  console.log(req.body);
+  try {
+    // const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      passwordHash: req.body.password,
+      role: req.body.role,
+      schoolId: req.body.schoolId,
+    });
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 router.post('/users/login', (req, res) => res.send('User Login'));
 router.get('/users/:id', (req, res) => res.send('Get User Details'));
 router.put('/users/:id', (req, res) => res.send('Update User'));
