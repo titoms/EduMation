@@ -1,6 +1,10 @@
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const courseRoutes = require('./routes/courseRoutes');
+const groupRoutes = require('./routes/groupRoutes');
+const quizRoutes = require('./routes/quizRoutes');
+const scheduleRoutes = require('./routes/scheduleRoutes');
+
 const router = express.Router();
 
 // Welcome message
@@ -8,23 +12,8 @@ router.get('/', (req, res) => res.send('Welcome to the API'));
 
 router.use('/users', userRoutes);
 router.use('/courses', courseRoutes);
-
-// Courses API Routes
-router.post('/courses', (req, res) => res.send('Create Course'));
-router.get('/courses/:id', (req, res) => res.send('Get Course Details'));
-router.put('/courses/:id', (req, res) => res.send('Update Course'));
-router.delete('/courses/:id', (req, res) => res.send('Delete Course'));
-
-// Quizzes API Routes
-router.post('/quizzes', (req, res) => res.send('Create Quiz'));
-router.get('/quizzes/:id', (req, res) => res.send('Get Quiz Details'));
-router.put('/quizzes/:id', (req, res) => res.send('Update Quiz'));
-router.delete('/quizzes/:id', (req, res) => res.send('Delete Quiz'));
-
-// Schedules API Routes
-router.post('/schedules', (req, res) => res.send('Create Schedule'));
-router.get('/schedules/:id', (req, res) => res.send('Get Schedule Details'));
-router.put('/schedules/:id', (req, res) => res.send('Update Schedule'));
-router.delete('/schedules/:id', (req, res) => res.send('Delete Schedule'));
+router.use('/groups', groupRoutes);
+router.use('/quizz', quizRoutes);
+router.use('/schedules', scheduleRoutes);
 
 module.exports = router;
