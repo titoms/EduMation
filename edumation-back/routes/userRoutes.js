@@ -120,6 +120,11 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    if (req.user._id !== req.params.id && req.user.role !== 'admin') {
+      return res
+        .status(403)
+        .send('Access Denied: You can only update your own account');
+    }
     try {
       if (req.body.password) {
         req.body.passwordHash = await bcrypt.hash(
@@ -147,11 +152,17 @@ router.put(
 // Delete User
 router.delete(
   '/:id',
+  verifyToken,
   [param('id').isMongoId().withMessage('Invalid user ID')],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
+    }
+    if (req.user._id !== req.params.id && req.user.role !== 'admin') {
+      return res
+        .status(403)
+        .send('Access Denied: You can only delete your own account');
     }
     try {
       const user = await User.findByIdAndDelete(req.params.id);
@@ -162,10 +173,5 @@ router.delete(
     }
   }
 );
-
-// Protected content
-router.get('/protected', verifyToken, (req, res) => {
-  res.send('Protected content');
-});
 
 module.exports = router;

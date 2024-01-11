@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/', (req, res) => res.send('Welcome to the API'));
 
 router.use('/users', userRoutes);
+
 // Schools API Routes
 router.post('/schools', (req, res) => res.send('Create School'));
 router.get('/schools/:id', (req, res) => res.send('Get School Details'));
