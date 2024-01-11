@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../assets/logo.png';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [email, setEmail] = useState<string>('');
@@ -22,16 +23,14 @@ const Login = () => {
         }
       );
       // Handle login success, store the received token, redirect, etc.
-      console.log('Login successful', response.data);
       localStorage.setItem('token', response.data);
+      toast.success('Login successful');
       navigate('/dashboard');
-    } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        setErrorMessage(error.response.data);
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        setErrorMessage(err.response.data);
       } else {
-        setErrorMessage('Login failed. Please try again.');
+        setErrorMessage('Registration failed. Please try again.');
       }
     }
   };

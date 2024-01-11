@@ -42,7 +42,7 @@ const Navbar = () => {
         >
           <input
             type="search"
-            className="w-full h-10 pl-10 pr-2 bg-transparent border-2 border-gray-300 rounded-full text-sm text-white focus:outline-none focus:border-blue-500 hover:border-blue-500 active:border-blue-500"
+            className="h-10 pl-10 pr-2 mr-2 bg-transparent border-2 border-gray-300 rounded-full text-sm text-white focus:outline-none focus:border-blue-500 hover:border-blue-500 active:border-blue-500"
             placeholder="Search..."
             value={searchTerm}
             onChange={handleSearchChange}
@@ -68,12 +68,20 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <Link
-            to="/login"
-            className="text-white m-2 no-underline transition-colors hover:text-terciary"
-          >
-            Login
-          </Link>
+          <>
+            <Link
+              to="/login"
+              className="text-white m-2 no-underline transition-colors hover:text-terciary"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="text-white m-2 no-underline transition-colors hover:text-terciary"
+            >
+              Register
+            </Link>
+          </>
         )}
       </div>
     </nav>
