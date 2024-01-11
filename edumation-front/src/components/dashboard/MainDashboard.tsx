@@ -5,7 +5,7 @@ const MainDashboard = () => {
       {/* RESUME */}
       <div className="p-4 mt-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
             <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +133,7 @@ const MainDashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-shrink-0">
                   <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                    $45,385
+                    $0
                   </span>
                   <h3 className="text-base font-normal text-gray-500">
                     Sales this week
