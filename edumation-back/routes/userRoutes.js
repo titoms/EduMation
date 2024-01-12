@@ -125,20 +125,15 @@ router.put(
   ],
   verifyToken,
   async (req, res) => {
+    console.log(req.user);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    if (!req.user || !req.user._id) {
-      return res.status(403).send('Access Denied: User information is missing');
-    }
-    if (
-      req.user._id.toString() !== req.params.id &&
-      req.user.role !== 'admin'
-    ) {
+    if (req.user._id !== req.params.id && req.user.role !== 'admin') {
       return res
         .status(403)
-        .send('Access Denied: You can only update your own account');
+        .send('Access Denied: You can only delete your own account');
     }
     try {
       if (req.body.password) {
@@ -156,9 +151,11 @@ router.put(
           new: true,
         }
       );
+      console.log('UPDATED');
       if (!updatedUser) return res.status(404).send('User not found.');
       res.json(updatedUser);
     } catch (error) {
+      console.log('NOT UPDATED');
       if (!res.headersSent) {
         res.status(500).json({ message: error.message });
       }
@@ -176,11 +173,11 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    if (req.user._id !== req.params.id && req.user.role !== 'admin') {
-      return res
-        .status(403)
-        .send('Access Denied: You can only delete your own account');
-    }
+    // if (req.user._id !== req.params.id && req.user.role !== 'admin') {
+    //   return res
+    //     .status(403)
+    //     .send('Access Denied: You can only delete your own account');
+    // }
     try {
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user) return res.status(404).send('User not found.');
