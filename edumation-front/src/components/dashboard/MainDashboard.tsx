@@ -1,4 +1,79 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+type School = {
+  _id: string;
+  name: string;
+  address: string;
+  contactInfo: {
+    phone: string;
+    email: string;
+    website: string;
+  };
+};
+
+type Student = {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
 const MainDashboard = () => {
+  const [schools, setSchools] = useState<School[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [countStudents, setCountStudents] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [countSchools, setCountSchools] = useState(0);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/schools', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+        setSchools(response.data);
+        setCountSchools(Object.keys(response.data).length);
+        setLoading(false);
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          setError(err.response.data);
+        } else {
+          setError('An error occurred while fetching schools.');
+        }
+        setLoading(false);
+      }
+    };
+    fetchSchools();
+
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/users', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+
+        const studentData = response.data.filter(
+          (user: Student) => user.role === 'student'
+        );
+        setStudents(studentData);
+        setCountStudents(Object.keys(studentData).length);
+        setLoading(false);
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          setError(err.response.data);
+        } else {
+          setError('An error occurred while fetching students.');
+        }
+        setLoading(false);
+      }
+    };
+    fetchStudents();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <>
       <h1 className="text-2xl font-semibold">Dashboard</h1>
@@ -28,7 +103,7 @@ const MainDashboard = () => {
                 Schools
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                0
+                <span>{countSchools}</span>
               </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
@@ -59,7 +134,7 @@ const MainDashboard = () => {
                 Students
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                0
+                {countStudents}
               </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
@@ -83,7 +158,7 @@ const MainDashboard = () => {
             </div>
             <div className="p-4 text-right">
               <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                Schedules
+                Courses
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
                 0
@@ -128,7 +203,9 @@ const MainDashboard = () => {
       {/* MAIN CONTENT */}
       <main>
         <div className="pt-6 px-4">
+          {/* FIRST ROW */}
           <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
+            {/* CHART  */}
             <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-shrink-0">
@@ -157,6 +234,7 @@ const MainDashboard = () => {
               </div>
               <div id="main-chart"></div>
             </div>
+            {/* Latest */}
             <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <div className="mb-4 flex items-center justify-between">
                 <div>
@@ -300,6 +378,7 @@ const MainDashboard = () => {
               </div>
             </div>
           </div>
+          {/* SECOND ROW */}
           <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <div className="flex items-center">
@@ -308,7 +387,7 @@ const MainDashboard = () => {
                     2,340
                   </span>
                   <h3 className="text-base font-normal text-gray-500">
-                    New products this week
+                    New quizzes this week
                   </h3>
                 </div>
                 <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -383,7 +462,9 @@ const MainDashboard = () => {
               </div>
             </div>
           </div>
+          {/* THIRD ROW */}
           <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
+            {/* LATEST CUSTOMERS ROW */}
             <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold leading-none text-gray-900">
@@ -541,6 +622,7 @@ const MainDashboard = () => {
                 </ul>
               </div>
             </div>
+            {/* ACQUISITION OVERVIEW ROW */}
             <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <h3 className="text-xl leading-none font-bold text-gray-900 mb-10">
                 Acquisition Overview
