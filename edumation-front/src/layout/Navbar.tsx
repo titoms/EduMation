@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.png';
+import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
@@ -37,6 +37,7 @@ const Navbar = () => {
       </Link>
       <div className="flex align-middle justify-center">
         <form
+          id="searchInput"
           onSubmit={handleSearchSubmit}
           className="relative w-full max-w-xs"
         >
@@ -46,6 +47,7 @@ const Navbar = () => {
             placeholder="Search..."
             value={searchTerm}
             onChange={handleSearchChange}
+            name="searchBar"
           />
           <button type="submit" className="absolute left-0 top-0 mt-2 ml-3">
             <FontAwesomeIcon icon={faMagnifyingGlass} />

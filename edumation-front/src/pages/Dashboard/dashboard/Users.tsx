@@ -162,39 +162,44 @@ const Users = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-lg font-semibold">Update User</h3>
-            <input
-              className="w-full p-2 border border-gray-300 rounded mt-2"
-              type="text"
-              value={updatedName}
-              onChange={(e) => setUpdatedName(e.target.value)}
-              placeholder="Name"
-            />
-            <input
-              className="w-full p-2 border border-gray-300 rounded mt-2"
-              type="email"
-              value={updatedEmail}
-              onChange={(e) => setUpdatedEmail(e.target.value)}
-              placeholder="Email"
-            />
-            <input
-              className="w-full p-2 border border-gray-300 rounded mt-2"
-              type="text"
-              value={updatedRole}
-              onChange={(e) => setUpdatedRole(e.target.value)}
-              placeholder="Role"
-            />
-            <button
-              onClick={handleUpdateUser}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
-            >
-              Update
-            </button>
-            <button
-              onClick={() => setShowUpdateModal(false)}
-              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 mt-4 ml-2"
-            >
-              Cancel
-            </button>
+            <form>
+              <input
+                className="w-full p-2 border border-gray-300 rounded mt-2"
+                type="text"
+                value={updatedName}
+                onChange={(e) => setUpdatedName(e.target.value)}
+                placeholder="Name"
+                name="updateUserName"
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded mt-2"
+                type="email"
+                value={updatedEmail}
+                onChange={(e) => setUpdatedEmail(e.target.value)}
+                placeholder="Email"
+                name="updateUserEmail"
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded mt-2"
+                type="text"
+                value={updatedRole}
+                onChange={(e) => setUpdatedRole(e.target.value)}
+                placeholder="Role"
+                name="updateUserRole"
+              />
+              <button
+                onClick={handleUpdateUser}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => setShowUpdateModal(false)}
+                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 mt-4 ml-2"
+              >
+                Cancel
+              </button>
+            </form>
           </div>
         </div>
       )}

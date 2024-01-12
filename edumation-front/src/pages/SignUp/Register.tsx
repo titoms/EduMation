@@ -52,10 +52,13 @@ const Register: React.FC = () => {
           )}
           <form onSubmit={handleSubmit} className="mt-4">
             <div>
-              <label className="block">Name:</label>
+              <label htmlFor="nameRegister" className="block">
+                Name:
+              </label>
               <input
                 type="text"
-                name="name"
+                id="nameRegister"
+                name="nameRegister"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.name}
                 onChange={handleChange}
@@ -63,10 +66,13 @@ const Register: React.FC = () => {
               />
             </div>
             <div className="mt-4">
-              <label className="block">Email:</label>
+              <label htmlFor="emailRegister" className="block">
+                Email:
+              </label>
               <input
                 type="email"
-                name="email"
+                id="emailRegister"
+                name="emailRegister"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.email}
                 onChange={handleChange}
@@ -74,10 +80,13 @@ const Register: React.FC = () => {
               />
             </div>
             <div className="mt-4">
-              <label className="block">Password:</label>
+              <label htmlFor="passwordRegister" className="block">
+                Password:
+              </label>
               <input
                 type="password"
-                name="password"
+                id="passwordRegister"
+                name="passwordRegister"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.password}
                 onChange={handleChange}

@@ -49,12 +49,13 @@ const Login = () => {
             )}
             <form onSubmit={handleLogin} className="mt-4">
               <div>
-                <label className="block" htmlFor="email">
+                <label className="block" htmlFor="loginEmail">
                   Email:
                 </label>
                 <input
                   type="email"
-                  id="email"
+                  id="loginEmail"
+                  name="loginEmail"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -62,12 +63,13 @@ const Login = () => {
                 />
               </div>
               <div className="mt-4">
-                <label className="block" htmlFor="password">
+                <label className="block" htmlFor="loginPassword">
                   Password:
                 </label>
                 <input
                   type="password"
-                  id="password"
+                  id="loginPassword"
+                  name="loginPassword"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

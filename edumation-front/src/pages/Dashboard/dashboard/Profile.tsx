@@ -182,7 +182,11 @@ const Profile = () => {
                         <h3 className="text-lg leading-6 font-medium text-gray-900">
                           Update Profile
                         </h3>
-                        <form onSubmit={handleUpdateSubmit} className="mt-8">
+                        <form
+                          id="updateForm"
+                          onSubmit={handleUpdateSubmit}
+                          className="mt-8"
+                        >
                           <div className="flex items-center mb-4">
                             <label className="block text-sm font-medium text-gray-700 mr-2">
                               Name:
@@ -192,6 +196,7 @@ const Profile = () => {
                               className="flex-1 p-2 border border-gray-300 rounded"
                               value={updatedName}
                               onChange={(e) => setUpdatedName(e.target.value)}
+                              name="updateProfileName"
                             />
                           </div>
                           <div className="flex items-center mb-4">
@@ -203,6 +208,7 @@ const Profile = () => {
                               className="flex-1 p-2 border border-gray-300 rounded"
                               value={updatedEmail}
                               onChange={(e) => setUpdatedEmail(e.target.value)}
+                              name="updateProfileEmail"
                             />
                           </div>
                           <div className="items-center px-4 py-3">
