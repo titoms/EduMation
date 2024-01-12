@@ -31,6 +31,16 @@ const SideBar = () => {
           </Link>
         )}
 
+        {['admin'].includes(userRole) && (
+          <Link
+            to="/dashboard/users"
+            className="transition-all mt-4 p-2 hover:bg-gray-700 rounded-full flex items-center"
+          >
+            <span className="text-lg mr-2">👥</span>
+            <span className="hidden md:inline">Users</span>
+          </Link>
+        )}
+
         {['admin', 'teacher'].includes(userRole) && (
           <Link
             to="/dashboard/schools"

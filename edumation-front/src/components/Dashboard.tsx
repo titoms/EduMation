@@ -2,6 +2,7 @@ import Sidebar from './SideBar';
 import { Routes, Route } from 'react-router-dom';
 import MainDashboard from './dashboard/MainDashboard';
 import Profile from './dashboard/Profile';
+import Users from './dashboard/Users';
 import Schools from './dashboard/Schools';
 import Courses from './dashboard/Courses';
 import Students from './dashboard/Students';
@@ -17,6 +18,8 @@ const Dashboard = () => {
         <Routes>
           <Route path="/" element={<MainDashboard />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="users" element={<Users />} />
+
           <Route path="schools" element={<Schools />} />
           <Route path="courses" element={<Courses />} />
           <Route path="students" element={<Students />} />

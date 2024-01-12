@@ -44,7 +44,15 @@ const Profile = () => {
     setShowModal(false);
   };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleUpdateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -73,14 +81,6 @@ const Profile = () => {
       }
     }
     setShowModal(false);
-  };
-
-  const handleDeleteClick = () => {
-    setShowDeleteModal(true);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setShowDeleteModal(false);
   };
 
   const handleDeleteConfirm = async () => {
@@ -182,7 +182,7 @@ const Profile = () => {
                         <h3 className="text-lg leading-6 font-medium text-gray-900">
                           Update Profile
                         </h3>
-                        <form onSubmit={handleFormSubmit} className="mt-8">
+                        <form onSubmit={handleUpdateSubmit} className="mt-8">
                           <div className="flex items-center mb-4">
                             <label className="block text-sm font-medium text-gray-700 mr-2">
                               Name:
