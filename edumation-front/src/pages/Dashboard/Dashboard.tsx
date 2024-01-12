@@ -1,4 +1,4 @@
-import Sidebar from './SideBar';
+import SideBar from './dashboard/SideBar';
 import { Routes, Route } from 'react-router-dom';
 import MainDashboard from './dashboard/MainDashboard';
 import Profile from './dashboard/Profile';
@@ -13,7 +13,7 @@ import Settings from './dashboard/Settings';
 const Dashboard = () => {
   return (
     <div className="flex bg-gray-100">
-      <Sidebar />
+      <SideBar />
       <div className="flex-grow p-4">
         <Routes>
           <Route path="/" element={<MainDashboard />} />
