@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 type Course = {
@@ -45,20 +45,21 @@ const Courses: React.FC = () => {
     <>
       <h1 className="text-2xl font-semibold">Courses</h1>
       <div className="h-screen mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
             <div key={course._id} className="bg-white shadow rounded-lg p-4">
               <h3 className="text-lg font-semibold">{course.title}</h3>
-              <p className="font-bold mt-4">{course.description}</p>
-              <p className="text-sm mt-4">School ID: {course.schoolId}</p>
-              <p className="text-sm mt-2">Teacher ID: {course.teacherId}</p>
-              <p className="text-sm mt-2">
-                Student IDs: {course.studentIds.join(', ')}
-              </p>
-              <p className="text-sm mt-2">
-                Quiz IDs: {course.quizIds.join(', ')}
-              </p>
-              <p className="text-sm mt-2">Schedule ID: {course.scheduleId}</p>
+              <div className="text-bold mt-4">
+                <p className="mt-2">School ID: {course.schoolId}</p>
+                <p className="mt-2">Teacher ID: {course.teacherId}</p>
+                <p className="mt-2">
+                  Student IDs: {course.studentIds.join(', ')}
+                </p>
+                <p className="mt-2">Quiz IDs: {course.quizIds.join(', ')}</p>
+                <p className="mt-2">Schedule ID: {course.scheduleId}</p>
+              </div>
+              <hr />
+              <p className="mt-4">{course.description}</p>
             </div>
           ))}
         </div>

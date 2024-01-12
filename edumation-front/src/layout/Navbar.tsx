@@ -11,17 +11,17 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // Search bar handling
-  const [searchTerm, setSearchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
+  // const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchTerm(e.target.value);
+  // };
 
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Implement your search logic here
-    console.log('Searching for:', searchTerm);
-  };
+  // const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   // Implement your search logic here
+  //   console.log('Searching for:', searchTerm);
+  // };
 
   const handleLogout = () => {
     // Clear the token from localStorage and any other state or context
@@ -33,10 +33,11 @@ const Navbar = () => {
   return (
     <nav className="bg-navy text-white flex justify-between p-2 center">
       <Link to="/">
-        <img src={logo} className="h-10" alt="Logo" />
+        <img src={logo} className="h-10 w-10" alt="Logo" />
       </Link>
       <div className="flex align-middle justify-center">
-        <form
+        {/* SEARCHBAR, Maybe we move it elsewhere */}
+        {/* <form
           id="searchInput"
           onSubmit={handleSearchSubmit}
           className="relative w-full max-w-xs"
@@ -52,7 +53,7 @@ const Navbar = () => {
           <button type="submit" className="absolute left-0 top-0 mt-2 ml-3">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
-        </form>
+        </form> */}
         {isLoggedIn ? (
           <>
             <Link

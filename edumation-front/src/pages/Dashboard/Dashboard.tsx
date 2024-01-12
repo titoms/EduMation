@@ -17,6 +17,7 @@ const Dashboard = () => {
       <div className="flex-grow p-4">
         <Routes>
           <Route path="/" element={<MainDashboard />} />
+          <Route path="/main" element={<MainDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<Users />} />
           <Route path="schools" element={<Schools />} />
