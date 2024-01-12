@@ -14,7 +14,9 @@ router.get('/', async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message });
+    }
   }
 });
 
@@ -46,7 +48,9 @@ router.post(
       const savedUser = await newUser.save();
       res.status(201).json(savedUser);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(400).json({ message: error.message });
+      }
     }
   }
 );
@@ -79,7 +83,9 @@ router.post(
       );
       res.header('auth-token', token).send(token);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
     }
   }
 );
@@ -98,7 +104,9 @@ router.get(
       if (!user) return res.status(404).send('User not found.');
       res.json(user);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
     }
   }
 );
@@ -178,7 +186,9 @@ router.delete(
       if (!user) return res.status(404).send('User not found.');
       res.json({ message: 'User successfully deleted' });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
     }
   }
 );

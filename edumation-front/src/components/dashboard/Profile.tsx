@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 type UserProfile = {
   name: string;
@@ -17,12 +18,14 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [updatedName, setUpdatedName] = useState(
     userProfile ? userProfile.name : ''
   );
   const [updatedEmail, setUpdatedEmail] = useState(
     userProfile ? userProfile.email : ''
   );
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
   let userId = '';
@@ -30,6 +33,8 @@ const Profile = () => {
     const decodedToken = jwtDecode(token);
     userId = decodedToken._id;
   }
+
+  const isCurrentUser = userProfile && userProfile._id === userId;
 
   const handleUpdateClick = () => {
     setShowModal(true);
@@ -70,6 +75,37 @@ const Profile = () => {
     setShowModal(false);
   };
 
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/users/${userId}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success('Account deleted successfully');
+        localStorage.removeItem('token'); // Remove the authentication token
+        navigate('/'); // Redirect to home page
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(`Deletion failed: ${error.response.data}`);
+      } else {
+        toast.error('Deletion failed. Please try again.');
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -97,15 +133,13 @@ const Profile = () => {
     fetchUserProfile();
   }, []);
 
-  const isCurrentUser = userProfile && userProfile._id === userId;
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <>
       <h1 className="text-2xl font-semibold">Profile</h1>
-      <div className="container h-screen mt-8">
+      <div className="h-screen mt-8">
         {userProfile && (
           <div className="bg-white w-full shadow rounded-lg p-6">
             <div className="flex items-center justify-between space-x-6 mb-4">
@@ -135,7 +169,6 @@ const Profile = () => {
                     Update
                   </button>
                 )}
-                {/* Modal */}
                 {showModal && (
                   <div
                     className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
@@ -191,10 +224,35 @@ const Profile = () => {
                     </div>
                   </div>
                 )}
-                <button className="flex items-center px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                <button
+                  onClick={handleDeleteClick}
+                  className="flex items-center px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
                   <FontAwesomeIcon icon={faTrash} className="mr-2" />
                   Delete
                 </button>
+                {/* Delete Confirmation Modal */}
+                {showDeleteModal && (
+                  <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+                    <div className="bg-white p-6 rounded shadow-lg text-center">
+                      <h3 className="mb-4 text-lg font-semibold">
+                        Are you sure you want to delete your account?
+                      </h3>
+                      <button
+                        onClick={handleDeleteConfirm}
+                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 mr-2"
+                      >
+                        Yes, Delete
+                      </button>
+                      <button
+                        onClick={handleCloseDeleteModal}
+                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

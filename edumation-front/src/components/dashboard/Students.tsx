@@ -44,7 +44,7 @@ const Students: React.FC = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Students</h1>
-      <div className="container h-screen mt-8">
+      <div className="h-screen mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {students.map((student) => (
             <div key={student._id} className="bg-white shadow rounded-lg p-4">
