@@ -75,6 +75,11 @@ const Users = () => {
     }
   };
 
+  const handleDeleteClick = (user: User) => {
+    setSelectedUser(user);
+    setShowDeleteModal(true);
+  };
+
   const handleDeleteUser = async () => {
     if (selectedUser) {
       try {
@@ -90,6 +95,8 @@ const Users = () => {
         if (response.status === 200) {
           setUsers(users.filter((user) => user._id !== selectedUser._id));
           toast.success('User deleted successfully');
+          localStorage.removeItem('token'); // Remove the authentication token
+          navigate('/'); // Redirect to home page
         }
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -101,11 +108,6 @@ const Users = () => {
       setShowDeleteModal(false);
       setSelectedUser(null);
     }
-  };
-
-  const handleDeleteClick = (user: User) => {
-    setSelectedUser(user);
-    setShowDeleteModal(true);
   };
 
   return (
@@ -200,11 +202,11 @@ const Users = () => {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && selectedUser && (
         <div
-          className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
+          className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
           onClick={() => setShowDeleteModal(false)}
         >
           <div
-            className="bg-white p-6 rounded shadow-lg"
+            className="relative top-20 text-center mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="mb-4 text-lg font-semibold">

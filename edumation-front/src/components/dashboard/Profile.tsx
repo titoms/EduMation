@@ -233,8 +233,8 @@ const Profile = () => {
                 </button>
                 {/* Delete Confirmation Modal */}
                 {showDeleteModal && (
-                  <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-                    <div className="bg-white p-6 rounded shadow-lg text-center">
+                  <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div className="relative text-center top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                       <h3 className="mb-4 text-lg font-semibold">
                         Are you sure you want to delete your account?
                       </h3>
