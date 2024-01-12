@@ -19,7 +19,6 @@ const Dashboard = () => {
           <Route path="/" element={<MainDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<Users />} />
-
           <Route path="schools" element={<Schools />} />
           <Route path="courses" element={<Courses />} />
           <Route path="students" element={<Students />} />
