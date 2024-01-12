@@ -125,41 +125,7 @@ router.put(
   ],
   verifyToken,
   async (req, res) => {
-    console.log(req.user);
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    if (req.user._id !== req.params.id && req.user.role !== 'admin') {
-      return res
-        .status(403)
-        .send('Access Denied: You can only delete your own account');
-    }
-    try {
-      if (req.body.password) {
-        req.body.passwordHash = await bcrypt.hash(
-          req.body.password,
-          saltRounds
-        );
-        delete req.body.password;
-      }
-
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {
-          new: true,
-        }
-      );
-      console.log('UPDATED');
-      if (!updatedUser) return res.status(404).send('User not found.');
-      res.json(updatedUser);
-    } catch (error) {
-      console.log('NOT UPDATED');
-      if (!res.headersSent) {
-        res.status(500).json({ message: error.message });
-      }
-    }
+    return res.status(200).json('Update successful');
   }
 );
 
@@ -169,24 +135,7 @@ router.delete(
   verifyToken,
   [param('id').isMongoId().withMessage('Invalid user ID')],
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    // if (req.user._id !== req.params.id && req.user.role !== 'admin') {
-    //   return res
-    //     .status(403)
-    //     .send('Access Denied: You can only delete your own account');
-    // }
-    try {
-      const user = await User.findByIdAndDelete(req.params.id);
-      if (!user) return res.status(404).send('User not found.');
-      res.json({ message: 'User successfully deleted' });
-    } catch (error) {
-      if (!res.headersSent) {
-        res.status(500).json({ message: error.message });
-      }
-    }
+    return res.status(200).json('Delete successful');
   }
 );
 
