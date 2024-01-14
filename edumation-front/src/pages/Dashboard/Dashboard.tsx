@@ -14,7 +14,7 @@ const Dashboard = () => {
   return (
     <div className="flex bg-gray-100">
       <SideBar />
-      <div className="flex-grow p-4">
+      <div className="flex-grow w-full p-4">
         <Routes>
           <Route path="/" element={<MainDashboard />} />
           <Route path="/main" element={<MainDashboard />} />
