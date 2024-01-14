@@ -12,8 +12,8 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-gray-800 h-full text-white transition-all duration-300 border-none z-10 sidebar">
-        <div className="h-screen overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+      <div className="flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-gray-800 text-white transition-all duration-300 border-none z-10 sidebar">
+        <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
           <ul className="flex flex-col py-4 space-y-1">
             <li className="px-5 hidden md:block">
               <div className="flex flex-row items-center h-8">
@@ -24,10 +24,9 @@ const SideBar = () => {
             </li>
             <li>
               <NavLink
-                to="/dashboard/main"
+                to="/dashboard/"
                 className={({ isActive }) =>
-                  'relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-800 pr-6' +
-                  (isActive ? ' bg-gray-700' : ' hover:bg-gray-700')
+                  'relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-800 pr-6'
                 }
               >
                 <span className="inline-flex justify-center items-center ml-4">

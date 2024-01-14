@@ -1,14 +1,14 @@
-import SideBar from './dashboard/SideBar';
+import SideBar from './components/SideBar';
 import { Routes, Route } from 'react-router-dom';
-import MainDashboard from './dashboard/MainDashboard';
-import Profile from './dashboard/Profile';
-import Users from './dashboard/Users';
-import Schools from './dashboard/Schools';
-import Courses from './dashboard/Courses';
-import Students from './dashboard/Students';
-import Schedules from './dashboard/Schedules';
-import Quizz from './dashboard/Quizz';
-import Settings from './dashboard/Settings';
+import MainDashboard from './components/MainDashboard';
+import Profile from './components/Profile';
+import Users from './components/Users';
+import Schools from './components/Schools';
+import Courses from './components/Courses';
+import Students from './components/Students';
+import Schedules from './components/Schedules';
+import Quizz from './components/Quizz';
+import Settings from './components/Settings';
 
 const Dashboard = () => {
   return (
@@ -17,7 +17,6 @@ const Dashboard = () => {
       <div className="flex-grow w-full p-4">
         <Routes>
           <Route path="/" element={<MainDashboard />} />
-          <Route path="/main" element={<MainDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<Users />} />
           <Route path="schools" element={<Schools />} />
