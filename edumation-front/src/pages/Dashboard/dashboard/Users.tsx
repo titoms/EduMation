@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -113,24 +113,52 @@ const Users = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Users</h1>
-      <div className="h-screen p-4">
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm divide-y divide-gray-200">
+
+      <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+        <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+          <table className="min-w-full leading-normal">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left text-gray-500">Name</th>
-                <th className="px-4 py-2 text-left text-gray-500">Email</th>
-                <th className="px-4 py-2 text-left text-gray-500">Role</th>
-                <th className="px-4 py-2 text-left text-gray-500">Actions</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Role
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
-                  <td className="px-4 py-2">{user.name}</td>
-                  <td className="px-4 py-2">{user.email}</td>
-                  <td className="px-4 py-2">{user.role}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 w-10 h-10">
+                        <img
+                          className="w-full h-full rounded-full"
+                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                          alt=""
+                        />
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {user.name}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {user.email}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {user.role}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <button
                       onClick={() => handleUpdateClick(user)}
                       className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -148,6 +176,19 @@ const Users = () => {
               ))}
             </tbody>
           </table>
+          <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+            <span className="text-xs xs:text-sm text-gray-900">
+              Showing 1 to 4 of 50 Entries
+            </span>
+            <div className="inline-flex mt-2 xs:mt-0">
+              <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                Prev
+              </button>
+              <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
