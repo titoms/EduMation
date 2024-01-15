@@ -3,7 +3,7 @@ import { Schedule } from '../../../services/Types';
 import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
 import Calendar from './schedule/Calendar';
-import { addDays, format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
@@ -24,10 +24,7 @@ const Schedules = () => {
     fetchSchedule();
   }, []);
 
-  const events = [
-    { date: subDays(new Date(), 6), title: 'Post video' },
-    { date: addDays(new Date(), 3), title: 'Code' },
-  ];
+  const events: Event[] = [];
 
   const fromAPItoDates = () => {
     {

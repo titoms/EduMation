@@ -15,13 +15,9 @@ import {
   startOfToday,
 } from 'date-fns';
 import { useMemo, useState } from 'react';
+import Tooltip from '@mui/material/Tooltip';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-interface Event {
-  date: Date;
-  title: string;
-}
 
 interface EventCalendarProps {
   events: Event[];
@@ -113,14 +109,18 @@ const Calendar = ({ events }: EventCalendarProps) => {
                 {format(day, 'd')}
                 {todaysEvents.map((event) => {
                   return (
-                    <div
-                      key={event.title}
-                      className="bg-green-300 p-1 rounded-md text-green-900"
-                    >
-                      <span className="overflow-hidden hidden md:block">
-                        {event.title}
-                      </span>
-                    </div>
+                    <>
+                      <Tooltip title={event.title} placement="top">
+                        <div
+                          key={event.title}
+                          className="bg-green-300 p-1 rounded-md text-green-900"
+                        >
+                          <span className="overflow-hidden hidden md:block">
+                            {event.title}
+                          </span>
+                        </div>
+                      </Tooltip>
+                    </>
                   );
                 })}
               </div>
