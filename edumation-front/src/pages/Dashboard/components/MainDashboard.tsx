@@ -1,27 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-type School = {
-  _id: string;
-  name: string;
-  address: string;
-  contactInfo: {
-    phone: string;
-    email: string;
-    website: string;
-  };
-};
-
-type Student = {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-};
+import SchoolsService from '../../../services/SchoolsService';
+import UsersService from '../../../services/UsersService';
+import { User, School } from '../../../services/Types';
 
 const MainDashboard = () => {
   const [schools, setSchools] = useState<School[]>([]);
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<User[]>([]);
   const [countStudents, setCountStudents] = useState(0);
   const [loading, setLoading] = useState(true);
   const [countSchools, setCountSchools] = useState(0);
@@ -30,9 +15,7 @@ const MainDashboard = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/schools', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const response = await SchoolsService.getAllSchools();
         setSchools(response.data);
         setCountSchools(Object.keys(response.data).length);
         setLoading(false);
@@ -49,12 +32,9 @@ const MainDashboard = () => {
 
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/users', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
-
+        const response = await UsersService.getAllUsers();
         const studentData = response.data.filter(
-          (user: Student) => user.role === 'student'
+          (user: User) => user.role === 'student'
         );
         setStudents(studentData);
         setCountStudents(Object.keys(studentData).length);

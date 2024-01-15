@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Quiz } from '../../../services/Types';
+import QuizzService from '../../../services/QuizzService';
 import axios from 'axios';
-
-type Quiz = {
-  _id: string;
-  title: string;
-  description: string;
-  questions: { questionText: string; options: string[]; answer: string }[];
-};
 
 const Quizz: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -16,9 +11,7 @@ const Quizz: React.FC = () => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/quizz', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const response = await QuizzService.getAllQuizz();
         setQuizzes(response.data);
         setLoading(false);
       } catch (err) {

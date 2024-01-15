@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-type Course = {
-  _id: string;
-  title: string;
-  description: string;
-  schoolId: string;
-  teacherId: string;
-  studentIds: string[];
-  quizIds: string[];
-  scheduleId: string;
-};
+import { Course } from '../../../services/Types';
+import CoursesService from '../../../services/CoursesService';
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -20,9 +11,7 @@ const Courses: React.FC = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/courses', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const response = await CoursesService.getAllCourses();
         setCourses(response.data);
         setLoading(false);
       } catch (err) {

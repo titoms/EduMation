@@ -1,5 +1,4 @@
 import SideBar from './components/SideBar';
-import { Routes, Route } from 'react-router-dom';
 import MainDashboard from './components/MainDashboard';
 import Profile from './components/Profile';
 import Users from './components/Users';
@@ -9,17 +8,12 @@ import Students from './components/Students';
 import Schedules from './components/Schedules';
 import Quizz from './components/Quizz';
 import Settings from './components/Settings';
+import { Routes, Route } from 'react-router-dom';
 import { DashboardContext } from '../../context/DashboardContext';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-
-export interface User {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-}
+import { User } from '../../services/Types';
+import UsersService from '../../services/UsersService';
 
 const Dashboard = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -27,9 +21,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/users', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const response = await UsersService.getAllUsers();
         setUsers(response.data);
       } catch (error) {
         toast.error('Failed to fetch users');

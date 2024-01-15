@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-type Student = {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-};
+import UsersService from '../../../services/UsersService';
+import { User } from '../../../services/Types';
 
 const Students: React.FC = () => {
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/users', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const response = await UsersService.getAllUsers();
+        setStudents(response.data);
 
         const studentData = response.data.filter(
-          (user: Student) => user.role === 'student'
+          (user: User) => user.role === 'student'
         );
         setStudents(studentData);
         setLoading(false);

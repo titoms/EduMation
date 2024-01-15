@@ -12,12 +12,11 @@ const Schedules = () => {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      setLoading(true);
       try {
         const response = await ScheduleService.getAllSchedules();
         setSchedules(response.data);
       } catch (error) {
-        toast.error('Failed to fetch schedules', error);
+        toast.error('Failed to fetch schedules');
       }
       setLoading(false);
     };

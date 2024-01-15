@@ -3,17 +3,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../../context/DashboardContext';
-
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-};
+import { User } from '../../../services/Types';
 
 const Users = () => {
   const users = useUserContext();
-  // const [users, setUsers] = useState<User[]>([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -21,21 +14,6 @@ const Users = () => {
   const [updatedEmail, setUpdatedEmail] = useState('');
   const [updatedRole, setUpdatedRole] = useState('');
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:5000/api/users', {
-  //         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  //       });
-  //       setUsers(response.data);
-  //     } catch (error) {
-  //       toast.error('Failed to fetch users');
-  //     }
-  //   };
-
-  //   fetchUsers();
-  // }, []);
 
   const handleUpdateClick = (user: User) => {
     setSelectedUser(user);

@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-
-type School = {
-  _id: string;
-  name: string;
-  address: string;
-  contactInfo: {
-    phone: string;
-    email: string;
-    website: string;
-  };
-};
+import { School } from '../../../services/Types';
+import SchoolsService from '../../../services/SchoolsService';
 
 const Schools: React.FC = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -21,9 +12,7 @@ const Schools: React.FC = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/schools', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const response = await SchoolsService.getAllSchools();
         setSchools(response.data);
         setLoading(false);
       } catch (err) {
