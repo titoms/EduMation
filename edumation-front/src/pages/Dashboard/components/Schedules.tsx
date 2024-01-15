@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Schedule, ClassTime } from '../../../services/Types';
-import ScheduleService from '../../../services/ScheduleService';
+import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
 
 const Schedules = () => {
