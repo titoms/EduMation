@@ -11,6 +11,13 @@ export interface Schedule {
   recurring: boolean;
 }
 
+export interface Student {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export interface Course {
   _id: string;
   title: string;

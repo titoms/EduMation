@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Schedule, ClassTime } from '../../../services/Types';
+import { Schedule } from '../../../services/Types';
 import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
+import Calendar from './schedule/Calendar';
+import { format } from 'date-fns';
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [newSchedule, setNewSchedule] = useState<Partial<Schedule>>({
-    classTimes: [],
-  });
 
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
         const response = await ScheduleService.getAllSchedules();
         setSchedules(response.data);
+        console.log(response.data);
       } catch (error) {
         toast.error('Failed to fetch schedules');
       }
@@ -24,38 +24,20 @@ const Schedules = () => {
     fetchSchedule();
   }, []);
 
-  const handleAddClassTime = () => {
-    setNewSchedule({
-      ...newSchedule,
-      classTimes: [
-        ...(newSchedule.classTimes as ClassTime[]),
-        {
-          date: new Date().toISOString(),
-          startTime: '09:00',
-          endTime: '17:00',
-          location: 'New Location',
-        }, // Example class time
-      ],
-    });
-  };
+  const events: Event[] = [];
 
-  const handleSubmit = async () => {
-    if (!newSchedule.courseId || newSchedule.classTimes?.length === 0) {
-      alert('Please fill in all fields.');
-      return;
+  const fromAPItoDates = () => {
+    {
+      schedules.map((schedule) => {
+        {
+          schedule.classTimes.map((classTime) => {
+            events.push({ date: classTime.date, title: schedule.courseId });
+          });
+        }
+      });
     }
-    setLoading(true);
-    try {
-      const response = await ScheduleService.createSchedule(
-        newSchedule as Schedule
-      );
-      setSchedules([...schedules, response.data]);
-      setNewSchedule({ classTimes: [] }); // Reset the form
-    } catch (error) {
-      console.error('Error creating new schedule:', error);
-    }
-    setLoading(false);
   };
+  fromAPItoDates();
 
   if (loading) {
     return <div>Loading schedules...</div>;
@@ -64,32 +46,10 @@ const Schedules = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schedules</h1>
-      {/* <div className="w-full rounded-md my-8 p-4 bg-gray-200">
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded m-2"
-          placeholder="Course ID"
-          value={newSchedule.courseId || ''}
-          onChange={(e) =>
-            setNewSchedule({ ...newSchedule, courseId: e.target.value })
-          }
-        />
-        <button
-          className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddClassTime}
-        >
-          Add Class Time
-        </button>
-        <button
-          className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleSubmit}
-        >
-          Submit New Schedule
-        </button>
-      </div> */}
+      <Calendar events={events} />
       <div className="h-screen mt-8">
         <div className="flex flex-col">
-          {schedules.map((schedule, index) => (
+          {/* {schedules.map((schedule, index) => (
             <div key={index} className="mb-8">
               <div className="mb-2 text-xl font-bold text-gray-800">
                 Week {index + 1}
@@ -125,7 +85,7 @@ const Schedules = () => {
                 })}
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </>
