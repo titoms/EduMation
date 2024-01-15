@@ -2,19 +2,22 @@ import { useEffect, useState } from 'react';
 import { Schedule, ClassTime } from '../../../services/Types';
 import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
+import Calendar from './schedule/Calendar';
+import { addDays, subDays } from 'date-fns';
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [newSchedule, setNewSchedule] = useState<Partial<Schedule>>({
-    classTimes: [],
-  });
+  // const [newSchedule, setNewSchedule] = useState<Partial<Schedule>>({
+  //   classTimes: [],
+  // });
 
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
         const response = await ScheduleService.getAllSchedules();
         setSchedules(response.data);
+        console.log(response.data);
       } catch (error) {
         toast.error('Failed to fetch schedules');
       }
@@ -24,38 +27,38 @@ const Schedules = () => {
     fetchSchedule();
   }, []);
 
-  const handleAddClassTime = () => {
-    setNewSchedule({
-      ...newSchedule,
-      classTimes: [
-        ...(newSchedule.classTimes as ClassTime[]),
-        {
-          date: new Date().toISOString(),
-          startTime: '09:00',
-          endTime: '17:00',
-          location: 'New Location',
-        }, // Example class time
-      ],
-    });
-  };
+  // const handleAddClassTime = () => {
+  //   setNewSchedule({
+  //     ...newSchedule,
+  //     classTimes: [
+  //       ...(newSchedule.classTimes as ClassTime[]),
+  //       {
+  //         date: new Date().toISOString(),
+  //         startTime: '09:00',
+  //         endTime: '17:00',
+  //         location: 'New Location',
+  //       }, // Example class time
+  //     ],
+  //   });
+  // };
 
-  const handleSubmit = async () => {
-    if (!newSchedule.courseId || newSchedule.classTimes?.length === 0) {
-      alert('Please fill in all fields.');
-      return;
-    }
-    setLoading(true);
-    try {
-      const response = await ScheduleService.createSchedule(
-        newSchedule as Schedule
-      );
-      setSchedules([...schedules, response.data]);
-      setNewSchedule({ classTimes: [] }); // Reset the form
-    } catch (error) {
-      console.error('Error creating new schedule:', error);
-    }
-    setLoading(false);
-  };
+  // const handleSubmit = async () => {
+  //   if (!newSchedule.courseId || newSchedule.classTimes?.length === 0) {
+  //     alert('Please fill in all fields.');
+  //     return;
+  //   }
+  //   setLoading(true);
+  //   try {
+  //     const response = await ScheduleService.createSchedule(
+  //       newSchedule as Schedule
+  //     );
+  //     setSchedules([...schedules, response.data]);
+  //     setNewSchedule({ classTimes: [] }); // Reset the form
+  //   } catch (error) {
+  //     console.error('Error creating new schedule:', error);
+  //   }
+  //   setLoading(false);
+  // };
 
   if (loading) {
     return <div>Loading schedules...</div>;
@@ -64,6 +67,9 @@ const Schedules = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schedules</h1>
+      <Calendar
+        events={[{ date: subDays(new Date(), 6), title: 'Post video' }]}
+      />
       {/* <div className="w-full rounded-md my-8 p-4 bg-gray-200">
         <input
           type="text"
