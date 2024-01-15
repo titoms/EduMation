@@ -31,9 +31,7 @@ const Schedules = () => {
       schedules.map((schedule) => {
         {
           schedule.classTimes.map((classTime) => {
-            const formattedDate = format(classTime.date, 'MMMM do, yyyy');
             events.push({ date: classTime.date, title: schedule.courseId });
-            console.log(formattedDate);
           });
         }
       });
