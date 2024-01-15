@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Schedule, ClassTime } from '../../../services/Types';
+import { Schedule } from '../../../services/Types';
 import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
 import Calendar from './schedule/Calendar';
-import { addDays, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  // const [newSchedule, setNewSchedule] = useState<Partial<Schedule>>({
-  //   classTimes: [],
-  // });
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -27,39 +24,6 @@ const Schedules = () => {
     fetchSchedule();
   }, []);
 
-  // const handleAddClassTime = () => {
-  //   setNewSchedule({
-  //     ...newSchedule,
-  //     classTimes: [
-  //       ...(newSchedule.classTimes as ClassTime[]),
-  //       {
-  //         date: new Date().toISOString(),
-  //         startTime: '09:00',
-  //         endTime: '17:00',
-  //         location: 'New Location',
-  //       }, // Example class time
-  //     ],
-  //   });
-  // };
-
-  // const handleSubmit = async () => {
-  //   if (!newSchedule.courseId || newSchedule.classTimes?.length === 0) {
-  //     alert('Please fill in all fields.');
-  //     return;
-  //   }
-  //   setLoading(true);
-  //   try {
-  //     const response = await ScheduleService.createSchedule(
-  //       newSchedule as Schedule
-  //     );
-  //     setSchedules([...schedules, response.data]);
-  //     setNewSchedule({ classTimes: [] }); // Reset the form
-  //   } catch (error) {
-  //     console.error('Error creating new schedule:', error);
-  //   }
-  //   setLoading(false);
-  // };
-
   if (loading) {
     return <div>Loading schedules...</div>;
   }
@@ -70,29 +34,6 @@ const Schedules = () => {
       <Calendar
         events={[{ date: subDays(new Date(), 6), title: 'Post video' }]}
       />
-      {/* <div className="w-full rounded-md my-8 p-4 bg-gray-200">
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded m-2"
-          placeholder="Course ID"
-          value={newSchedule.courseId || ''}
-          onChange={(e) =>
-            setNewSchedule({ ...newSchedule, courseId: e.target.value })
-          }
-        />
-        <button
-          className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddClassTime}
-        >
-          Add Class Time
-        </button>
-        <button
-          className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleSubmit}
-        >
-          Submit New Schedule
-        </button>
-      </div> */}
       <div className="h-screen mt-8">
         <div className="flex flex-col">
           {schedules.map((schedule, index) => (
