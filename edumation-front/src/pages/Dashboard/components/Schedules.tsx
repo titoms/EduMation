@@ -88,46 +88,44 @@ const Schedules = () => {
         </button>
       </div> */}
       <div className="h-screen mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="flex flex-col">
-            {schedules.map((schedule, index) => (
-              <div key={index} className="mb-8">
-                <div className="mb-2 text-xl font-bold text-gray-800">
-                  Week {index + 1}
-                </div>
-                <div className="grid grid-cols-7 gap-4">
-                  {schedule.classTimes.map((classTime, classIndex) => {
-                    // Format the date to match the image representation
-                    const date = new Date(classTime.date);
-                    const dayOfWeek = date
-                      .toLocaleDateString('en-US', { weekday: 'short' })
-                      .toUpperCase();
-                    const monthDay = date.getDate();
-                    return (
-                      <div
-                        key={classIndex}
-                        className={`col-span-1 p-4 border rounded-lg shadow-sm bg-white ${
-                          dayOfWeek === 'SAT' || dayOfWeek === 'SUN'
-                            ? 'bg-gray-100'
-                            : ''
-                        }`}
-                      >
-                        <div className="font-semibold text-gray-700">
-                          {dayOfWeek} {monthDay}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {classTime.startTime} - {classTime.endTime}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {classTime.location}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+        <div className="flex flex-col">
+          {schedules.map((schedule, index) => (
+            <div key={index} className="mb-8">
+              <div className="mb-2 text-xl font-bold text-gray-800">
+                Week {index + 1}
               </div>
-            ))}
-          </div>
+              <div className="grid grid-cols-7 gap-4">
+                {schedule.classTimes.map((classTime, classIndex) => {
+                  // Format the date to match the image representation
+                  const date = new Date(classTime.date);
+                  const dayOfWeek = date
+                    .toLocaleDateString('en-US', { weekday: 'short' })
+                    .toUpperCase();
+                  const monthDay = date.getDate();
+                  return (
+                    <div
+                      key={classIndex}
+                      className={`col-span-1 p-4 border rounded-lg shadow-sm bg-white ${
+                        dayOfWeek === 'SAT' || dayOfWeek === 'SUN'
+                          ? 'bg-gray-100'
+                          : ''
+                      }`}
+                    >
+                      <div className="font-semibold text-gray-700">
+                        {dayOfWeek} {monthDay}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        {classTime.startTime} - {classTime.endTime}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {classTime.location}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>
