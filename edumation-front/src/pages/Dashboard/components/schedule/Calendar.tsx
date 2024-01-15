@@ -61,7 +61,7 @@ const Calendar = ({ events }: EventCalendarProps) => {
   }, [events]);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto py-4">
       <div className="mb-4 text-center flex justify">
         <button
           onClick={previousMonth}
@@ -79,44 +79,54 @@ const Calendar = ({ events }: EventCalendarProps) => {
           {format(firstDayCurrentMonth, 'MMMM yyyy')}
         </h2>
       </div>
-      <div className="grid grid-cols-7">
-        {WEEKDAYS.map((day) => {
-          return (
-            <div key={day} className="font-bold text-center">
-              {day}
-            </div>
-          );
-        })}
-        {Array.from({ length: startingDayIndex }).map((_, index) => {
-          return (
-            <div key={`empty-${index}`} className="border p-4 text-center" />
-          );
-        })}
-        {days.map((day, index) => {
-          const dateKey = format(day, 'yyyy-MM-dd');
-          const todaysEvents = eventsByDate[dateKey] || [];
-          return (
-            <div
-              key={index}
-              className={clsx('border h-32 text-center', {
-                'bg-blue-200 font-bold': isToday(day),
-                'text-blue-900': isToday(day),
-              })}
-            >
-              {format(day, 'd')}
-              {todaysEvents.map((event) => {
-                return (
-                  <div
-                    key={event.title}
-                    className="bg-green-300 p-1 rounded-md text-green-900"
-                  >
-                    {event.title}
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+      <div className="w-[85%] md:w-full">
+        <div className="grid grid-cols-7">
+          {WEEKDAYS.map((day) => {
+            return (
+              <div
+                key={day}
+                className="font-bold text-center hover:bg-gray-200"
+              >
+                {day}
+              </div>
+            );
+          })}
+          {Array.from({ length: startingDayIndex }).map((_, index) => {
+            return (
+              <div key={`empty-${index}`} className="border p-4 text-center" />
+            );
+          })}
+          {days.map((day, index) => {
+            const dateKey = format(day, 'yyyy-MM-dd');
+            const todaysEvents = eventsByDate[dateKey] || [];
+            return (
+              <div
+                key={index}
+                className={clsx(
+                  'border h-16 md:h-32 text-center hover:bg-gray-200',
+                  {
+                    'bg-blue-200 font-bold': isToday(day),
+                    'text-blue-900': isToday(day),
+                  }
+                )}
+              >
+                {format(day, 'd')}
+                {todaysEvents.map((event) => {
+                  return (
+                    <div
+                      key={event.title}
+                      className="bg-green-300 p-1 rounded-md text-green-900"
+                    >
+                      <span className="overflow-hidden hidden md:block">
+                        {event.title}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className="flex justify-center align-middle"></div>
     </div>

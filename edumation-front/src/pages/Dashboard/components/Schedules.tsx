@@ -3,7 +3,7 @@ import { Schedule } from '../../../services/Types';
 import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
 import Calendar from './schedule/Calendar';
-import { subDays } from 'date-fns';
+import { addDays, format, subDays } from 'date-fns';
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
@@ -24,6 +24,26 @@ const Schedules = () => {
     fetchSchedule();
   }, []);
 
+  const events = [
+    { date: subDays(new Date(), 6), title: 'Post video' },
+    { date: addDays(new Date(), 3), title: 'Code' },
+  ];
+
+  const fromAPItoDates = () => {
+    {
+      schedules.map((schedule) => {
+        {
+          schedule.classTimes.map((classTime) => {
+            const formattedDate = format(classTime.date, 'MMMM do, yyyy');
+            events.push({ date: classTime.date, title: schedule.courseId });
+            console.log(formattedDate);
+          });
+        }
+      });
+    }
+  };
+  fromAPItoDates();
+
   if (loading) {
     return <div>Loading schedules...</div>;
   }
@@ -31,12 +51,10 @@ const Schedules = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schedules</h1>
-      <Calendar
-        events={[{ date: subDays(new Date(), 6), title: 'Post video' }]}
-      />
+      <Calendar events={events} />
       <div className="h-screen mt-8">
         <div className="flex flex-col">
-          {schedules.map((schedule, index) => (
+          {/* {schedules.map((schedule, index) => (
             <div key={index} className="mb-8">
               <div className="mb-2 text-xl font-bold text-gray-800">
                 Week {index + 1}
@@ -72,7 +90,7 @@ const Schedules = () => {
                 })}
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-// ScheduleService.ts
+// scheduleService.ts
 import axios from 'axios';
 import { Schedule } from './Types';
 
