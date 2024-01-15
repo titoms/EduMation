@@ -19,7 +19,7 @@ const Users = () => {
   if (!userContext) {
     return <div>Loading...</div>;
   }
-  const { users } = userContext;
+  const { users, setUsers } = userContext;
 
   const handleUpdateClick = (user: User) => {
     setSelectedUser(user);
