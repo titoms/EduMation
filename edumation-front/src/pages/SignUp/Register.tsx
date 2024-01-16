@@ -3,6 +3,8 @@ import axios from 'axios';
 import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import UsersService from '../../services/UsersService';
+import { User } from '../../services/Types';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const Register: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    role: 'student', // Default role; can be changed as per requirement
+    role: 'student',
   });
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -24,6 +26,17 @@ const Register: React.FC = () => {
     setErrorMessage('');
 
     try {
+      // const newUser: User = {
+      //   // Assuming these are the fields in your User type
+      //   name: 'John Doe',
+      //   email: 'johndoe@example.com',
+      //   password: 'password123',
+      //   profileImage: '',
+      //   role: 'user',
+      //   // Add other fields as required
+      // };
+      // const response = await UsersService.createUser(newUser);
+
       const response = await axios.post(
         'http://localhost:5000/api/users/register',
         formData
