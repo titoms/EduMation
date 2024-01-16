@@ -20,8 +20,12 @@ const UserRow: React.FC<UserRowProps> = ({
           <div className="flex-shrink-0 w-10 h-10">
             <img
               className="w-full h-full rounded-full"
-              src="https://via.placeholder.com/150"
-              alt={user.name}
+              src={
+                user.profileImage
+                  ? user.profileImage
+                  : 'https://via.placeholder.com/150'
+              }
+              alt="User profile Pic"
             />
           </div>
           <div className="ml-3">
