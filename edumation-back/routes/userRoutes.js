@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const verifyToken = require('../middlewares/verifyToken');
 const { body, validationResult, param } = require('express-validator');
-
 const saltRounds = 10;
+
+const s3Upload = require('../middlewares/s3UploadFile');
+const upload = s3Upload.single('profileImage');
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -23,6 +25,7 @@ router.get('/', async (req, res) => {
 // User registration
 router.post(
   '/register',
+  upload,
   [
     body('name').trim().not().isEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Invalid email address'),
@@ -37,10 +40,13 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
+      const file = req.file;
+      const imageUrl = file ? file.location : '';
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
+        profileImage: imageUrl,
         passwordHash: hashedPassword,
         role: req.body.role,
         schoolId: req.body.schoolId,
