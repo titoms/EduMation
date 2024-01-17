@@ -13,11 +13,13 @@ const Register: React.FC = () => {
     name: '',
     email: '',
     password: '',
+    profileImage: '',
     role: 'student',
   });
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -71,7 +73,7 @@ const Register: React.FC = () => {
               <input
                 type="text"
                 id="nameRegister"
-                name="nameRegister"
+                name="name"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.name}
                 onChange={handleChange}
@@ -85,7 +87,7 @@ const Register: React.FC = () => {
               <input
                 type="email"
                 id="emailRegister"
-                name="emailRegister"
+                name="email"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.email}
                 onChange={handleChange}
@@ -99,7 +101,7 @@ const Register: React.FC = () => {
               <input
                 type="password"
                 id="passwordRegister"
-                name="passwordRegister"
+                name="password"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.password}
                 onChange={handleChange}
