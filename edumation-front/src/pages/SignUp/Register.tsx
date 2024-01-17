@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import UsersService from '../../services/UsersService';
 import { User } from '../../services/Types';
+import DragAndDrop from './DragAndDrop';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const Register: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -108,6 +108,12 @@ const Register: React.FC = () => {
                 required
               />
             </div>
+
+            <div className="mt-4">
+              <label className="block">Profile Picture :</label>
+              <DragAndDrop />
+            </div>
+
             <div className="mt-6">
               <button
                 type="submit"
