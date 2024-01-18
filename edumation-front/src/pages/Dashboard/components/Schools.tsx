@@ -14,6 +14,7 @@ const Schools: React.FC = () => {
       try {
         const response = await SchoolsService.getAllSchools();
         setSchools(response.data);
+        console.log(response.data);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {

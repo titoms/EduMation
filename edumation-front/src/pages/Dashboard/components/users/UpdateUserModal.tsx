@@ -4,6 +4,7 @@ import { User } from '../../../../services/Types';
 import UsersService from '../../../../services/UsersService';
 import { toast } from 'react-toastify';
 import DragAndDrop from '../../../../components/DragAndDrop';
+import { Select, Option } from '@material-tailwind/react';
 
 interface UpdateUserModalProps {
   user: User;
@@ -66,6 +67,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             onChange={(e) => setUpdatedName(e.target.value)}
             placeholder="Name"
             name="updateUserName"
+            id="updateUserName"
           />
           <label htmlFor="updateUserEmail" className="block font-semibold mt-2">
             New Email
@@ -77,6 +79,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             onChange={(e) => setUpdatedEmail(e.target.value)}
             placeholder="Email"
             name="updateUserEmail"
+            id="updateUserEmail"
           />
           <label
             htmlFor="updateUserPassword"
@@ -91,21 +94,24 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             onChange={(e) => setUpdatedPassword(e.target.value)}
             placeholder="Password"
             name="updateUserPassword"
+            id="updateUserPassword"
           />
           <label htmlFor="updateUserRole" className="block font-semibold mt-2">
             New Role
           </label>
-          <input
-            className="w-full p-2 border border-gray-300 rounded mt-2"
-            type="text"
+          <select
+            className="w-full p-2 border border-gray-300 rounded"
+            name="updateUserRole"
+            id="updateUserRole"
             value={updatedRole}
             onChange={(e) => setUpdatedRole(e.target.value)}
-            placeholder="Role"
-            name="updateUserRole"
-          />
-          <label htmlFor="updateUserRole" className="block font-semibold mt-2">
-            New Profile Picture
-          </label>
+          >
+            <option value="admin">Admin</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+
+          <p className="font-semibold mt-2">New Profile Picture</p>
           <DragAndDrop onFileDrop={handleFileDrop} />
 
           <button
