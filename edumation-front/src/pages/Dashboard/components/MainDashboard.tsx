@@ -603,7 +603,7 @@ const MainDashboard = () => {
               </div>
             </div>
             {/* ACQUISITION OVERVIEW ROW */}
-            <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+            <div className="bg-white mt-4 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <h3 className="text-xl leading-none font-bold text-gray-900 mb-10">
                 Acquisition Overview
               </h3>
