@@ -4,6 +4,16 @@ import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import DragAndDrop from '../../components/DragAndDrop';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -53,77 +63,113 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="items-center h-screen bg-gray-100 p-6">
-      <img src={logo} className="h-40 m-auto" alt="Logo" />
-      <div className="flex justify-center mt-8">
-        <div className="p-6 max-w-sm w-full bg-white shadow-md rounded-md">
-          <h2 className="text-xl font-semibold text-gray-700 text-center">
-            Register
-          </h2>
-          {errorMessage && (
-            <p className="text-red-500 text-sm text-center">{errorMessage}</p>
-          )}
-          <form onSubmit={handleSubmit} className="mt-4">
-            <div>
-              <label htmlFor="name" className="block">
-                Name:
-              </label>
-              <input
-                type="text"
+    <>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage:
+              'url(https://source.unsplash.com/random?wallpapers)',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <img src={logo} className="h-40 m-auto" alt="Logo" />
+            <Typography component="h1" variant="h5">
+              Create a new account :
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
+              {errorMessage && (
+                <p className="text-red-500 text-sm text-center">
+                  {errorMessage}
+                </p>
+              )}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="name"
-                name="name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                label="Name"
                 value={formData.name}
                 onChange={handleChange}
-                required
+                name="name"
+                autoComplete="name"
+                autoFocus
               />
-            </div>
-            <div className="mt-4">
-              <label htmlFor="email" className="block">
-                Email:
-              </label>
-              <input
-                type="email"
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="email"
-                name="email"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                label="Email"
                 value={formData.email}
                 onChange={handleChange}
-                required
+                name="email"
+                autoComplete="email"
+                autoFocus
               />
-            </div>
-            <div className="mt-4">
-              <label htmlFor="password" className="block">
-                Password:
-              </label>
-              <input
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
                 type="password"
                 id="password"
-                name="password"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.password}
                 onChange={handleChange}
-                required
+                autoComplete="current-password"
               />
-            </div>
-
-            <div className="mt-4">
-              <label className="block">Profile Picture:</label>
               <DragAndDrop onFileDrop={handleFileDrop} />
-            </div>
-
-            <div className="mt-6">
-              <button
+              <FormControlLabel
+                className="mt-4"
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
                 type="submit"
-                className="w-full px-4 py-2 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
               >
-                Register
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+                Sign Up
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

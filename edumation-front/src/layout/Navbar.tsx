@@ -82,7 +82,7 @@ const Navbar = () => {
               to="/register"
               className="text-white m-2 no-underline transition-colors hover:text-terciary"
             >
-              Register
+              Sign Up
             </Link>
           </>
         )}
