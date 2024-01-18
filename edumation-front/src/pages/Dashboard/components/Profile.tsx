@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Grid, Skeleton } from '@mui/material';
 
 type UserProfile = {
   name: string;
@@ -133,7 +134,14 @@ const Profile = () => {
     fetchUserProfile();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <>
+        <Skeleton variant="text" height={60} />
+        <Skeleton variant="rounded" height={200} />
+      </>
+    );
+  }
   if (error) return <div>Error: {error}</div>;
 
   return (

@@ -10,7 +10,7 @@ import Quizz from './components/Quizz';
 import Settings from './components/Settings';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
-import { Grid, Skeleton } from '@mui/material';
+
 const Dashboard = () => {
   return (
     <div className="flex bg-gray-100">
