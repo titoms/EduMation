@@ -3,11 +3,12 @@ import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { School } from '../../../services/Types';
 import SchoolsService from '../../../services/SchoolsService';
+import { Grid, Skeleton } from '@mui/material';
 
 const Schools: React.FC = () => {
   const [schools, setSchools] = useState<School[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -25,11 +26,27 @@ const Schools: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchSchools();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <>
+        <Skeleton variant="text" height={60} />
+        <Grid container spacing={2} className="mb-4 w-full">
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={250} />
+          </Grid>
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={250} />
+          </Grid>
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={250} />
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
   if (error) return <div>Error: {error}</div>;
 
   return (

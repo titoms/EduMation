@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UsersService from '../../../services/UsersService';
 import { User } from '../../../services/Types';
+import { Grid, Skeleton } from '@mui/material';
 
 const Students: React.FC = () => {
   const [students, setStudents] = useState<User[]>([]);
@@ -33,7 +34,21 @@ const Students: React.FC = () => {
     fetchStudents();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <>
+        <Skeleton variant="text" height={60} />
+        <Grid container spacing={2} className="mb-4 w-full">
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={100} />
+          </Grid>
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={100} />
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
   if (error) return <div>Error: {error}</div>;
 
   return (

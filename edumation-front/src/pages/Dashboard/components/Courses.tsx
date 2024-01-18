@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Course } from '../../../services/Types';
 import CoursesService from '../../../services/CoursesService';
+import { Grid, Skeleton } from '@mui/material';
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -27,7 +28,21 @@ const Courses: React.FC = () => {
     fetchCourses();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <>
+        <Skeleton variant="text" height={60} />
+        <Grid container spacing={2} className="mb-4 w-full">
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={300} />
+          </Grid>
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={300} />
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
   if (error) return <div>Error: {error}</div>;
 
   return (
