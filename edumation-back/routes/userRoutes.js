@@ -120,28 +120,75 @@ router.get(
 // Update User
 router.put(
   '/:id',
+  upload,
   [
     param('id').isMongoId().withMessage('Invalid user ID'),
-    body('name').optional().trim(),
+    body('name')
+      .optional()
+      .trim()
+      .not()
+      .isEmpty()
+      .withMessage('Name cannot be empty'),
     body('email').optional().isEmail().withMessage('Invalid email address'),
     body('password')
       .optional()
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long'),
+    body('role').optional().not().isEmpty().withMessage('Role is required'),
   ],
-  verifyToken,
   async (req, res) => {
-    return res.status(200).json('Update successful');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const updateData = req.body;
+      if (req.file) {
+        updateData.profileImage = req.file.location; // Update with new image URL
+      }
+      if (updateData.password) {
+        updateData.passwordHash = await bcrypt.hash(
+          updateData.password,
+          saltRounds
+        );
+        delete updateData.password;
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        updateData,
+        { new: true }
+      );
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
+    }
   }
 );
 
 // Delete User
 router.delete(
   '/:id',
-  verifyToken,
   [param('id').isMongoId().withMessage('Invalid user ID')],
   async (req, res) => {
-    return res.status(200).json('Delete successful');
+    try {
+      const deletedUser = await User.findByIdAndDelete(req.params.id);
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
+    }
   }
 );
 

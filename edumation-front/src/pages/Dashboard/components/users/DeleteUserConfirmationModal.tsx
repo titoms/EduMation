@@ -20,6 +20,7 @@ const DeleteUserConfirmationModal: React.FC<
       toast.success('User deleted successfully');
       onClose();
     } catch (error) {
+      console.log(error);
       toast.error('Deletion failed. Please try again.');
     }
   };

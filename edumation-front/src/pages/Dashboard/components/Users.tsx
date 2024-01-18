@@ -16,7 +16,6 @@ const Users = () => {
     return <div>Loading...</div>;
   }
   const { users, setUsers } = userContext;
-  console.log(users);
 
   const onShowUpdateModal = (user: User) => {
     setSelectedUser(user);
