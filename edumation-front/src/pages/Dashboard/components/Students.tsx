@@ -10,6 +10,7 @@ const Students: React.FC = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
+      setLoading(true);
       try {
         const response = await UsersService.getAllUsers();
         setStudents(response.data);
