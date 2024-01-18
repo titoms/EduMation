@@ -53,7 +53,7 @@ const Schools: React.FC = () => {
     <>
       <h1 className="text-2xl font-semibold">Schools</h1>
       <div className="h-screen mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {schools.map((school) => (
             <div key={school._id} className="w-full">
               <div className="bg-white rounded-lg overflow-hidden mb-10">

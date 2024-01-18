@@ -186,7 +186,7 @@ const MainDashboard = () => {
           {/* FIRST ROW */}
           <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
             {/* CHART  */}
-            <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+            {/* <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-shrink-0">
                   <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
@@ -213,9 +213,9 @@ const MainDashboard = () => {
                 </div>
               </div>
               <div id="main-chart"></div>
-            </div>
+            </div> */}
             {/* Latest */}
-            <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+            {/* <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <div className="mb-4 flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -356,10 +356,10 @@ const MainDashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* SECOND ROW */}
-          <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {/* <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -441,11 +441,11 @@ const MainDashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* THIRD ROW */}
           <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
             {/* LATEST CUSTOMERS ROW */}
-            <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
+            {/* <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold leading-none text-gray-900">
                   Latest Customers
@@ -601,9 +601,9 @@ const MainDashboard = () => {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
             {/* ACQUISITION OVERVIEW ROW */}
-            <div className="bg-white mt-4 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+            {/* <div className="bg-white mt-4 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
               <h3 className="text-xl leading-none font-bold text-gray-900 mb-10">
                 Acquisition Overview
               </h3>
@@ -750,7 +750,7 @@ const MainDashboard = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

@@ -1,5 +1,5 @@
 // Users.tsx
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import UserTable from './users/UserTable';
 import UpdateUserModal from './users/UpdateUserModal';
 import DeleteUserConfirmationModal from './users/DeleteUserConfirmationModal';

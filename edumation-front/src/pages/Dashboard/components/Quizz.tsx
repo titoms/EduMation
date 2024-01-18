@@ -49,7 +49,7 @@ const Quizz: React.FC = () => {
     <>
       <h1 className="text-2xl font-semibold">Schools</h1>
       <div className="h-screen mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quizzes.map((quiz) => (
             <div key={quiz._id} className="bg-white shadow rounded-lg p-4">
               <h3 className="text-lg font-semibold">{quiz.title}</h3>
