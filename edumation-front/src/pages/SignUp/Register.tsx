@@ -3,7 +3,7 @@ import axios from 'axios';
 import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import DragAndDrop from './DragAndDrop';
+import DragAndDrop from '../../components/DragAndDrop';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();

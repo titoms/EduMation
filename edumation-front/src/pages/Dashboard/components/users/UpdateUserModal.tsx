@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { User } from '../../../../services/Types';
 import UsersService from '../../../../services/UsersService';
 import { toast } from 'react-toastify';
+import DragAndDrop from '../../../../components/DragAndDrop';
 
 interface UpdateUserModalProps {
   user: User;
@@ -18,7 +19,12 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   const [updatedName, setUpdatedName] = useState(user.name);
   const [updatedEmail, setUpdatedEmail] = useState(user.email);
   const [updatedRole, setUpdatedRole] = useState(user.role);
+  const [updatedPassword, setUpdatedPassword] = useState(user.password);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
 
+  const handleFileDrop = (file: File) => {
+    setProfileImage(file);
+  };
   const handleUpdateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -50,6 +56,9 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
       >
         <h3 className="text-lg font-semibold">Update User</h3>
         <form onSubmit={handleUpdateUser}>
+          <label htmlFor="updateUserName" className="block font-semibold mt-2">
+            New Name
+          </label>
           <input
             className="w-full p-2 border border-gray-300 rounded mt-2"
             type="text"
@@ -58,6 +67,9 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             placeholder="Name"
             name="updateUserName"
           />
+          <label htmlFor="updateUserEmail" className="block font-semibold mt-2">
+            New Email
+          </label>
           <input
             className="w-full p-2 border border-gray-300 rounded mt-2"
             type="email"
@@ -66,6 +78,23 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             placeholder="Email"
             name="updateUserEmail"
           />
+          <label
+            htmlFor="updateUserPassword"
+            className="block font-semibold mt-2"
+          >
+            New Password
+          </label>
+          <input
+            className="w-full p-2 border border-gray-300 rounded mt-2"
+            type="password"
+            value={updatedPassword}
+            onChange={(e) => setUpdatedPassword(e.target.value)}
+            placeholder="Password"
+            name="updateUserPassword"
+          />
+          <label htmlFor="updateUserRole" className="block font-semibold mt-2">
+            New Role
+          </label>
           <input
             className="w-full p-2 border border-gray-300 rounded mt-2"
             type="text"
@@ -74,6 +103,11 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             placeholder="Role"
             name="updateUserRole"
           />
+          <label htmlFor="updateUserRole" className="block font-semibold mt-2">
+            New Profile Picture
+          </label>
+          <DragAndDrop onFileDrop={handleFileDrop} />
+
           <button
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"

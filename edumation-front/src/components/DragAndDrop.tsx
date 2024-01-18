@@ -67,7 +67,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
         dragActive
           ? 'bg-blue-400 border-blue-300'
           : 'bg-blue-100 border-gray-300'
-      }  p-4 w-full rounded-lg  border-2 border-dashed min-h-[8rem] text-center flex flex-col items-center justify-center`}
+      }  p-4 w-full rounded-lg  border-2 border-dashed min-h-[8rem] text-center flex flex-col items-center justify-center mt-2`}
       onDragEnter={handleDragEnter}
       onSubmit={(e) => e.preventDefault()}
       onDrop={handleDrop}
