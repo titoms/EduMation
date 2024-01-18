@@ -1,6 +1,7 @@
 // UserRow.tsx
 import React from 'react';
 import { User } from '../../../../services/Types';
+import Button from '../../../../components/ui/Button';
 
 interface UserRowProps {
   user: User;
@@ -40,18 +41,12 @@ const UserRow: React.FC<UserRowProps> = ({
         {user.role}
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <button
-          onClick={() => onShowUpdateModal(user)}
-          className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <Button onClick={() => onShowUpdateModal(user)} variant="blue">
           Update
-        </button>
-        <button
-          onClick={() => onShowDeleteModal(user)}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
+        </Button>
+        <Button onClick={() => onShowDeleteModal(user)} variant="red">
           Delete
-        </button>
+        </Button>
       </td>
     </tr>
   );
