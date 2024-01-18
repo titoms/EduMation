@@ -3,8 +3,6 @@ import axios from 'axios';
 import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import UsersService from '../../services/UsersService';
-import { User } from '../../services/Types';
 import DragAndDrop from './DragAndDrop';
 
 const Register: React.FC = () => {
@@ -14,34 +12,34 @@ const Register: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    profileImage: '',
     role: 'student',
   });
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileDrop = (file: File) => {
+    setProfileImage(file);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage('');
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('password', formData.password);
+    formDataToSend.append('role', formData.role);
+    if (profileImage) {
+      formDataToSend.append('profileImage', profileImage);
+    }
 
     try {
-      // const newUser: User = {
-      //   // Assuming these are the fields in your User type
-      //   name: 'John Doe',
-      //   email: 'johndoe@example.com',
-      //   password: 'password123',
-      //   profileImage: '',
-      //   role: 'user',
-      //   // Add other fields as required
-      // };
-      // const response = await UsersService.createUser(newUser);
-
       const response = await axios.post(
         'http://localhost:5000/api/users/register',
-        formData
+        formDataToSend
       );
       toast.success('Registration successful');
       navigate('/login');
@@ -67,12 +65,12 @@ const Register: React.FC = () => {
           )}
           <form onSubmit={handleSubmit} className="mt-4">
             <div>
-              <label htmlFor="nameRegister" className="block">
+              <label htmlFor="name" className="block">
                 Name:
               </label>
               <input
                 type="text"
-                id="nameRegister"
+                id="name"
                 name="name"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.name}
@@ -81,12 +79,12 @@ const Register: React.FC = () => {
               />
             </div>
             <div className="mt-4">
-              <label htmlFor="emailRegister" className="block">
+              <label htmlFor="email" className="block">
                 Email:
               </label>
               <input
                 type="email"
-                id="emailRegister"
+                id="email"
                 name="email"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.email}
@@ -95,12 +93,12 @@ const Register: React.FC = () => {
               />
             </div>
             <div className="mt-4">
-              <label htmlFor="passwordRegister" className="block">
+              <label htmlFor="password" className="block">
                 Password:
               </label>
               <input
                 type="password"
-                id="passwordRegister"
+                id="password"
                 name="password"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 value={formData.password}
@@ -110,8 +108,8 @@ const Register: React.FC = () => {
             </div>
 
             <div className="mt-4">
-              <label className="block">Profile Picture :</label>
-              <DragAndDrop />
+              <label className="block">Profile Picture:</label>
+              <DragAndDrop onFileDrop={handleFileDrop} />
             </div>
 
             <div className="mt-6">

@@ -9,7 +9,7 @@ const apiClient = axios.create({
   withCredentials: false, // This is optional, depends on your backend setup
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
     Authorization: `Bearer ${token}`,
   },
 });
