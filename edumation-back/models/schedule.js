@@ -7,14 +7,11 @@ const scheduleSchema = new mongoose.Schema(
       ref: 'Group',
       required: true,
     },
-    classTimes: [
-      {
-        date: Date,
-        startTime: String,
-        endTime: String,
-        location: String,
-      },
-    ],
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+      required: true,
+    },
     recurring: Boolean,
     creationDate: {
       type: Date,

@@ -147,11 +147,7 @@ The Quiz schema describes the structure for storing quiz information in the data
 The Schedule schema outlines the structure for storing scheduling information in the database.
 
 - `groupId`: Reference to the associated Group for the schedules.
-- `classTimes`: A list of class times, each including:
-  - `date`: The date for the class.
-  - `startTime`: The start time of the class.
-  - `endTime`: The end time of the class.
-  - `location`: The location where the class is held.
+- `courseId`: Reference to the associated Courses for the schedules.
 - `recurring`: Indicates whether the schedule is recurring.
 - `creationDate`: The date and time when the schedule was created.
 - `updateDate`: The date and time when the schedule was last updated.
@@ -208,7 +204,7 @@ The Course schema defines the structure for storing course information in the da
 - PUT /courses/:id: Update a course by ID.
 - DELETE /courses/:id: Delete a course by ID.
 
-### General Notes
+## General Notes
 
 - All endpoints require proper authentication tokens unless specified otherwise.
 - Data should be sent in a JSON format.
