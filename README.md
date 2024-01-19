@@ -77,7 +77,7 @@ http://"<your-domain>"/api
 
 ## Endpoints :
 
-# Users
+# - Users
 
 The User schema defines the structure of user data in the database.
 
@@ -105,7 +105,7 @@ The User schema defines the structure of user data in the database.
 - PUT /users/:id: Update a user by ID.
 - DELETE /users/:id: Delete a user by ID.
 
-# Schools
+# - Schools
 
 The School schema defines the structure of school data in the database.
 
@@ -131,14 +131,6 @@ The School schema defines the structure of school data in the database.
 - GET /schools/:id: Retrieve a school by ID.
 - PUT /schools/:id: Update a school by ID.
 - DELETE /schools/:id: Delete a school by ID.
-
-# Courses
-
-- GET /courses: Retrieve a list of all courses.
-- POST /courses: Create a new course.
-- GET /courses/:id: Retrieve a course by ID.
-- PUT /courses/:id: Update a course by ID.
-- DELETE /courses/:id: Delete a course by ID.
 
 # Quizzes
 
@@ -168,7 +160,7 @@ The Quiz schema describes the structure for storing quiz information in the data
 - PUT /quizz/:id: Update a quiz by ID.
 - DELETE /quizz/:id: Delete a quiz by ID.
 
-# Schedules
+# - Schedules
 
 The Schedule schema outlines the structure for storing scheduling information in the database.
 
@@ -196,7 +188,7 @@ The Schedule schema outlines the structure for storing scheduling information in
 - PUT /schedules/:id: Update a schedule by ID.
 - DELETE /schedules/:id: Delete a schedule by ID.
 
-# Groups
+# - Groups
 
 The Group schema represents the structure for storing group information in the database.
 
@@ -220,7 +212,15 @@ The Group schema represents the structure for storing group information in the d
 - PUT /groups/:id: Update a group by ID.
 - DELETE /groups/:id: Delete a group by ID.
 
-_General Notes_
+# - Courses
+
+- GET /courses: Retrieve a list of all courses.
+- POST /courses: Create a new course.
+- GET /courses/:id: Retrieve a course by ID.
+- PUT /courses/:id: Update a course by ID.
+- DELETE /courses/:id: Delete a course by ID.
+
+  _General Notes_
 
 - All endpoints require proper authentication tokens unless specified otherwise.
 - Data should be sent in a JSON format.
