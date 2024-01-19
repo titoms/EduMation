@@ -20,14 +20,6 @@ const quizSchema = new mongoose.Schema(
       },
     ],
     timeLimit: Number,
-    creationDate: {
-      type: Date,
-      default: Date.now,
-    },
-    updateDate: {
-      type: Date,
-      default: Date.now,
-    },
   },
   { timestamps: true }
 );

@@ -30,6 +30,7 @@ const Profile = () => {
 
   const token = localStorage.getItem('token');
   let userId = '';
+
   if (token) {
     const decodedToken = jwtDecode(token);
     userId = decodedToken._id;

@@ -8,6 +8,7 @@ import Students from './components/Students';
 import Schedules from './components/Schedules';
 import Quizz from './components/Quizz';
 import Settings from './components/Settings';
+import Classes from './components/Classes';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 
@@ -22,6 +23,7 @@ const Dashboard = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="users" element={<Users />} />
             <Route path="schools" element={<Schools />} />
+            <Route path="classes" element={<Classes />} />
             <Route path="courses" element={<Courses />} />
             <Route path="students" element={<Students />} />
             <Route path="schedules" element={<Schedules />} />

@@ -35,14 +35,6 @@ const courseSchema = new mongoose.Schema(
       startDate: Date,
       endDate: Date,
     },
-    creationDate: {
-      type: Date,
-      default: Date.now,
-    },
-    updateDate: {
-      type: Date,
-      default: Date.now,
-    },
   },
   { timestamps: true }
 );

@@ -15,14 +15,6 @@ const scheduleSchema = new mongoose.Schema(
       },
     ],
     recurring: Boolean,
-    creationDate: {
-      type: Date,
-      default: Date.now,
-    },
-    updateDate: {
-      type: Date,
-      default: Date.now,
-    },
   },
   { timestamps: true }
 );

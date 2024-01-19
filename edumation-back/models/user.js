@@ -36,14 +36,6 @@ const userSchema = new mongoose.Schema(
         ref: 'Group',
       },
     ],
-    creationDate: {
-      type: Date,
-      default: Date.now,
-    },
-    updateDate: {
-      type: Date,
-      default: Date.now,
-    },
   },
   { timestamps: true }
 );

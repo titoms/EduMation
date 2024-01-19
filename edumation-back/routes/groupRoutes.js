@@ -36,7 +36,9 @@ router.post(
       const savedgroup = await newgroup.save();
       res.status(201).json(savedgroup);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(400).json({ message: error.message });
+      }
     }
   }
 );

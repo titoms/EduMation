@@ -29,6 +29,13 @@ export interface Course {
   scheduleId: string;
 }
 
+export interface Group {
+  _id: string;
+  name: string;
+  schoolId: string;
+  studentIds: string[];
+}
+
 export interface User {
   _id: string;
   name: string;
