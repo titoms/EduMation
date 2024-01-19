@@ -41,6 +41,7 @@ export interface Group {
   _id: string;
   name: string;
   schoolId: string;
+  schoolName?: string;
   studentsIds: Student[];
 }
 
