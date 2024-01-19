@@ -29,11 +29,19 @@ export interface Course {
   scheduleId: string;
 }
 
+export interface Student {
+  _id: string;
+  name: string;
+  email: string;
+  profileImage: string;
+  role: string;
+}
+
 export interface Group {
   _id: string;
   name: string;
   schoolId: string;
-  studentIds: string[];
+  studentsIds: Student[];
 }
 
 export interface User {
