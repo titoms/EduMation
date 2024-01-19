@@ -11,7 +11,7 @@ const s3Upload = require('../middlewares/s3UploadFile');
 const upload = s3Upload.single('profileImage');
 
 // Get all users
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
@@ -99,6 +99,7 @@ router.post(
 // Get ONE User
 router.get(
   '/:id',
+  verifyToken,
   [param('id').isMongoId().withMessage('Invalid user ID')],
   async (req, res) => {
     const errors = validationResult(req);
@@ -120,6 +121,7 @@ router.get(
 // Update User
 router.put(
   '/:id',
+  verifyToken,
   upload,
   [
     param('id').isMongoId().withMessage('Invalid user ID'),
@@ -175,6 +177,7 @@ router.put(
 // Delete User
 router.delete(
   '/:id',
+  verifyToken,
   [param('id').isMongoId().withMessage('Invalid user ID')],
   async (req, res) => {
     try {

@@ -5,7 +5,7 @@ const verifyToken = require('../middlewares/verifyToken');
 const router = express.Router();
 
 // Get all groups
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const groups = await Group.find().populate('studentsIds');
     res.json(groups);
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a specific group
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   try {
     const group = await Group.findById(req.params.id).populate('studentsIds');
     if (!group) return res.status(404).send('Group not found.');
@@ -63,6 +63,7 @@ router.post(
 // Update a group
 router.put(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid group ID'),
     body('name').optional().trim(),
@@ -95,7 +96,7 @@ router.put(
 );
 
 // Delete a group
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const deletedGroup = await Group.findByIdAndDelete(req.params.id);
     console.log(deletedGroup);

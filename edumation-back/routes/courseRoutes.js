@@ -5,7 +5,7 @@ const Course = require('../models/course');
 const verifyToken = require('../middlewares/verifyToken');
 
 // Get all courses
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const courses = await Course.find();
     res.json(courses);
@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
 // Create a new course
 router.post(
   '/',
+  verifyToken,
   [
     body('title').trim().not().isEmpty().withMessage('Title is required'),
     body('description').trim().optional(),
@@ -56,7 +57,7 @@ router.post(
 );
 
 // Get a specific course
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
     if (!course) return res.status(404).send('Course not found.');
@@ -69,6 +70,7 @@ router.get('/:id', async (req, res) => {
 // Update a course
 router.put(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid course ID'),
     body('title').optional().trim(),
@@ -95,7 +97,7 @@ router.put(
 );
 
 // Delete a course
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const course = await Course.findByIdAndDelete(req.params.id);
     if (!course) return res.status(404).send('Course not found.');

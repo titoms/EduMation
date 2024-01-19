@@ -5,7 +5,7 @@ const Schedule = require('../models/schedule');
 const verifyToken = require('../middlewares/verifyToken');
 
 // Get all schedules
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const schedules = await Schedule.find();
     res.json(schedules);
@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
 // Create a new schedule
 router.post(
   '/',
+  verifyToken,
   [
     body('courseId').isMongoId().withMessage('Invalid course ID'),
     body('classTimes').isArray().withMessage('Class times must be an array'),
@@ -43,7 +44,7 @@ router.post(
 );
 
 // Get a specific schedule
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   try {
     const schedule = await Schedule.findById(req.params.id);
     if (!schedule) return res.status(404).send('Schedule not found.');
@@ -56,6 +57,7 @@ router.get('/:id', async (req, res) => {
 // Update a schedule
 router.put(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid schedule ID'),
     body('classTimes').optional().isArray(),

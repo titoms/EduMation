@@ -5,7 +5,7 @@ const Quiz = require('../models/quiz');
 const verifyToken = require('../middlewares/verifyToken');
 
 // Get all quizzes
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const quizzes = await Quiz.find();
     res.json(quizzes);
@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
 // Create a new quiz
 router.post(
   '/',
+  verifyToken,
   [
     body('courseId').isMongoId().withMessage('Invalid course ID'),
     body('title').trim().not().isEmpty().withMessage('Title is required'),
@@ -45,7 +46,7 @@ router.post(
 );
 
 // Get a specific quiz
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   try {
     const quiz = await Quiz.findById(req.params.id);
     if (!quiz) return res.status(404).send('Quiz not found.');
@@ -58,6 +59,7 @@ router.get('/:id', async (req, res) => {
 // Update a quiz
 router.put(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid quiz ID'),
     body('title').optional().trim(),
@@ -85,7 +87,7 @@ router.put(
 );
 
 // Delete a quiz
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', verifyToken, verifyToken, async (req, res) => {
   try {
     const quiz = await Quiz.findByIdAndDelete(req.params.id);
     if (!quiz) return res.status(404).send('Quiz not found.');

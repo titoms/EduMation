@@ -4,7 +4,7 @@ const router = express.Router();
 const verifyToken = require('../middlewares/verifyToken');
 
 // Get all schools
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const schools = await School.find();
     res.json(schools);
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create a new school (restricted to certain user roles if needed)
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const school = new School({
     name: req.body.name,
     address: req.body.address,
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get a single school by id
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   try {
     const school = await School.findById(req.params.id);
     if (!school) return res.status(404).json({ message: 'School not found' });
@@ -41,7 +41,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a school by id
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   try {
     const updatedSchool = await School.findByIdAndUpdate(
       req.params.id,
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete a school by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const school = await School.findByIdAndDelete(req.params.id);
     if (!school) return res.status(404).json({ message: 'School not found' });
