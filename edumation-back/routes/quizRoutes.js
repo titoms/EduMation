@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
 // Create a new quiz
 router.post(
   '/',
-  verifyToken,
   [
     body('courseId').isMongoId().withMessage('Invalid course ID'),
     body('title').trim().not().isEmpty().withMessage('Title is required'),
@@ -59,7 +58,6 @@ router.get('/:id', async (req, res) => {
 // Update a quiz
 router.put(
   '/:id',
-  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid quiz ID'),
     body('title').optional().trim(),

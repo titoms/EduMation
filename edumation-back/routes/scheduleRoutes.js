@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
 // Create a new schedule
 router.post(
   '/',
-  verifyToken,
   [
     body('courseId').isMongoId().withMessage('Invalid course ID'),
     body('classTimes').isArray().withMessage('Class times must be an array'),
@@ -57,7 +56,6 @@ router.get('/:id', async (req, res) => {
 // Update a schedule
 router.put(
   '/:id',
-  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid schedule ID'),
     body('classTimes').optional().isArray(),

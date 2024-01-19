@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
 // Create a new course
 router.post(
   '/',
-  verifyToken,
   [
     body('title').trim().not().isEmpty().withMessage('Title is required'),
     body('description').trim().optional(),
@@ -70,7 +69,6 @@ router.get('/:id', async (req, res) => {
 // Update a course
 router.put(
   '/:id',
-  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid course ID'),
     body('title').optional().trim(),
@@ -97,7 +95,7 @@ router.put(
 );
 
 // Delete a course
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const course = await Course.findByIdAndDelete(req.params.id);
     if (!course) return res.status(404).send('Course not found.');

@@ -14,7 +14,6 @@ router.get('/', (req, res) => res.send('Welcome to the API'));
 router.use('/users', userRoutes);
 router.use('/schools', schoolRoutes);
 router.use('/courses', courseRoutes);
-router.use('/groups', groupRoutes);
 router.use('/quizz', quizRoutes);
 router.use('/schedules', scheduleRoutes);
 router.use('/groups', groupRoutes);

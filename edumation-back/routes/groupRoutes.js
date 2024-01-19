@@ -14,6 +14,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get a specific group
+router.get('/:id', async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id).populate('studentsIds');
+    if (!group) return res.status(404).send('Group not found.');
+    res.json(group);
+  } catch (error) {
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+});
+
 // Create a new group
 router.post(
   '/',
@@ -28,7 +41,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      console.log(req.body.userIds);
       const newGroup = new Group({
         name: req.body.name,
         schoolId: req.body.schoolId,
@@ -47,23 +59,9 @@ router.post(
   }
 );
 
-// Get a specific group
-router.get('/:id', async (req, res) => {
-  try {
-    const group = await Group.findById(req.params.id).populate('studentsIds');
-    if (!group) return res.status(404).send('Group not found.');
-    res.json(group);
-  } catch (error) {
-    if (!res.headersSent) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-});
-
 // Update a group
 router.put(
   '/:id',
-  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid group ID'),
     body('name').optional().trim(),
@@ -96,9 +94,11 @@ router.put(
 );
 
 // Delete a group
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const deletedGroup = await Group.findByIdAndDelete(req.params.id);
+    console.log(deletedGroup);
+
     if (!deletedGroup) return res.status(404).send('Group not found.');
     res.json({ message: 'Group successfully deleted' });
   } catch (error) {
