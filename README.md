@@ -77,13 +77,9 @@ http://"<your-domain>"/api
 
 ## Endpoints :
 
-# - Users
-
-<users>
+# 👤 Users
 
 The User schema defines the structure of user data in the database.
-
-## Fields
 
 - `name`: The name of the user.
 - `email`: The email address of the user. It is stored in lowercase and is unique.
@@ -103,15 +99,9 @@ The User schema defines the structure of user data in the database.
 - PUT /users/:id: Update a user by ID.
 - DELETE /users/:id: Delete a user by ID.
 
-</users>
-
-# - Schools
-
-<school>
+# 🏫 Schools
 
 The School schema defines the structure of school data in the database.
-
-## Fields
 
 - `name`: The name of the school.
 - `address`: The physical address of the school.
@@ -130,15 +120,9 @@ The School schema defines the structure of school data in the database.
 - PUT /schools/:id: Update a school by ID.
 - DELETE /schools/:id: Delete a school by ID.
 
-</school>
-
-# Quizzes
-
-<school>
+# ❔ Quizzes
 
 The Quiz schema describes the structure for storing quiz information in the database.
-
-## Fields
 
 - `courseId`: Reference to the associated Course document.
 - `title`: The title of the quiz.
@@ -158,15 +142,9 @@ The Quiz schema describes the structure for storing quiz information in the data
 - PUT /quizz/:id: Update a quiz by ID.
 - DELETE /quizz/:id: Delete a quiz by ID.
 
-</school>
-
-# - Schedules
-
-<schedule>
+# 📅 Schedules
 
 The Schedule schema outlines the structure for storing scheduling information in the database.
-
-## Fields
 
 - `courseId`: Reference to the associated Course document.
 - `classTimes`: A list of class times, each including:
@@ -186,15 +164,9 @@ The Schedule schema outlines the structure for storing scheduling information in
 - PUT /schedules/:id: Update a schedule by ID.
 - DELETE /schedules/:id: Delete a schedule by ID.
 
-</schedule>
-
-# - Groups
-
-<groups>
+# 👥 Groups
 
 The Group schema represents the structure for storing group information in the database.
-
-## Fields
 
 - `name`: The name of the group.
 - `schoolId`: Reference to the associated School document.
@@ -210,25 +182,13 @@ The Group schema represents the structure for storing group information in the d
 - PUT /groups/:id: Update a group by ID.
 - DELETE /groups/:id: Delete a group by ID.
 
-</groups>
-
-# - Courses
-
-<courses>
-
-The Courses schema represents the structure for storing courses information in the database.
-
-## Fields
-
-## Routes
+# 👨‍🏫 Courses
 
 - GET /courses: Retrieve a list of all courses.
 - POST /courses: Create a new course.
 - GET /courses/:id: Retrieve a course by ID.
 - PUT /courses/:id: Update a course by ID.
 - DELETE /courses/:id: Delete a course by ID.
-
-</courses>
 
 ## General Notes
 
