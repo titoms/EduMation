@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const scheduleSchema = new mongoose.Schema(
   {
-    courseId: {
+    groupId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
+      ref: 'Group',
       required: true,
     },
     classTimes: [

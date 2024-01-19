@@ -86,8 +86,8 @@ The User schema defines the structure of user data in the database.
 - `profileImage`: URL to the user's profile image.
 - `passwordHash`: Hashed password for the user.
 - `role`: The role of the user, which can be 'admin', 'teacher', 'school', or 'student'.
-- `schoolId`: Reference to the School document if the user is associated with a school.
-- `courses`: A list of course IDs that the user is enrolled in or teaching.
+- `schoolId`: A list of Schools IDs document if the user is associated with a school.
+- `groups`: A list of Groups IDs that the user is enrolled in or teaching.
 - `creationDate`: The date and time when the user was created.
 - `updateDate`: The date and time when the user was last updated.
 
@@ -146,7 +146,7 @@ The Quiz schema describes the structure for storing quiz information in the data
 
 The Schedule schema outlines the structure for storing scheduling information in the database.
 
-- `courseId`: Reference to the associated Course document.
+- `groupId`: Reference to the associated Group for the schedules.
 - `classTimes`: A list of class times, each including:
   - `date`: The date for the class.
   - `startTime`: The start time of the class.
@@ -183,6 +183,24 @@ The Group schema represents the structure for storing group information in the d
 - DELETE /groups/:id: Delete a group by ID.
 
 # 👨‍🏫 Courses
+
+The Course schema defines the structure for storing course information in the database.
+
+## Fields
+
+- `title`: The title of the course.
+- `description`: A brief description of the course.
+- `schoolId`: Reference to the associated School document.
+- `teacherId`: Reference to the User document representing the course's teacher.
+- `groupId`: Reference to the Group document associated with the course.
+- `quizIds`: A list of references to Quiz documents related to the course.
+- `timeline`:
+  - `startDate`: The start date of the course.
+  - `endDate`: The end date of the course.
+- `creationDate`: The date and time when the course was created.
+- `updateDate`: The date and time when the course was last updated.
+
+### Routes
 
 - GET /courses: Retrieve a list of all courses.
 - POST /courses: Create a new course.

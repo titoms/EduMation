@@ -21,12 +21,10 @@ const courseSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    studentIds: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ],
+    groupId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Group',
+    },
     quizIds: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -36,10 +34,6 @@ const courseSchema = new mongoose.Schema(
     timeline: {
       startDate: Date,
       endDate: Date,
-    },
-    scheduleId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Schedule',
     },
     creationDate: {
       type: Date,

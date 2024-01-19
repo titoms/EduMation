@@ -24,14 +24,16 @@ const userSchema = new mongoose.Schema(
       enum: ['admin', 'teacher', 'school', 'student'],
       required: true,
     },
-    schoolId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'School',
-    },
-    courses: [
+    schoolId: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        ref: 'School',
+      },
+    ],
+    groups: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group',
       },
     ],
     creationDate: {
