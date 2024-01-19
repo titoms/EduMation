@@ -2,9 +2,9 @@ const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
 const courseRoutes = require('./routes/courseRoutes');
-const groupRoutes = require('./routes/groupRoutes');
 const quizRoutes = require('./routes/quizRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
+const groupRoutes = require('./routes/groupRoutes');
 
 const router = express.Router();
 
@@ -17,5 +17,5 @@ router.use('/courses', courseRoutes);
 router.use('/groups', groupRoutes);
 router.use('/quizz', quizRoutes);
 router.use('/schedules', scheduleRoutes);
-
+router.use('/groups', groupRoutes);
 module.exports = router;

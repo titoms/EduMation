@@ -9,13 +9,8 @@ const groupSchema = new mongoose.Schema(
     },
     schoolId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'School',
-    },
-    teacherId: {
-      type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
     },
     studentIds: [
       {
@@ -23,11 +18,11 @@ const groupSchema = new mongoose.Schema(
         ref: 'User',
       },
     ],
-    createdAt: {
+    creationDate: {
       type: Date,
       default: Date.now,
     },
-    updatedAt: {
+    updateDate: {
       type: Date,
       default: Date.now,
     },
@@ -35,6 +30,6 @@ const groupSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Group = mongoose.model('Group', groupSchema);
+const Group = mongoose.model('group', groupSchema);
 
 module.exports = Group;

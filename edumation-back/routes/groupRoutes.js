@@ -21,7 +21,6 @@ router.post(
   [
     body('name').trim().not().isEmpty().withMessage('Name is required'),
     body('schoolId').isMongoId().withMessage('Invalid school ID'),
-    body('teacherId').isMongoId().withMessage('Invalid teacher ID'),
   ],
   async (req, res) => {
     const errors = validationResult(req);
