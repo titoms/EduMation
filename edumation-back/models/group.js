@@ -12,7 +12,7 @@ const groupSchema = new mongoose.Schema(
       ref: 'School',
       required: true,
     },
-    studentIds: [
+    studentsIds: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

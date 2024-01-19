@@ -8,6 +8,7 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
+express.urlencoded({ extended: true });
 app.use(cors());
 
 // Test Route

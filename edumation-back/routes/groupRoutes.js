@@ -1,13 +1,13 @@
 const express = require('express');
 const { body, validationResult, param } = require('express-validator');
-const router = express.Router();
-const group = require('../models/group');
+const Group = require('../models/group');
 const verifyToken = require('../middlewares/verifyToken');
+const router = express.Router();
 
 // Get all groups
 router.get('/', async (req, res) => {
   try {
-    const groups = await group.find();
+    const groups = await Group.find().populate('studentsIds');
     res.json(groups);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
 // Create a new group
 router.post(
   '/',
-  verifyToken,
   [
     body('name').trim().not().isEmpty().withMessage('Name is required'),
     body('schoolId').isMongoId().withMessage('Invalid school ID'),
+    body('studentsIds').isArray().withMessage('User IDs must be an array'),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -28,16 +28,20 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const newgroup = new group({
+      console.log(req.body.userIds);
+      const newGroup = new Group({
         name: req.body.name,
         schoolId: req.body.schoolId,
-        teacherId: req.body.teacherId,
+        studentsIds: req.body.studentsIds,
       });
-      const savedgroup = await newgroup.save();
-      res.status(201).json(savedgroup);
+      const savedGroup = await newGroup.save();
+      const populatedGroup = await Group.findById(savedGroup._id).populate(
+        'studentsIds'
+      );
+      res.status(201).json(populatedGroup);
     } catch (error) {
       if (!res.headersSent) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
       }
     }
   }
@@ -46,11 +50,13 @@ router.post(
 // Get a specific group
 router.get('/:id', async (req, res) => {
   try {
-    const group = await group.findById(req.params.id);
+    const group = await Group.findById(req.params.id).populate('studentsIds');
     if (!group) return res.status(404).send('Group not found.');
     res.json(group);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message });
+    }
   }
 });
 
@@ -61,6 +67,10 @@ router.put(
   [
     param('id').isMongoId().withMessage('Invalid group ID'),
     body('name').optional().trim(),
+    body('studentsIds')
+      .optional()
+      .isArray()
+      .withMessage('User IDs must be an array'),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -69,15 +79,18 @@ router.put(
     }
 
     try {
-      const updatedgroup = await group.findByIdAndUpdate(
+      const updateData = req.body;
+      const updatedGroup = await Group.findByIdAndUpdate(
         req.params.id,
-        req.body,
+        updateData,
         { new: true }
       );
-      if (!updatedgroup) return res.status(404).send('Group not found.');
-      res.json(updatedgroup);
+      if (!updatedGroup) return res.status(404).send('Group not found.');
+      res.json(updatedGroup);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      if (!res.headersSent) {
+        res.status(500).json({ message: error.message });
+      }
     }
   }
 );
@@ -85,11 +98,13 @@ router.put(
 // Delete a group
 router.delete('/:id', verifyToken, async (req, res) => {
   try {
-    const group = await group.findByIdAndDelete(req.params.id);
-    if (!group) return res.status(404).send('Group not found.');
+    const deletedGroup = await Group.findByIdAndDelete(req.params.id);
+    if (!deletedGroup) return res.status(404).send('Group not found.');
     res.json({ message: 'Group successfully deleted' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message });
+    }
   }
 });
 
