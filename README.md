@@ -79,6 +79,8 @@ http://"<your-domain>"/api
 
 # - Users
 
+<users>
+
 The User schema defines the structure of user data in the database.
 
 ## Fields
@@ -101,7 +103,11 @@ The User schema defines the structure of user data in the database.
 - PUT /users/:id: Update a user by ID.
 - DELETE /users/:id: Delete a user by ID.
 
+</users>
+
 # - Schools
+
+<school>
 
 The School schema defines the structure of school data in the database.
 
@@ -124,7 +130,11 @@ The School schema defines the structure of school data in the database.
 - PUT /schools/:id: Update a school by ID.
 - DELETE /schools/:id: Delete a school by ID.
 
+</school>
+
 # Quizzes
+
+<school>
 
 The Quiz schema describes the structure for storing quiz information in the database.
 
@@ -148,7 +158,11 @@ The Quiz schema describes the structure for storing quiz information in the data
 - PUT /quizz/:id: Update a quiz by ID.
 - DELETE /quizz/:id: Delete a quiz by ID.
 
+</school>
+
 # - Schedules
+
+<schedule>
 
 The Schedule schema outlines the structure for storing scheduling information in the database.
 
@@ -172,7 +186,11 @@ The Schedule schema outlines the structure for storing scheduling information in
 - PUT /schedules/:id: Update a schedule by ID.
 - DELETE /schedules/:id: Delete a schedule by ID.
 
+</schedule>
+
 # - Groups
+
+<groups>
 
 The Group schema represents the structure for storing group information in the database.
 
@@ -192,13 +210,25 @@ The Group schema represents the structure for storing group information in the d
 - PUT /groups/:id: Update a group by ID.
 - DELETE /groups/:id: Delete a group by ID.
 
+</groups>
+
 # - Courses
+
+<courses>
+
+The Courses schema represents the structure for storing courses information in the database.
+
+## Fields
+
+## Routes
 
 - GET /courses: Retrieve a list of all courses.
 - POST /courses: Create a new course.
 - GET /courses/:id: Retrieve a course by ID.
 - PUT /courses/:id: Update a course by ID.
 - DELETE /courses/:id: Delete a course by ID.
+
+</courses>
 
 ## General Notes
 
