@@ -75,7 +75,8 @@ We value your feedback! If you encounter any issues, have suggestions, or need a
 Base URL
 http://<your-domain>/api
 
-**Endpoints : **
+#Endpoints :
+
 _Users_
 
 GET /users: Retrieve a list of all users.
