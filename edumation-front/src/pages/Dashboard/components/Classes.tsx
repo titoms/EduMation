@@ -6,6 +6,7 @@ import { Button, Grid, Skeleton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SchoolsService from '../../../services/SchoolsService';
+import DeleteClassesConfirmationModal from './classes/DeleteClassesConfirmationModal';
 
 const Classes = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -36,6 +37,12 @@ const Classes = () => {
 
     fetchClasses();
   }, []);
+
+  const handleCreateClick = async (groupId: string) => {
+    // API call to create group
+    // Example: await ClassesService.addGroup(groupData);
+    console.log('Update group with ID:', groupId);
+  };
 
   const handleUpdateClick = async (groupId: string) => {
     // API call to update group
@@ -71,7 +78,18 @@ const Classes = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-2">
+      <h1 className="text-2xl font-semibold">Classes</h1>
+      <div className="my-4">
+        <Button
+          variant="contained"
+          onClick={() => handleCreateClick}
+          startIcon={<Edit />}
+        >
+          Create new class
+        </Button>
+      </div>
+
       {classes.map((group) => (
         <div key={group._id} className="bg-white shadow rounded-lg p-6 mb-4">
           <div className="flex justify-between">
@@ -84,6 +102,7 @@ const Classes = () => {
               >
                 Update
               </Button>
+
               <Button
                 variant="outlined"
                 color="error"
@@ -95,11 +114,11 @@ const Classes = () => {
             </div>
           </div>
 
-          <div className="mb-4">
-            <strong>School ID:</strong> {group.schoolName}
+          <div className="mb-4 font-semibold">
+            School ID: {group.schoolName}
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">Students:</h3>
+            <h3 className="text-lg font-bold mb-4">Students:</h3>
             {group.studentsIds.map((student) => (
               <div key={student._id} className="mb-2 border-b pb-2">
                 <img
