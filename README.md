@@ -75,7 +75,7 @@ We value your feedback! If you encounter any issues, have suggestions, or need a
 Base URL
 http://"<your-domain>"/api
 
-## Endpoints :
+### Endpoints :
 
 # 👤 Users
 
@@ -91,7 +91,7 @@ The User schema defines the structure of user data in the database.
 - `creationDate`: The date and time when the user was created.
 - `updateDate`: The date and time when the user was last updated.
 
-## Routes
+### Routes
 
 - GET /users: Retrieve a list of all users.
 - POST /users: Create a new user.
@@ -112,7 +112,7 @@ The School schema defines the structure of school data in the database.
 - `createdAt`: The date and time when the school record was created.
 - `updatedAt`: The date and time when the school record was last updated.
 
-## Routes
+### Routes
 
 - GET /schools: Retrieve a list of all schools.
 - POST /schools: Create a new school.
@@ -134,7 +134,7 @@ The Quiz schema describes the structure for storing quiz information in the data
 - `creationDate`: The date and time when the quiz was created.
 - `updateDate`: The date and time when the quiz was last updated.
 
-## Routes
+### Routes
 
 - GET /quizz: Retrieve a list of all quizzes.
 - POST /quizz: Create a new quiz.
@@ -156,7 +156,7 @@ The Schedule schema outlines the structure for storing scheduling information in
 - `creationDate`: The date and time when the schedule was created.
 - `updateDate`: The date and time when the schedule was last updated.
 
-## Routes
+### Routes
 
 - GET /schedules: Retrieve a list of all schedules.
 - POST /schedules: Create a new schedule.
@@ -174,7 +174,7 @@ The Group schema represents the structure for storing group information in the d
 - `creationDate`: The date and time when the group was created.
 - `updateDate`: The date and time when the group was last updated.
 
-## Routes
+### Routes
 
 - GET /groups: Retrieve a list of all groups.
 - POST /groups: Create a new group.
@@ -190,7 +190,7 @@ The Group schema represents the structure for storing group information in the d
 - PUT /courses/:id: Update a course by ID.
 - DELETE /courses/:id: Delete a course by ID.
 
-## General Notes
+### General Notes
 
 - All endpoints require proper authentication tokens unless specified otherwise.
 - Data should be sent in a JSON format.
