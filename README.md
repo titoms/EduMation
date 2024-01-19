@@ -93,10 +93,6 @@ The User schema defines the structure of user data in the database.
 - `creationDate`: The date and time when the user was created.
 - `updateDate`: The date and time when the user was last updated.
 
-## Additional Information
-
-- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
-
 ## Routes
 
 - GET /users: Retrieve a list of all users.
@@ -119,10 +115,6 @@ The School schema defines the structure of school data in the database.
   - `website`: Website URL for the school.
 - `createdAt`: The date and time when the school record was created.
 - `updatedAt`: The date and time when the school record was last updated.
-
-## Additional Information
-
-- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
 
 ## Routes
 
@@ -148,10 +140,6 @@ The Quiz schema describes the structure for storing quiz information in the data
 - `creationDate`: The date and time when the quiz was created.
 - `updateDate`: The date and time when the quiz was last updated.
 
-## Additional Information
-
-- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
-
 ## Routes
 
 - GET /quizz: Retrieve a list of all quizzes.
@@ -176,10 +164,6 @@ The Schedule schema outlines the structure for storing scheduling information in
 - `creationDate`: The date and time when the schedule was created.
 - `updateDate`: The date and time when the schedule was last updated.
 
-## Additional Information
-
-- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
-
 ## Routes
 
 - GET /schedules: Retrieve a list of all schedules.
@@ -200,10 +184,6 @@ The Group schema represents the structure for storing group information in the d
 - `creationDate`: The date and time when the group was created.
 - `updateDate`: The date and time when the group was last updated.
 
-## Additional Information
-
-- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
-
 ## Routes
 
 - GET /groups: Retrieve a list of all groups.
@@ -220,7 +200,7 @@ The Group schema represents the structure for storing group information in the d
 - PUT /courses/:id: Update a course by ID.
 - DELETE /courses/:id: Delete a course by ID.
 
-  _General Notes_
+## General Notes
 
 - All endpoints require proper authentication tokens unless specified otherwise.
 - Data should be sent in a JSON format.
