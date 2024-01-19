@@ -77,7 +77,27 @@ http://"<your-domain>"/api
 
 ## Endpoints :
 
-_Users_
+# Users
+
+The User schema defines the structure of user data in the database.
+
+## Fields
+
+- `name`: The name of the user.
+- `email`: The email address of the user. It is stored in lowercase and is unique.
+- `profileImage`: URL to the user's profile image.
+- `passwordHash`: Hashed password for the user.
+- `role`: The role of the user, which can be 'admin', 'teacher', 'school', or 'student'.
+- `schoolId`: Reference to the School document if the user is associated with a school.
+- `courses`: A list of course IDs that the user is enrolled in or teaching.
+- `creationDate`: The date and time when the user was created.
+- `updateDate`: The date and time when the user was last updated.
+
+## Additional Information
+
+- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
+
+## Routes
 
 - GET /users: Retrieve a list of all users.
 - POST /users: Create a new user.
@@ -85,7 +105,26 @@ _Users_
 - PUT /users/:id: Update a user by ID.
 - DELETE /users/:id: Delete a user by ID.
 
-_Schools_
+# Schools
+
+The School schema defines the structure of school data in the database.
+
+## Fields
+
+- `name`: The name of the school.
+- `address`: The physical address of the school.
+- `contactInfo`:
+  - `phone`: Contact phone number for the school.
+  - `email`: Contact email address for the school.
+  - `website`: Website URL for the school.
+- `createdAt`: The date and time when the school record was created.
+- `updatedAt`: The date and time when the school record was last updated.
+
+## Additional Information
+
+- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
+
+## Routes
 
 - GET /schools: Retrieve a list of all schools.
 - POST /schools: Create a new school.
@@ -93,7 +132,7 @@ _Schools_
 - PUT /schools/:id: Update a school by ID.
 - DELETE /schools/:id: Delete a school by ID.
 
-_Courses_
+# Courses
 
 - GET /courses: Retrieve a list of all courses.
 - POST /courses: Create a new course.
@@ -101,7 +140,27 @@ _Courses_
 - PUT /courses/:id: Update a course by ID.
 - DELETE /courses/:id: Delete a course by ID.
 
-_Quizzes_
+# Quizzes
+
+The Quiz schema describes the structure for storing quiz information in the database.
+
+## Fields
+
+- `courseId`: Reference to the associated Course document.
+- `title`: The title of the quiz.
+- `questions`: A list of questions, each including:
+  - `questionText`: The text of the question.
+  - `options`: An array of possible answers.
+  - `correctAnswer`: The correct answer for the question.
+- `timeLimit`: The time limit for the quiz, expressed in minutes.
+- `creationDate`: The date and time when the quiz was created.
+- `updateDate`: The date and time when the quiz was last updated.
+
+## Additional Information
+
+- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
+
+## Routes
 
 - GET /quizz: Retrieve a list of all quizzes.
 - POST /quizz: Create a new quiz.
@@ -109,7 +168,27 @@ _Quizzes_
 - PUT /quizz/:id: Update a quiz by ID.
 - DELETE /quizz/:id: Delete a quiz by ID.
 
-_Schedules_
+# Schedules
+
+The Schedule schema outlines the structure for storing scheduling information in the database.
+
+## Fields
+
+- `courseId`: Reference to the associated Course document.
+- `classTimes`: A list of class times, each including:
+  - `date`: The date for the class.
+  - `startTime`: The start time of the class.
+  - `endTime`: The end time of the class.
+  - `location`: The location where the class is held.
+- `recurring`: Indicates whether the schedule is recurring.
+- `creationDate`: The date and time when the schedule was created.
+- `updateDate`: The date and time when the schedule was last updated.
+
+## Additional Information
+
+- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
+
+## Routes
 
 - GET /schedules: Retrieve a list of all schedules.
 - POST /schedules: Create a new schedule.
@@ -117,7 +196,23 @@ _Schedules_
 - PUT /schedules/:id: Update a schedule by ID.
 - DELETE /schedules/:id: Delete a schedule by ID.
 
-_Groups_
+# Groups
+
+The Group schema represents the structure for storing group information in the database.
+
+## Fields
+
+- `name`: The name of the group.
+- `schoolId`: Reference to the associated School document.
+- `studentIds`: A list of references to User documents representing students in the group.
+- `creationDate`: The date and time when the group was created.
+- `updateDate`: The date and time when the group was last updated.
+
+## Additional Information
+
+- This schema includes automatic `timestamps` which mongoose will use to add `createdAt` and `updatedAt` fields to the document.
+
+## Routes
 
 - GET /groups: Retrieve a list of all groups.
 - POST /groups: Create a new group.

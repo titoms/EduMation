@@ -18,4 +18,5 @@ router.use('/groups', groupRoutes);
 router.use('/quizz', quizRoutes);
 router.use('/schedules', scheduleRoutes);
 router.use('/groups', groupRoutes);
+
 module.exports = router;
