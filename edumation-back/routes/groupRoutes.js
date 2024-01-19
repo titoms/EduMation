@@ -30,6 +30,7 @@ router.get('/:id', async (req, res) => {
 // Create a new group
 router.post(
   '/',
+  verifyToken,
   [
     body('name').trim().not().isEmpty().withMessage('Name is required'),
     body('schoolId').isMongoId().withMessage('Invalid school ID'),
