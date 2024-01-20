@@ -2,16 +2,41 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Group } from '../../../services/Types';
 import ClassesService from '../../../services/ClassesService';
-import { Button, Grid, Skeleton } from '@mui/material';
+import { Box, Button, Grid, Modal, Skeleton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SchoolsService from '../../../services/SchoolsService';
-import DeleteClassesConfirmationModal from './classes/DeleteClassesConfirmationModal';
+// import DeleteClassesConfirmationModal from './classes/DeleteClassesConfirmationModal';
 
 const Classes = () => {
   const [classes, setClasses] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [groupData, setGroupData] = useState({
+    name: '',
+    schoolId: '',
+    studentIds: ['', ''],
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGroupData({ ...groupData, [e.target.name]: e.target.value });
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -38,19 +63,24 @@ const Classes = () => {
     fetchClasses();
   }, []);
 
-  const handleCreateClick = async (groupId: string) => {
-    // API call to create group
-    // Example: await ClassesService.addGroup(groupData);
-    console.log('Update group with ID:', groupId);
+  const handleCreateClass = async () => {
+    try {
+      const response = await ClassesService.createGroup(groupData);
+      console.log('Class created successfully:', response.data);
+      // Optionally update state or UI based on successful creation
+    } catch (error) {
+      console.error('Error creating class:', error);
+      // Optionally handle error in UI
+    }
   };
 
-  const handleUpdateClick = async (groupId: string) => {
+  const handleUpdateClass = async (groupId: string) => {
     // API call to update group
     // Example: await ClassesService.updateGroup(groupId, updateData);
     console.log('Update group with ID:', groupId);
   };
 
-  const handleDeleteClick = async (groupId: string) => {
+  const handleDeleteClass = async (groupId: string) => {
     try {
       await ClassesService.deleteGroup(groupId);
       setClasses(classes.filter((group) => group._id !== groupId));
@@ -81,13 +111,36 @@ const Classes = () => {
     <div className="p-2">
       <h1 className="text-2xl font-semibold">Classes</h1>
       <div className="my-4">
-        <Button
-          variant="contained"
-          onClick={() => handleCreateClick}
-          startIcon={<Edit />}
-        >
+        <Button variant="contained" onClick={handleOpen} startIcon={<Edit />}>
           Create new class
         </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <h3 className="font-semibold">Create new class</h3>
+            <form className="my-4" onSubmit={() => handleCreateClass()}>
+              <input
+                className="w-full p-2 border border-gray-300 rounded mt-2"
+                type="text"
+                value={groupData.name}
+                onChange={handleChange}
+                placeholder="Class name"
+                name="groupName"
+                id="groupName"
+              />
+              <div className="mt-4 flex gap-4">
+                <Button variant="outlined">Create</Button>
+                <Button variant="contained" onClick={handleClose}>
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </Box>
+        </Modal>
       </div>
 
       {classes.map((group) => (
