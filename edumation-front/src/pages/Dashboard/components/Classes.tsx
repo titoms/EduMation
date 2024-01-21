@@ -12,14 +12,19 @@ const Classes = () => {
   const [classes, setClasses] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openCreate, setOpenCreate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
 
   const [groupData, setGroupData] = useState({
+    _id: '',
     name: '',
     schoolId: '',
-    studentIds: ['', ''],
+    studentsIds: ['', ''],
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,12 +116,16 @@ const Classes = () => {
     <div className="p-2">
       <h1 className="text-2xl font-semibold">Classes</h1>
       <div className="my-4">
-        <Button variant="contained" onClick={handleOpen} startIcon={<Edit />}>
+        <Button
+          variant="contained"
+          onClick={handleOpenCreate}
+          startIcon={<Edit />}
+        >
           Create new class
         </Button>
         <Modal
-          open={open}
-          onClose={handleClose}
+          open={openCreate}
+          onClose={handleCloseCreate}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -134,7 +143,7 @@ const Classes = () => {
               />
               <div className="mt-4 flex gap-4">
                 <Button variant="outlined">Create</Button>
-                <Button variant="contained" onClick={handleClose}>
+                <Button variant="contained" onClick={handleCloseCreate}>
                   Cancel
                 </Button>
               </div>
@@ -151,7 +160,7 @@ const Classes = () => {
               <Button
                 variant="contained"
                 startIcon={<Edit />}
-                onClick={() => handleUpdateClick(group._id)}
+                onClick={() => handleUpdateClass(group._id)}
               >
                 Update
               </Button>
@@ -160,10 +169,35 @@ const Classes = () => {
                 variant="outlined"
                 color="error"
                 startIcon={<DeleteIcon />}
-                onClick={() => handleDeleteClick(group._id)}
+                onClick={handleOpenDelete}
               >
                 Delete
               </Button>
+              <Modal
+                open={openDelete}
+                onClose={handleCloseDelete}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <h3 className="font-semibold">
+                    Are you sure to delete class {group.name} ?{' '}
+                  </h3>
+                  <form
+                    className="my-4"
+                    onSubmit={() => handleDeleteClass(group._id)}
+                  >
+                    <div className="mt-4 flex gap-4">
+                      <Button variant="outlined" color="error">
+                        Delete
+                      </Button>
+                      <Button variant="contained" onClick={handleCloseDelete}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                </Box>
+              </Modal>
             </div>
           </div>
 
