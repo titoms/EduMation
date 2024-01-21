@@ -113,7 +113,7 @@ const Classes = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-2">
+    <div className="p-2 h-screen">
       <h1 className="text-2xl font-semibold">Classes</h1>
       <div className="my-4">
         <Button
@@ -158,6 +158,7 @@ const Classes = () => {
             <h2 className="text-xl font-bold mb-4">{group.name}</h2>
             <div className="flex justify-end gap-4">
               <Button
+                size="small"
                 variant="contained"
                 startIcon={<Edit />}
                 onClick={() => handleUpdateClass(group._id)}
@@ -166,6 +167,7 @@ const Classes = () => {
               </Button>
 
               <Button
+                size="small"
                 variant="outlined"
                 color="error"
                 startIcon={<DeleteIcon />}
