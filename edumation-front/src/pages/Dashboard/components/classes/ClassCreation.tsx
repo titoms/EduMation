@@ -1,7 +1,7 @@
-import Edit from '@mui/icons-material/Edit';
-import { Box, Button, Modal } from '@mui/material';
 import React, { useState } from 'react';
+import { Box, Button, Modal, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
+import Edit from '@mui/icons-material/Edit';
 
 const style = {
   position: 'absolute',
@@ -21,57 +21,52 @@ const ClassCreation = () => {
   const handleCloseCreate = () => setOpenCreate(false);
 
   const [groupData, setGroupData] = useState({
-    _id: '',
     name: '',
-    schoolId: '',
-    studentsIds: ['', ''],
+    studentsIds: [] as string[], // Update according to your data model
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGroupData({ ...groupData, [e.target.name]: e.target.value });
   };
 
-  const handleCreateClass = async () => {
+  const handleCreateClass = async (event: React.FormEvent) => {
+    event.preventDefault();
     try {
       const response = await ClassesService.createGroup(groupData);
       console.log('Class created successfully:', response.data);
-      // Optionally update state or UI based on successful creation
+      handleCloseCreate();
     } catch (error) {
       console.error('Error creating class:', error);
-      // Optionally handle error in UI
     }
   };
 
   return (
     <>
-      <div className="my-4">
+      <div className="flex my-4 justify-end">
         <Button
+          startIcon={<Edit />}
           variant="contained"
           onClick={handleOpenCreate}
-          startIcon={<Edit />}
         >
           Create new class
         </Button>
-        <Modal
-          open={openCreate}
-          onClose={handleCloseCreate}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+        <Modal open={openCreate} onClose={handleCloseCreate}>
           <Box sx={style}>
             <h3 className="font-semibold">Create new class</h3>
-            <form className="my-4" onSubmit={() => handleCreateClass()}>
-              <input
-                className="w-full p-2 border border-gray-300 rounded mt-2"
-                type="text"
+            <form className="my-4" onSubmit={handleCreateClass}>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Class Name"
+                variant="outlined"
+                name="name"
                 value={groupData.name}
                 onChange={handleChange}
-                placeholder="Class name"
-                name="groupName"
-                id="groupName"
               />
               <div className="mt-4 flex gap-4">
-                <Button variant="outlined">Create</Button>
+                <Button type="submit" variant="outlined">
+                  Create
+                </Button>
                 <Button variant="contained" onClick={handleCloseCreate}>
                   Cancel
                 </Button>
