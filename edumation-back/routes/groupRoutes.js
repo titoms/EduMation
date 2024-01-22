@@ -33,7 +33,6 @@ router.post(
   verifyToken,
   [
     body('name').trim().not().isEmpty().withMessage('Name is required'),
-    body('schoolId').isMongoId().withMessage('Invalid school ID'),
     body('studentsIds').isArray().withMessage('User IDs must be an array'),
   ],
   async (req, res) => {
@@ -44,7 +43,6 @@ router.post(
     try {
       const newGroup = new Group({
         name: req.body.name,
-        schoolId: req.body.schoolId,
         studentsIds: req.body.studentsIds,
       });
       const savedGroup = await newGroup.save();

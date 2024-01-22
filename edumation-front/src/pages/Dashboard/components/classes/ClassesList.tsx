@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, Grid, Button, Skeleton } from '@mui/material';
+import { Grid, Button, Skeleton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClassesService from '../../../../services/ClassesService';
@@ -7,6 +7,7 @@ import { Group } from '../../../../services/Types';
 import axios from 'axios';
 import DeleteClassModal from './DeleteClassModal';
 import UpdateClassModal from './UpdateClassModal';
+import { Link } from 'react-router-dom';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -84,12 +85,13 @@ const ClassesList = () => {
         {classes.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">
             <div className="flex justify-between flex-wrap md:flex-nowrap">
-              <Link href={`classes/${group._id}`}>
-                <h2 className="text-xl font-bold hover:text-blue-600">
+              <Link to={group._id}>
+                <h2 className="text-xl font-bold hover:text-blue-600 overflow-hidden">
                   {group.name}
                 </h2>
               </Link>
-              <div className="flex justify-end gap-4 mt-4 md:mt-0">
+
+              <div className="flex justify-end gap-2 mt-4 md:mt-0">
                 <Button
                   size="small"
                   variant="contained"
