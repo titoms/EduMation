@@ -11,6 +11,7 @@ import Settings from './components/Settings';
 import Classes from './components/Classes';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
+import IndividualClass from './components/classes/IndividualClass';
 
 const Dashboard = () => {
   return (
@@ -24,6 +25,7 @@ const Dashboard = () => {
             <Route path="users" element={<Users />} />
             <Route path="schools" element={<Schools />} />
             <Route path="classes" element={<Classes />} />
+            <Route path="classes/:id" element={<IndividualClass />} />
             <Route path="courses" element={<Courses />} />
             <Route path="students" element={<Students />} />
             <Route path="schedules" element={<Schedules />} />

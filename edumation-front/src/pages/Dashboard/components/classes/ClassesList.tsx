@@ -3,9 +3,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Grid, Modal, Skeleton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ClassesService from '../../../../services/ClassesService';
-import SchoolsService from '../../../../services/SchoolsService';
 import { Group } from '../../../../services/Types';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -31,13 +31,7 @@ const ClassesList = () => {
     const fetchClasses = async () => {
       try {
         const response = await ClassesService.getAllGroups();
-        const groupsWithSchoolNames = await Promise.all(
-          response.data.map(async (group: Group) => {
-            const school = await SchoolsService.getSchoolsById(group.schoolId);
-            return { ...group, schoolName: school.data.name };
-          })
-        );
-        setClasses(groupsWithSchoolNames);
+        setClasses(response.data);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -87,82 +81,65 @@ const ClassesList = () => {
 
   return (
     <>
-      {classes.map((group) => (
-        <div key={group._id} className="bg-white shadow rounded-lg p-6 mb-4">
-          <div className="flex justify-between">
-            <h2 className="text-xl font-bold mb-4">{group.name}</h2>
-            <div className="flex justify-end gap-4">
-              <Button
-                size="small"
-                variant="contained"
-                startIcon={<Edit />}
-                onClick={() => handleUpdateClass(group._id)}
-              >
-                Update
-              </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        {classes.map((group) => (
+          <div key={group._id} className="bg-white shadow rounded-lg p-6">
+            <div className="flex justify-between flex-wrap md:flex-nowrap">
+              <Link to={group._id}>
+                {' '}
+                <h2 className="text-xl font-bold hover:text-blue-600">
+                  {group.name}
+                </h2>
+              </Link>
+              <div className="flex justify-end gap-4 mt-4 md:mt-0">
+                <Button
+                  size="small"
+                  variant="contained"
+                  startIcon={<Edit />}
+                  onClick={() => handleUpdateClass(group._id)}
+                >
+                  Update
+                </Button>
 
-              <Button
-                size="small"
-                variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={handleOpenDelete}
-              >
-                Delete
-              </Button>
-              <Modal
-                open={openDelete}
-                onClose={handleCloseDelete}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <h3 className="font-semibold">
-                    Are you sure to delete class {group.name} ?{' '}
-                  </h3>
-                  <form
-                    className="my-4"
-                    onSubmit={() => handleDeleteClass(group._id)}
-                  >
-                    <div className="mt-4 flex gap-4">
-                      <Button variant="outlined" color="error">
-                        Delete
-                      </Button>
-                      <Button variant="contained" onClick={handleCloseDelete}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </form>
-                </Box>
-              </Modal>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleOpenDelete}
+                >
+                  Delete
+                </Button>
+                <Modal
+                  open={openDelete}
+                  onClose={handleCloseDelete}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <h3 className="font-semibold">
+                      Are you sure to delete class {group.name} ?{' '}
+                    </h3>
+                    <form
+                      className="my-4"
+                      onSubmit={() => handleDeleteClass(group._id)}
+                    >
+                      <div className="mt-4 flex gap-4">
+                        <Button variant="outlined" color="error">
+                          Delete
+                        </Button>
+                        <Button variant="contained" onClick={handleCloseDelete}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </form>
+                  </Box>
+                </Modal>
+              </div>
             </div>
           </div>
-
-          <div className="mb-4 font-semibold">
-            School ID: {group.schoolName}
-          </div>
-          <div>
-            <h3 className="text-lg font-bold mb-4">Students:</h3>
-            {group.studentsIds.map((student) => (
-              <div key={student._id} className="mb-2 border-b pb-2">
-                <img
-                  className="w-12 h-12 rounded-full mr-2 inline"
-                  src={student.profileImage}
-                  alt={student.name}
-                />
-                <div className="inline-block">
-                  <div>
-                    <strong>Name:</strong> {student.name}
-                  </div>
-                  <div>
-                    <strong>Email:</strong> {student.email}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </>
   );
 };
