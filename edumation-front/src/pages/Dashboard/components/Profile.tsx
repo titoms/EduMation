@@ -111,7 +111,6 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        // Replace '/me' with the endpoint you use to retrieve the logged-in user's information
         const response = await axios.get(
           `http://localhost:5000/api/users/${userId}`,
           {
