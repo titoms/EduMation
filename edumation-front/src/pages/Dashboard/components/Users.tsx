@@ -1,5 +1,5 @@
 // Users.tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserTable from './users/UserTable';
 import UpdateUserModal from './users/UpdateUserModal';
 import DeleteUserConfirmationModal from './users/DeleteUserConfirmationModal';
@@ -12,6 +12,19 @@ const Users = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [admins, setAdmins] = useState<User[]>([]);
+  const [students, setStudents] = useState<User[]>([]);
+  const [teachers, setTeachers] = useState<User[]>([]);
+  const [schools, setSchools] = useState<User[]>([]);
+
+  useEffect(() => {
+    if (userContext && userContext.users) {
+      setAdmins(userContext.users.filter((user) => user.role === 'admin'));
+      setStudents(userContext.users.filter((user) => user.role === 'student'));
+      setTeachers(userContext.users.filter((user) => user.role === 'teacher'));
+      setSchools(userContext.users.filter((user) => user.role === 'school'));
+    }
+  }, [userContext]);
 
   if (!userContext) {
     return (
@@ -42,13 +55,52 @@ const Users = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Users</h1>
-      <div className="h-screen mt-8">
+      <div className="h-screen mt-4">
         <div className="grid grid-cols-1">
-          <UserTable
-            users={users}
-            onShowUpdateModal={onShowUpdateModal}
-            onShowDeleteModal={onShowDeleteModal}
-          />
+          {admins.length > 0 && (
+            <>
+              <h3 className="my-4 font-semibold text-xl">Admin Users</h3>
+              <UserTable
+                users={admins}
+                onShowUpdateModal={onShowUpdateModal}
+                onShowDeleteModal={onShowDeleteModal}
+              />
+            </>
+          )}
+
+          {schools.length > 0 && (
+            <>
+              <h3 className="my-4 font-semibold text-xl">Schools</h3>
+              <UserTable
+                users={schools}
+                onShowUpdateModal={onShowUpdateModal}
+                onShowDeleteModal={onShowDeleteModal}
+              />
+            </>
+          )}
+
+          {teachers.length > 0 && (
+            <>
+              <h3 className="my-4 font-semibold text-xl">Teachers</h3>
+              <UserTable
+                users={teachers}
+                onShowUpdateModal={onShowUpdateModal}
+                onShowDeleteModal={onShowDeleteModal}
+              />
+            </>
+          )}
+
+          {students.length > 0 && (
+            <>
+              <h3 className="my-4 font-semibold text-xl">Students</h3>
+              <UserTable
+                users={students}
+                onShowUpdateModal={onShowUpdateModal}
+                onShowDeleteModal={onShowDeleteModal}
+              />
+            </>
+          )}
+
           {showUpdateModal && selectedUser && (
             <UpdateUserModal
               user={selectedUser}
@@ -56,6 +108,7 @@ const Users = () => {
               setUsers={setUsers}
             />
           )}
+
           {showDeleteModal && selectedUser && (
             <DeleteUserConfirmationModal
               user={selectedUser}

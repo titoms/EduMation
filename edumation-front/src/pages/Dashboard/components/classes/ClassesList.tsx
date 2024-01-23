@@ -8,6 +8,7 @@ import axios from 'axios';
 import DeleteClassModal from './DeleteClassModal';
 import UpdateClassModal from './UpdateClassModal';
 import { Link } from 'react-router-dom';
+import ClassCreation from './ClassCreation';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -81,6 +82,7 @@ const ClassesList = () => {
 
   return (
     <>
+      <ClassCreation />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
         {classes.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">
