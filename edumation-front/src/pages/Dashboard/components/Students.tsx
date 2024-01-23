@@ -1,68 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import UsersService from '../../../services/UsersService';
+// Students.tsx
+import { useEffect, useState } from 'react';
+import UserTable from './users/UserTable';
+import UpdateUserModal from './users/UpdateUserModal';
+import DeleteUserConfirmationModal from './users/DeleteUserConfirmationModal';
+import { useUserContext } from '../../../context/UserContext';
 import { User } from '../../../services/Types';
 import { Grid, Skeleton } from '@mui/material';
 
-const Students: React.FC = () => {
+const Students = () => {
+  const userContext = useUserContext();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [students, setStudents] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      setLoading(true);
-      try {
-        const response = await UsersService.getAllUsers();
-        setStudents(response.data);
+    if (userContext && userContext.users) {
+      setStudents(userContext.users.filter((user) => user.role === 'student'));
+    }
+  }, [userContext]);
 
-        const studentData = response.data.filter(
-          (user: User) => user.role === 'student'
-        );
-        setStudents(studentData);
-        setLoading(false);
-      } catch (err) {
-        if (axios.isAxiosError(err) && err.response) {
-          setError(err.response.data);
-        } else {
-          setError('An error occurred while fetching students.');
-        }
-        setLoading(false);
-      }
-    };
-
-    fetchStudents();
-  }, []);
-
-  if (loading) {
+  if (!userContext) {
     return (
       <>
-        <Skeleton variant="text" height={60} />
-        <Grid container spacing={2} className="mb-4 w-full">
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={100} />
-          </Grid>
-          <Grid item xs={12} md={6} xl={4}>
+        <Grid container className="mb-4 w-full">
+          <Grid item xs={12} md={12} xl={12}>
+            <Skeleton variant="rounded" height={50} />
+            <div className="mt-4 rounded-t-lg h-10 px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></div>
+            <Skeleton variant="rectangular" height={250} />
             <Skeleton variant="rounded" height={100} />
           </Grid>
         </Grid>
       </>
     );
   }
-  if (error) return <div>Error: {error}</div>;
+  const { users, setUsers } = userContext;
+
+  const onShowUpdateModal = (user: User) => {
+    setSelectedUser(user);
+    setShowUpdateModal(true);
+  };
+
+  const onShowDeleteModal = (user: User) => {
+    setSelectedUser(user);
+    setShowDeleteModal(true);
+  };
 
   return (
     <>
       <h1 className="text-2xl font-semibold">Students</h1>
-      <div className="h-screen mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {students.map((student) => (
-            <div key={student._id} className="bg-white shadow rounded-lg p-4">
-              <h3 className="text-lg font-semibold">{student.name}</h3>
-              <p>Email: {student.email}</p>
-              <p>Role: {student.role}</p>
-            </div>
-          ))}
+      <div className="h-screen mt-4">
+        <div className="grid grid-cols-1">
+          {students.length > 0 && (
+            <>
+              <UserTable
+                users={students}
+                onShowUpdateModal={onShowUpdateModal}
+                onShowDeleteModal={onShowDeleteModal}
+              />
+            </>
+          )}
+
+          {showUpdateModal && selectedUser && (
+            <UpdateUserModal
+              user={selectedUser}
+              onClose={() => setShowUpdateModal(false)}
+              setUsers={setUsers}
+            />
+          )}
+
+          {showDeleteModal && selectedUser && (
+            <DeleteUserConfirmationModal
+              user={selectedUser}
+              onClose={() => setShowDeleteModal(false)}
+              setUsers={setUsers}
+            />
+          )}
         </div>
       </div>
     </>
