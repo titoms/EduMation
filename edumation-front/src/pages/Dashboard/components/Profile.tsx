@@ -5,17 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Grid, Skeleton } from '@mui/material';
-
-type UserProfile = {
-  name: string;
-  email: string;
-  role: string;
-  pic: string;
-};
+import { Skeleton } from '@mui/material';
+import UsersService from '../../../services/UsersService';
+import { User } from '../../../services/Types';
 
 const Profile = () => {
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [userProfile, setUserProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -111,15 +106,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/users/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await UsersService.getUserById(userId);
         setUserProfile(response.data);
+        console.log(response.data);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -151,14 +140,18 @@ const Profile = () => {
         <div className="flex flex-col">
           {userProfile && (
             <div className="bg-white w-full shadow rounded-lg p-6">
-              <div className="flex items-center justify-between space-x-6 mb-4">
-                {/*<div className="flex-shrink-0">
-                 <img
-                  className="h-16 w-16 object-cover rounded-full"
-                  src={userProfile.pic}
-                  alt="profile"
-                /> 
-              </div>*/}
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <img
+                    className="w-40 h-40 rounded-full"
+                    src={
+                      userProfile.profileImage
+                        ? userProfile.profileImage
+                        : 'https://via.placeholder.com/150'
+                    }
+                    alt="User profile Pic"
+                  />
+                </div>
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800 mb-4">
                     Name : {userProfile.name}
@@ -272,8 +265,6 @@ const Profile = () => {
                   )}
                 </div>
               </div>
-
-              {/* Add additional profile data here */}
             </div>
           )}
         </div>
