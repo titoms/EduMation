@@ -83,17 +83,17 @@ const ClassesList = () => {
   return (
     <>
       <ClassCreation />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
         {classes.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">
-            <div className="flex justify-between flex-wrap md:flex-nowrap">
+            <div className="flex justify-between gap-4 flex-row md:flex-col flex-wrap md:flex-nowrap">
               <Link to={group._id}>
                 <h2 className="text-xl font-bold hover:text-blue-600 overflow-hidden">
                   {group.name}
                 </h2>
               </Link>
 
-              <div className="flex justify-end gap-2 mt-4 md:mt-0">
+              <div className="flex justify-start gap-2 md:mt-0">
                 <Button
                   size="small"
                   variant="contained"
