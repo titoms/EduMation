@@ -30,10 +30,6 @@ export const ClassProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const refetchClasses = () => {
-    setRefetchToggle((prev) => !prev);
-  };
-
   useEffect(() => {
     fetchGroups();
   }, []);
