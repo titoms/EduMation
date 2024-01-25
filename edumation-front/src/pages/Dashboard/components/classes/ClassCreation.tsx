@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Button, Modal, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
 import Edit from '@mui/icons-material/Edit';
+import { ClassContext } from '../../../../context/ClassContext';
 
 const style = {
   position: 'absolute',
@@ -19,6 +20,7 @@ const ClassCreation = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const handleOpenCreate = () => setOpenCreate(true);
   const handleCloseCreate = () => setOpenCreate(false);
+  const { refetchGroups } = useContext(ClassContext);
 
   const [groupData, setGroupData] = useState({
     name: '',
@@ -35,6 +37,7 @@ const ClassCreation = () => {
       const response = await ClassesService.createGroup(groupData);
       console.log('Class created successfully:', response.data);
       handleCloseCreate();
+      refetchGroups();
     } catch (error) {
       console.error('Error creating class:', error);
     }

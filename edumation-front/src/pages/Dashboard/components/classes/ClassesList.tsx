@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Grid, Button, Skeleton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,6 +9,7 @@ import DeleteClassModal from './DeleteClassModal';
 import UpdateClassModal from './UpdateClassModal';
 import { Link } from 'react-router-dom';
 import ClassCreation from './ClassCreation';
+import { ClassContext } from '../../../../context/ClassContext';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -18,6 +19,7 @@ const ClassesList = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
   const [selectedClassName, setSelectedClassName] = useState<string>('');
+  const { refetchGroups } = useContext(ClassContext);
 
   const handleOpenDelete = (groupId: string, groupName: string) => {
     setSelectedClassId(groupId);
@@ -61,7 +63,7 @@ const ClassesList = () => {
     };
 
     fetchClasses();
-  }, []);
+  }, [refetchGroups]);
 
   if (loading) {
     return (
