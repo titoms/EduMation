@@ -1,5 +1,7 @@
 # EduMation - Educational App
-
+<p align="center">
+  <a href="https://github.com/DenverCoder1/readme-typing-svg"><img src="https://readme-typing-svg.herokuapp.com?color=2962FF&center=true&lines=Education+Management;&width=500&height=50""></a>
+</p>
 EduMation is an engaging educational app that offers a wide range of features to enhance your learning experience, streamline course management, and facilitate time management for schools and universities.
 
 ## Features
