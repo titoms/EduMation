@@ -45,39 +45,37 @@ const ClassCreation = () => {
 
   return (
     <>
-      <div className="flex my-4 justify-end">
-        <Button
-          startIcon={<Edit />}
-          variant="contained"
-          onClick={handleOpenCreate}
-        >
-          Create new class
-        </Button>
-        <Modal open={openCreate} onClose={handleCloseCreate}>
-          <Box sx={style}>
-            <h3 className="font-semibold">Create new class</h3>
-            <form className="my-4" onSubmit={handleCreateClass}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Class Name"
-                variant="outlined"
-                name="name"
-                value={groupData.name}
-                onChange={handleChange}
-              />
-              <div className="mt-4 flex gap-4">
-                <Button type="submit" variant="outlined">
-                  Create
-                </Button>
-                <Button variant="contained" onClick={handleCloseCreate}>
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </Box>
-        </Modal>
-      </div>
+      <Button
+        startIcon={<Edit />}
+        variant="contained"
+        onClick={handleOpenCreate}
+      >
+        Create new class
+      </Button>
+      <Modal open={openCreate} onClose={handleCloseCreate}>
+        <Box sx={style}>
+          <h3 className="font-semibold">Create new class</h3>
+          <form className="my-4" onSubmit={handleCreateClass}>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Class Name"
+              variant="outlined"
+              name="name"
+              value={groupData.name}
+              onChange={handleChange}
+            />
+            <div className="mt-4 flex gap-4">
+              <Button type="submit" variant="outlined">
+                Create
+              </Button>
+              <Button variant="contained" onClick={handleCloseCreate}>
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </Box>
+      </Modal>
     </>
   );
 };
