@@ -43,14 +43,23 @@ const DeleteClassModal: React.FC<DeleteClassModalProps> = ({
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
-        <h3>Are you sure to delete class {className}?</h3>
-        <div className="mt-4 flex gap-4">
-          <Button variant="outlined" color="error" onClick={handleDelete}>
+        <h3 className="text-center">
+          Are you sure to delete class{' '}
+          <span className="font-bold">{className}</span> ?
+        </h3>
+        <div className="mt-4 flex justify-center gap-4">
+          <button
+            onClick={handleDelete}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 mr-2"
+          >
             Delete
-          </Button>
-          <Button variant="contained" onClick={onClose}>
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+          >
             Cancel
-          </Button>
+          </button>
         </div>
       </Box>
     </Modal>

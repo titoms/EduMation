@@ -16,9 +16,9 @@ import QuizzCreation from './components/quizz/QuizzCreation';
 
 const Dashboard = () => {
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex bg-gray-100 overflow-hidden">
       <SideBar />
-      <div className="flex-grow w-full h-screen p-4">
+      <div className="flex-grow w-full overflow-auto h-screen p-4">
         <UserProvider>
           <Routes>
             <Route path="/" element={<MainDashboard />} />

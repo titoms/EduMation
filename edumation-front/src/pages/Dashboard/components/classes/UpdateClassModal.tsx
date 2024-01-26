@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Box, Button, TextField } from '@mui/material';
+import { Modal, Box, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
 
 interface UpdateClassModalProps {
@@ -46,7 +46,9 @@ const UpdateClassModal: React.FC<UpdateClassModalProps> = ({
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={{ ...style, width: 500 }}>
-        <h3>Update Class</h3>
+        <h3 className="text-center">
+          Update Class <span className="font-bold">{className}</span> ?
+        </h3>
         <TextField
           label="Class Name"
           variant="outlined"
@@ -55,13 +57,21 @@ const UpdateClassModal: React.FC<UpdateClassModalProps> = ({
           value={newClassName}
           onChange={(e) => setNewClassName(e.target.value)}
         />
-        <div className="mt-4 flex gap-4">
-          <Button variant="contained" color="primary" onClick={handleUpdate}>
+        <div className=" flex gap-4">
+          <button
+            type="submit"
+            onClick={handleUpdate}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
+          >
             Update
-          </Button>
-          <Button variant="outlined" onClick={onClose}>
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 mt-4 ml-2"
+          >
             Cancel
-          </Button>
+          </button>
         </div>
       </Box>
     </Modal>

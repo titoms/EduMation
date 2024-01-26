@@ -36,8 +36,8 @@ const UpdateProfileModal: React.FC<UpdateProfileModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+    <div className="fixed inset-0 z-[9999] bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg bg-white">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           Update Profile
         </h3>
@@ -74,17 +74,17 @@ const UpdateProfileModal: React.FC<UpdateProfileModalProps> = ({
           </div>
           <div className="mt-4 flex justify-end">
             <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l"
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-r"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
             >
               Update
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 mt-4 ml-2"
+            >
+              Cancel
             </button>
           </div>
         </form>

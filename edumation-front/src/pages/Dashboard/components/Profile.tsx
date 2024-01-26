@@ -37,7 +37,7 @@ const Profile = () => {
     }
   };
 
-  const handleAxiosError = (err, defaultErrorMessage) => {
+  const handleAxiosError = (err: Error, defaultErrorMessage: string) => {
     if (axios.isAxiosError(err) && err.response) {
       setError(err.response.data);
     } else {

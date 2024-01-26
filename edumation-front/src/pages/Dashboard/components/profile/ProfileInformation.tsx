@@ -90,6 +90,7 @@ const ProfileInformations = (user) => {
           onUpdate={handleUpdate}
         />
       )}
+
       {showDeleteModal && (
         <DeleteConfirmationModal
           userId={userProfile._id}
