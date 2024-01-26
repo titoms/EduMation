@@ -1,5 +1,5 @@
 // UserTable.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import UserRow from './UserRow';
 import { User } from '../../../../services/Types';
 
@@ -14,8 +14,26 @@ const UserTable: React.FC<UserTableProps> = ({
   onShowUpdateModal,
   onShowDeleteModal,
 }) => {
+  const [filter, setFilter] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState(users);
+
+  useEffect(() => {
+    const result = users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(filter.toLowerCase()) ||
+        user.email.toLowerCase().includes(filter.toLowerCase()) ||
+        user.role.toLowerCase().includes(filter.toLowerCase())
+    );
+    setFilteredUsers(result);
+  }, [filter, users]);
   return (
     <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+      <input
+        type="text"
+        placeholder="Filter users..."
+        className="mb-4 px-3 py-2 border rounded"
+        onChange={(e) => setFilter(e.target.value)}
+      />
       <table className="min-w-full leading-normal">
         <thead>
           <tr>
@@ -34,7 +52,7 @@ const UserTable: React.FC<UserTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <UserRow
               key={user._id}
               user={user}
