@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import UserRow from './UserRow';
 import { User } from '../../../../services/Types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { IconButton } from '@mui/material';
 
 interface UserTableProps {
   users: User[];
@@ -27,13 +30,19 @@ const UserTable: React.FC<UserTableProps> = ({
     setFilteredUsers(result);
   }, [filter, users]);
   return (
-    <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-      <input
-        type="text"
-        placeholder="Filter users..."
-        className="mb-4 px-3 py-2 border rounded"
-        onChange={(e) => setFilter(e.target.value)}
-      />
+    <div className="inline-block min-w-full shadow rounded-lg overflow-hidden pt-2">
+      <div className="ml-2">
+        <IconButton aria-label="Search...">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </IconButton>
+        <input
+          type="text"
+          placeholder="Filter users..."
+          className="mb-4 px-3 py-2 border rounded-full"
+          onChange={(e) => setFilter(e.target.value)}
+        />
+      </div>
+
       <table className="min-w-full leading-normal">
         <thead>
           <tr>
