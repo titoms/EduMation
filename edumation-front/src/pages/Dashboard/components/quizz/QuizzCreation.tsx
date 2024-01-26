@@ -1,8 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import Question from './Question';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useNavigate } from 'react-router-dom';
+import BackButton from '../../../../components/ui/BackButton';
 
 const QuizzCreation: React.FC = () => {
   const [questions, setQuestions] = useState([
@@ -13,11 +12,6 @@ const QuizzCreation: React.FC = () => {
     },
     // Add more questions as needed
   ]);
-  const navigate = useNavigate();
-
-  const goBack = () => {
-    navigate(-1); // Navigates back to the previous page
-  };
 
   const addQuestion = () => {
     const newQuestion = {
@@ -31,15 +25,7 @@ const QuizzCreation: React.FC = () => {
   return (
     <>
       <div className="mb-4">
-        <Button
-          startIcon={<ArrowBackIosIcon />}
-          onClick={goBack}
-          variant="outlined"
-          color="primary"
-          className="bg-black text-yellow-500 text-sm"
-        >
-          Back
-        </Button>
+        <BackButton />
       </div>
       <div className="flex flex-col">
         <header className="flex items-center justify-between p-4 text-black">
@@ -72,14 +58,7 @@ const QuizzCreation: React.FC = () => {
           >
             Finish Quizz
           </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={goBack}
-            className="bg-black text-yellow-500 text-sm"
-          >
-            Cancel
-          </Button>
+          <BackButton title="Cancel" icon={false} />
         </div>
       </div>
     </>
