@@ -3,7 +3,9 @@ import { Schedule } from '../../../services/Types';
 import ScheduleService from '../../../services/SchedulesService';
 import { toast } from 'react-toastify';
 import Calendar from './schedule/Calendar';
-import { Grid, Skeleton } from '@mui/material';
+import { Button, Grid, Skeleton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import Edit from '@mui/icons-material/Edit';
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
@@ -113,6 +115,13 @@ const Schedules = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schedules</h1>
+      <div className="mt-4 flex justify-end">
+        <Link to="new">
+          <Button startIcon={<Edit />} variant="contained">
+            Create new Schedule
+          </Button>
+        </Link>
+      </div>
       <Calendar events={events} />
       <div className="h-screen mt-8">
         <div className="flex flex-col">

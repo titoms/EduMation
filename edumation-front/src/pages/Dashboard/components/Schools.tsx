@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { School } from '../../../services/Types';
 import SchoolsService from '../../../services/SchoolsService';
-import { Grid, Skeleton } from '@mui/material';
+import { Button, Grid, Skeleton } from '@mui/material';
+import Edit from '@mui/icons-material/Edit';
 
 const Schools: React.FC = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -51,6 +52,13 @@ const Schools: React.FC = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schools</h1>
+      <div className="mt-4 flex justify-end">
+        <Link to="new">
+          <Button startIcon={<Edit />} variant="contained">
+            Create new School
+          </Button>
+        </Link>
+      </div>
       <div className="h-screen mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {schools.map((school) => (

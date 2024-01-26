@@ -12,12 +12,13 @@ import Classes from './components/Classes';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 import IndividualClass from './components/classes/IndividualClass';
+import QuizzCreation from './components/quizz/QuizzCreation';
 
 const Dashboard = () => {
   return (
     <div className="flex bg-gray-100">
       <SideBar />
-      <div className="flex-grow w-full p-4">
+      <div className="flex-grow w-full h-screen p-4">
         <UserProvider>
           <Routes>
             <Route path="/" element={<MainDashboard />} />
@@ -30,6 +31,7 @@ const Dashboard = () => {
             <Route path="students" element={<Students />} />
             <Route path="schedules" element={<Schedules />} />
             <Route path="quizz" element={<Quizz />} />
+            <Route path="quizz/new" element={<QuizzCreation />} />
             <Route path="settings" element={<Settings />} />
           </Routes>
         </UserProvider>

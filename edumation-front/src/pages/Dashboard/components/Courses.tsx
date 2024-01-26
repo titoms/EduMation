@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Course } from '../../../services/Types';
 import CoursesService from '../../../services/CoursesService';
-import { Grid, Skeleton } from '@mui/material';
+import { Button, Grid, Skeleton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import Edit from '@mui/icons-material/Edit';
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -48,6 +50,13 @@ const Courses: React.FC = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Courses</h1>
+      <div className="mt-4 flex justify-end">
+        <Link to="new">
+          <Button startIcon={<Edit />} variant="contained">
+            Create new Course
+          </Button>
+        </Link>
+      </div>
       <div className="h-screen mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (

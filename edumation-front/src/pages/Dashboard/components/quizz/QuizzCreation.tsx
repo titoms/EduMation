@@ -1,0 +1,88 @@
+import { Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import Question from './Question';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useNavigate } from 'react-router-dom';
+
+const QuizzCreation: React.FC = () => {
+  const [questions, setQuestions] = useState([
+    {
+      id: 1,
+      text: 'Question 1',
+      choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+    },
+    // Add more questions as needed
+  ]);
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1); // Navigates back to the previous page
+  };
+
+  const addQuestion = () => {
+    const newQuestion = {
+      id: questions.length + 1,
+      text: `Question ${questions.length + 1}`,
+      choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'], // Default choices, adjust as needed
+    };
+    setQuestions([...questions, newQuestion]);
+  };
+
+  return (
+    <>
+      <div className="mb-4">
+        <Button
+          startIcon={<ArrowBackIosIcon />}
+          onClick={goBack}
+          variant="outlined"
+          color="primary"
+          className="bg-black text-yellow-500 text-sm"
+        >
+          Back
+        </Button>
+      </div>
+      <div className="flex flex-col">
+        <header className="flex items-center justify-between p-4 text-black">
+          <Typography
+            variant="h6"
+            component="h1"
+            className="text-lg font-semibold"
+          >
+            Create new Quizz
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            className="bg-black text-yellow-500 text-sm"
+            onClick={addQuestion}
+          >
+            Add Question
+          </Button>
+        </header>
+        <main className="flex-grow overflow-auto ">
+          {questions.map((question, index) => (
+            <Question key={question.id} question={question} index={index} />
+          ))}
+        </main>
+        <div className="flex justify-end mt-4 gap-4">
+          <Button
+            variant="contained"
+            color="primary"
+            className="bg-black text-yellow-500 text-sm"
+          >
+            Finish Quizz
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={goBack}
+            className="bg-black text-yellow-500 text-sm"
+          >
+            Cancel
+          </Button>
+        </div>
+      </div>
+    </>
+  );
+};
+export default QuizzCreation;
