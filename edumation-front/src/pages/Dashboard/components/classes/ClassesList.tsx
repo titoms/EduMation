@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Grid, Button, Skeleton } from '@mui/material';
+import { Grid, Button, Skeleton, IconButton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClassesService from '../../../../services/ClassesService';
@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import ClassCreation from './ClassCreation';
 import { ClassContext } from '../../../../context/ClassContext';
 import ClassImport from './ClassImport';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -21,6 +23,8 @@ const ClassesList = () => {
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
   const [selectedClassName, setSelectedClassName] = useState<string>('');
   const { refetchGroups } = useContext(ClassContext);
+  const [filter, setFilter] = useState('');
+  const [filteredClasses, setFilteredClasses] = useState(classes);
 
   const handleOpenDelete = (groupId: string, groupName: string) => {
     setSelectedClassId(groupId);
@@ -53,6 +57,10 @@ const ClassesList = () => {
         const response = await ClassesService.getAllGroups();
         setClasses(response.data);
         setLoading(false);
+        const result = classes.filter((classe) =>
+          classe.name.toLowerCase().includes(filter.toLowerCase())
+        );
+        setFilteredClasses(result);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           setError(err.response.data);
@@ -64,7 +72,7 @@ const ClassesList = () => {
     };
 
     fetchClasses();
-  }, [refetchGroups]);
+  }, [refetchGroups, filter, classes]);
 
   if (loading) {
     return (
@@ -90,9 +98,19 @@ const ClassesList = () => {
         <ClassCreation />
         <ClassImport />
       </div>
-
+      <div className="ml-2">
+        <IconButton aria-label="Search...">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </IconButton>
+        <input
+          type="text"
+          placeholder="Filter users..."
+          className="mb-4 px-3 py-2 border rounded-full"
+          onChange={(e) => setFilter(e.target.value)}
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        {classes.map((group) => (
+        {filteredClasses.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">
             <div className="flex justify-between gap-4 flex-row md:flex-col flex-wrap md:flex-nowrap">
               <Link to={group._id}>
