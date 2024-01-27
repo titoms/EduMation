@@ -29,6 +29,7 @@ const UserTable: React.FC<UserTableProps> = ({
     );
     setFilteredUsers(result);
   }, [filter, users]);
+
   return (
     <div className="inline-block min-w-full shadow rounded-lg overflow-hidden pt-2">
       <div className="ml-2">

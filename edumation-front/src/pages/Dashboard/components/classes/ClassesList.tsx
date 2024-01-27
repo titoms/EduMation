@@ -1,18 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
 import { Grid, Button, Skeleton, IconButton } from '@mui/material';
+import { Group } from '../../../../services/Types';
+import { Link } from 'react-router-dom';
+import { ClassContext } from '../../../../context/ClassContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClassesService from '../../../../services/ClassesService';
-import { Group } from '../../../../services/Types';
 import axios from 'axios';
 import DeleteClassModal from './DeleteClassModal';
 import UpdateClassModal from './UpdateClassModal';
-import { Link } from 'react-router-dom';
 import ClassCreation from './ClassCreation';
-import { ClassContext } from '../../../../context/ClassContext';
 import ClassImport from './ClassImport';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -56,11 +56,11 @@ const ClassesList = () => {
       try {
         const response = await ClassesService.getAllGroups();
         setClasses(response.data);
-        setLoading(false);
         const result = classes.filter((classe) =>
           classe.name.toLowerCase().includes(filter.toLowerCase())
         );
         setFilteredClasses(result);
+        setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           setError(err.response.data);
@@ -95,20 +95,22 @@ const ClassesList = () => {
     <>
       <div className="flex my-4 justify-end gap-2">
         {' '}
+        <div className="ml-2">
+          <IconButton aria-label="Search...">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </IconButton>
+          <input
+            type="text"
+            id="classSearchBar"
+            placeholder="Filter users..."
+            className="px-3 py-2 border rounded-full"
+            onChange={(e) => setFilter(e.target.value)}
+          />
+        </div>
         <ClassCreation />
         <ClassImport />
       </div>
-      <div className="ml-2">
-        <IconButton aria-label="Search...">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </IconButton>
-        <input
-          type="text"
-          placeholder="Filter users..."
-          className="mb-4 px-3 py-2 border rounded-full"
-          onChange={(e) => setFilter(e.target.value)}
-        />
-      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
         {filteredClasses.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">

@@ -3,19 +3,27 @@ import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import { School } from '../../../services/Types';
 import SchoolsService from '../../../services/SchoolsService';
-import { Button, Grid, Skeleton } from '@mui/material';
+import { Button, Grid, IconButton, Skeleton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const Schools: React.FC = () => {
   const [schools, setSchools] = useState<School[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('');
+  const [filteredSchools, setFilteredSchools] = useState(schools);
 
   useEffect(() => {
     const fetchSchools = async () => {
       try {
         const response = await SchoolsService.getAllSchools();
         setSchools(response.data);
+        const result = schools.filter((school) =>
+          school.name.toLowerCase().includes(filter.toLowerCase())
+        );
+        setFilteredSchools(result);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -27,7 +35,7 @@ const Schools: React.FC = () => {
       }
     };
     fetchSchools();
-  }, []);
+  }, [filter, schools]);
 
   if (loading) {
     return (
@@ -53,6 +61,17 @@ const Schools: React.FC = () => {
     <>
       <h1 className="text-2xl font-semibold">Schools</h1>
       <div className="mt-4 flex justify-end">
+        <div className="ml-2">
+          <IconButton aria-label="Search...">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </IconButton>
+          <input
+            type="text"
+            placeholder="Filter users..."
+            className="px-3 py-2 mr-4 border rounded-full"
+            onChange={(e) => setFilter(e.target.value)}
+          />
+        </div>
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">
             Create new School
@@ -61,7 +80,7 @@ const Schools: React.FC = () => {
       </div>
       <div className="h-screen mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {schools.map((school) => (
+          {filteredSchools.map((school) => (
             <div key={school._id} className="w-full">
               <div className="bg-white rounded-lg overflow-hidden mb-10">
                 <img
