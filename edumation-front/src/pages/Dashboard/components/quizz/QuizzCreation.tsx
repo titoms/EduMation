@@ -20,6 +20,7 @@ const QuizzCreation: React.FC = () => {
       choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'], // Default choices, adjust as needed
     };
     setQuestions([...questions, newQuestion]);
+    console.log(questions);
   };
 
   return (

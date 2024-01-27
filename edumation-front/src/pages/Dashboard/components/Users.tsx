@@ -55,7 +55,7 @@ const Users = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Users</h1>
-      <div className="h-screen mt-4">
+      <div className="mt-4">
         <div className="grid grid-cols-1">
           {admins.length > 0 && (
             <>

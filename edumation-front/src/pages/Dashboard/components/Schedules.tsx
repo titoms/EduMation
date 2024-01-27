@@ -123,7 +123,7 @@ const Schedules = () => {
         </Link>
       </div>
       <Calendar events={events} />
-      <div className="h-screen mt-8">
+      <div className="mt-8">
         <div className="flex flex-col">
           {/* {schedules.map((schedule, index) => (
             <div key={index} className="mb-8">

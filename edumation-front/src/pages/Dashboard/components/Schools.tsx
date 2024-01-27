@@ -78,7 +78,7 @@ const Schools: React.FC = () => {
           </Button>
         </Link>
       </div>
-      <div className="h-screen mt-8">
+      <div className="mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredSchools.map((school) => (
             <div key={school._id} className="w-full">

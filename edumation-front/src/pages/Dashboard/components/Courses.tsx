@@ -57,7 +57,7 @@ const Courses: React.FC = () => {
           </Button>
         </Link>
       </div>
-      <div className="h-screen mt-8">
+      <div className="mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
             <div key={course._id} className="bg-white shadow rounded-lg p-4">
