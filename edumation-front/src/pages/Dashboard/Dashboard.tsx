@@ -13,6 +13,10 @@ import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 import IndividualClass from './components/classes/IndividualClass';
 import QuizzCreation from './components/quizz/QuizzCreation';
+import SchoolCreation from './components/school/SchoolCreation';
+import ClassCreation from './components/classes/ClassCreation';
+import CourseCreation from './components/courses/CourseCreation';
+import ScheduleCreation from './components/schedule/ScheduleCreation';
 
 const Dashboard = () => {
   return (
@@ -23,16 +27,26 @@ const Dashboard = () => {
           <Routes>
             <Route path="/" element={<MainDashboard />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
+
             <Route path="users" element={<Users />} />
-            <Route path="schools" element={<Schools />} />
-            <Route path="classes" element={<Classes />} />
-            <Route path="classes/:id" element={<IndividualClass />} />
-            <Route path="courses" element={<Courses />} />
             <Route path="students" element={<Students />} />
+
+            <Route path="schools" element={<Schools />} />
+            <Route path="schools/new" element={<SchoolCreation />} />
+
+            <Route path="classes" element={<Classes />} />
+            <Route path="classes/new" element={<ClassCreation />} />
+            <Route path="classes/:id" element={<IndividualClass />} />
+
+            <Route path="courses" element={<Courses />} />
+            <Route path="courses/new" element={<CourseCreation />} />
+
             <Route path="schedules" element={<Schedules />} />
+            <Route path="schedules/new" element={<ScheduleCreation />} />
+
             <Route path="quizz" element={<Quizz />} />
             <Route path="quizz/new" element={<QuizzCreation />} />
-            <Route path="settings" element={<Settings />} />
           </Routes>
         </UserProvider>
       </div>

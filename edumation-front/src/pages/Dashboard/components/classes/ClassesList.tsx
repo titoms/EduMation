@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import { Grid, Button, Skeleton, IconButton } from '@mui/material';
+import { Grid, Button, Skeleton } from '@mui/material';
 import { Group } from '../../../../services/Types';
 import { Link } from 'react-router-dom';
 import { ClassContext } from '../../../../context/ClassContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClassesService from '../../../../services/ClassesService';
@@ -13,6 +11,7 @@ import DeleteClassModal from './DeleteClassModal';
 import UpdateClassModal from './UpdateClassModal';
 import ClassCreation from './ClassCreation';
 import ClassImport from './ClassImport';
+import SearchBar from '../../../../components/ui/SearchBar';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -95,18 +94,7 @@ const ClassesList = () => {
     <>
       <div className="flex my-4 justify-end gap-2">
         {' '}
-        <div className="ml-2">
-          <IconButton aria-label="Search...">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </IconButton>
-          <input
-            type="text"
-            id="classSearchBar"
-            placeholder="Filter users..."
-            className="px-3 py-2 border rounded-full"
-            onChange={(e) => setFilter(e.target.value)}
-          />
-        </div>
+        <SearchBar onFilterChange={setFilter} />
         <ClassCreation />
         <ClassImport />
       </div>
