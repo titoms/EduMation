@@ -5,6 +5,7 @@ import { User } from '../../../../services/Types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { IconButton } from '@mui/material';
+import SearchBar from '../../../../components/ui/SearchBar';
 
 interface UserTableProps {
   users: User[];
@@ -31,17 +32,9 @@ const UserTable: React.FC<UserTableProps> = ({
   }, [filter, users]);
 
   return (
-    <div className="inline-block min-w-full shadow rounded-lg overflow-hidden pt-2">
-      <div className="ml-2">
-        <IconButton aria-label="Search...">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </IconButton>
-        <input
-          type="text"
-          placeholder="Filter users..."
-          className="mb-4 px-3 py-2 border rounded-full"
-          onChange={(e) => setFilter(e.target.value)}
-        />
+    <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+      <div className=" my-2">
+        <SearchBar onFilterChange={setFilter} />
       </div>
 
       <table className="min-w-full leading-normal">

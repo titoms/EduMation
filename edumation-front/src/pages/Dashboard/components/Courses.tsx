@@ -5,17 +5,24 @@ import CoursesService from '../../../services/CoursesService';
 import { Button, Grid, Skeleton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Edit from '@mui/icons-material/Edit';
+import SearchBar from '../../../components/ui/SearchBar';
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [filter, setFilter] = useState('');
+  const [filteredCourses, setFilteredCourses] = useState(courses);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await CoursesService.getAllCourses();
         setCourses(response.data);
+        const result = courses.filter((course) =>
+          course.title.toLowerCase().includes(filter.toLowerCase())
+        );
+        setFilteredCourses(result);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -28,7 +35,7 @@ const Courses: React.FC = () => {
     };
 
     fetchCourses();
-  }, []);
+  }, [filter, courses]);
 
   if (loading) {
     return (
@@ -50,7 +57,8 @@ const Courses: React.FC = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Courses</h1>
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 flex justify-end gap-4">
+        <SearchBar onFilterChange={setFilter} />
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">
             Create new Course
@@ -59,7 +67,7 @@ const Courses: React.FC = () => {
       </div>
       <div className="mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course) => (
+          {filteredCourses.map((course) => (
             <div key={course._id} className="bg-white shadow rounded-lg p-4">
               <h3 className="text-lg font-semibold">{course.title}</h3>
               <div className="text-bold mt-4">
