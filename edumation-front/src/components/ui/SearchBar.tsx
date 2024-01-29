@@ -15,7 +15,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFilterChange }) => {
       <input
         type="text"
         id="classSearchBar"
-        placeholder="Filter users..."
+        placeholder="Search..."
         className="px-3 py-2 border rounded-full"
         onChange={(e) => onFilterChange(e.target.value)}
       />
