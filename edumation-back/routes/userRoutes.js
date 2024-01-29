@@ -147,7 +147,7 @@ router.put(
     try {
       const updateData = req.body;
       if (req.file) {
-        updateData.profileImage = req.file.location; // Update with new image URL
+        updateData.profileImage = req.file.location;
       }
       if (updateData.password) {
         updateData.passwordHash = await bcrypt.hash(

@@ -20,9 +20,6 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   const [updatedName, setUpdatedName] = useState(user.name);
   const [updatedEmail, setUpdatedEmail] = useState(user.email);
   const [updatedRole, setUpdatedRole] = useState(user.role);
-  const [updatedProfileImage, setUpdatedProfileImage] = useState(
-    user.profileImage
-  );
   const [updatedPassword, setUpdatedPassword] = useState(user.password);
   const [profileImage, setProfileImage] = useState<File | null>(null);
 
@@ -32,14 +29,17 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   const handleUpdateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const updatedUser = {
-        ...user,
-        name: updatedName,
-        email: updatedEmail,
-        password: updatedPassword,
-        role: updatedRole,
-        profileImage: updatedProfileImage,
-      };
+      const updatedUser = new FormData();
+      updatedUser.append('name', updatedName);
+      updatedUser.append('email', updatedEmail);
+      updatedUser.append('role', updatedRole);
+      if (updatedPassword) {
+        updatedUser.append('password', updatedPassword);
+      }
+      if (profileImage) {
+        updatedUser.append('profileImage', profileImage);
+      }
+
       const response = await UsersService.updateUser(user._id, updatedUser);
       setUsers((prevUsers) =>
         prevUsers.map((u) => (u._id === user._id ? response.data : u))

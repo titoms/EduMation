@@ -32,7 +32,7 @@ export default {
   logIn(credentials: LoginCredentials) {
     return apiClient.post('/users/login', credentials);
   },
-  updateUser(id: string, UserData: Partial<User>) {
+  updateUser(id: string, UserData: Partial<User> | FormData) {
     return apiClient.put<User>(`/users/${id}`, UserData);
   },
   deleteUser(id: string) {
