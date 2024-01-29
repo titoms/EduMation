@@ -57,6 +57,20 @@ const updateGroupValidation = [
     .withMessage('User IDs must be an array'),
 ];
 
+const createQuizValidation = [
+  body('courseId').isMongoId().withMessage('Invalid course ID'),
+  body('title').trim().not().isEmpty().withMessage('Title is required'),
+  body('questions').isArray().withMessage('Questions must be an array'),
+  body('timeLimit').isNumeric().withMessage('Time limit must be a number'),
+];
+
+const updateQuizValidation = [
+  param('id').isMongoId().withMessage('Invalid quiz ID'),
+  body('title').optional().trim(),
+  body('questions').optional().isArray(),
+  body('timeLimit').optional().isNumeric(),
+];
+
 const isMongoId = (paramName) => {
   return param(paramName).isMongoId().withMessage('Invalid ID format');
 };
@@ -77,6 +91,8 @@ module.exports = {
   updateCourseValidation,
   createGroupValidation,
   updateGroupValidation,
+  createQuizValidation,
+  updateQuizValidation,
   checkValidation,
   isMongoId,
 };
