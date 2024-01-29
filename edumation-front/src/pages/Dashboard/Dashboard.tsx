@@ -1,4 +1,4 @@
-import SideBar from './components/SideBar';
+import SideBar from '../../components/ui/SideBar';
 import MainDashboard from './components/MainDashboard';
 import Profile from './components/Profile';
 import Users from './components/Users';
