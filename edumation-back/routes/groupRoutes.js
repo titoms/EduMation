@@ -1,111 +1,34 @@
 const express = require('express');
 const { body, validationResult, param } = require('express-validator');
 const Group = require('../models/group');
+const groupController = require('../controllers/groupController');
 const verifyToken = require('../middlewares/verifyToken');
+const validation = require('../middlewares/validationMiddleware');
 const router = express.Router();
 
 // Get all groups
-router.get('/', verifyToken, async (req, res) => {
-  try {
-    const groups = await Group.find().populate('studentsIds');
-    res.json(groups);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get('/', verifyToken, groupController.getAllGroups);
 
 // Get a specific group
-router.get('/:id', verifyToken, async (req, res) => {
-  try {
-    const group = await Group.findById(req.params.id).populate('studentsIds');
-    if (!group) return res.status(404).send('Group not found.');
-    res.json(group);
-  } catch (error) {
-    if (!res.headersSent) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-});
+router.get('/:id', verifyToken, groupController.getOneGroup);
 
 // Create a new group
 router.post(
   '/',
   verifyToken,
-  [
-    body('name').trim().not().isEmpty().withMessage('Name is required'),
-    body('studentsIds').isArray().withMessage('User IDs must be an array'),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const newGroup = new Group({
-        name: req.body.name,
-        studentsIds: req.body.studentsIds,
-      });
-      const savedGroup = await newGroup.save();
-      const populatedGroup = await Group.findById(savedGroup._id).populate(
-        'studentsIds'
-      );
-      res.status(201).json(populatedGroup);
-    } catch (error) {
-      if (!res.headersSent) {
-        res.status(500).json({ message: error.message });
-      }
-    }
-  }
+  validation.createGroupValidation,
+  groupController.createGroup
 );
 
 // Update a group
 router.put(
   '/:id',
   verifyToken,
-  [
-    param('id').isMongoId().withMessage('Invalid group ID'),
-    body('name').optional().trim(),
-    body('studentsIds')
-      .optional()
-      .isArray()
-      .withMessage('User IDs must be an array'),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-      const updateData = req.body;
-      const updatedGroup = await Group.findByIdAndUpdate(
-        req.params.id,
-        updateData,
-        { new: true }
-      );
-      if (!updatedGroup) return res.status(404).send('Group not found.');
-      res.json(updatedGroup);
-    } catch (error) {
-      if (!res.headersSent) {
-        res.status(500).json({ message: error.message });
-      }
-    }
-  }
+  validation.updateGroupValidation,
+  groupController.updateGroup
 );
 
 // Delete a group
-router.delete('/:id', verifyToken, async (req, res) => {
-  try {
-    const deletedGroup = await Group.findByIdAndDelete(req.params.id);
-    console.log(deletedGroup);
-
-    if (!deletedGroup) return res.status(404).send('Group not found.');
-    res.json({ message: 'Group successfully deleted' });
-  } catch (error) {
-    if (!res.headersSent) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-});
+router.delete('/:id', verifyToken, groupController.deleteGroup);
 
 module.exports = router;

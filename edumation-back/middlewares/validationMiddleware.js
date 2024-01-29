@@ -43,6 +43,20 @@ const updateCourseValidation = [
   body('description').optional().trim(),
 ];
 
+const createGroupValidation = [
+  body('name').trim().not().isEmpty().withMessage('Name is required'),
+  body('studentsIds').isArray().withMessage('User IDs must be an array'),
+];
+
+const updateGroupValidation = [
+  param('id').isMongoId().withMessage('Invalid group ID'),
+  body('name').optional().trim(),
+  body('studentsIds')
+    .optional()
+    .isArray()
+    .withMessage('User IDs must be an array'),
+];
+
 const isMongoId = (paramName) => {
   return param(paramName).isMongoId().withMessage('Invalid ID format');
 };
@@ -61,6 +75,8 @@ module.exports = {
   updateUserValidation,
   createCourseValidation,
   updateCourseValidation,
+  createGroupValidation,
+  updateGroupValidation,
   checkValidation,
   isMongoId,
 };

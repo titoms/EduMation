@@ -16,28 +16,17 @@ router.post(
 );
 
 // Get a specific course
-router.get(
-  '/:id',
-  verifyToken,
-  validation.isMongoId('id'),
-  courseController.getOneCourse
-);
+router.get('/:id', verifyToken, courseController.getOneCourse);
 
 // Update a course
 router.put(
   '/:id',
   verifyToken,
-  validation.isMongoId('id'),
   validation.updateCourseValidation,
   courseController.updateCourse
 );
 
 // Delete a course
-router.delete(
-  '/:id',
-  verifyToken,
-  validation.isMongoId('id'),
-  courseController.deleteCourse
-);
+router.delete('/:id', verifyToken, courseController.deleteCourse);
 
 module.exports = router;
