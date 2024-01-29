@@ -2,6 +2,11 @@
 import axios from 'axios';
 import { User } from './Types';
 
+interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
 const token = localStorage.getItem('token');
 
 const apiClient = axios.create({
@@ -22,7 +27,10 @@ export default {
     return apiClient.get<User>(`/users/${id}`);
   },
   createUser(UserData: User) {
-    return apiClient.post<User>('/users', UserData);
+    return apiClient.post<User>('/users/register', UserData);
+  },
+  logIn(credentials: LoginCredentials) {
+    return apiClient.post('/users/login', credentials);
   },
   updateUser(id: string, UserData: Partial<User>) {
     return apiClient.put<User>(`/users/${id}`, UserData);

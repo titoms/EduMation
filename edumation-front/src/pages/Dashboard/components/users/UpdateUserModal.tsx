@@ -20,6 +20,9 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   const [updatedName, setUpdatedName] = useState(user.name);
   const [updatedEmail, setUpdatedEmail] = useState(user.email);
   const [updatedRole, setUpdatedRole] = useState(user.role);
+  const [updatedProfileImage, setUpdatedProfileImage] = useState(
+    user.profileImage
+  );
   const [updatedPassword, setUpdatedPassword] = useState(user.password);
   const [profileImage, setProfileImage] = useState<File | null>(null);
 
@@ -33,7 +36,9 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
         ...user,
         name: updatedName,
         email: updatedEmail,
+        password: updatedPassword,
         role: updatedRole,
+        profileImage: updatedProfileImage,
       };
       const response = await UsersService.updateUser(user._id, updatedUser);
       setUsers((prevUsers) =>

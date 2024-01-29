@@ -59,9 +59,8 @@ const Schools: React.FC = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schools</h1>
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 flex justify-end gap-2">
         <SearchBar onFilterChange={setFilter} />
-
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">
             Create new School
