@@ -1,17 +1,11 @@
 const express = require('express');
-const School = require('../models/School');
-const router = express.Router();
+const School = require('../models/school');
+const schoolController = require('../controllers/schoolController');
 const verifyToken = require('../middlewares/verifyToken');
+const router = express.Router();
 
 // Get all schools
-router.get('/', verifyToken, async (req, res) => {
-  try {
-    const schools = await School.find();
-    res.json(schools);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get('/', verifyToken, schoolController.getAllSchools);
 
 // Create a new school (restricted to certain user roles if needed)
 router.post('/', verifyToken, async (req, res) => {
@@ -30,41 +24,12 @@ router.post('/', verifyToken, async (req, res) => {
 });
 
 // Get a single school by id
-router.get('/:id', verifyToken, async (req, res) => {
-  try {
-    const school = await School.findById(req.params.id);
-    if (!school) return res.status(404).json({ message: 'School not found' });
-    res.json(school);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get('/:id', verifyToken, schoolController.getOneSchool);
 
 // Update a school by id
-router.put('/:id', verifyToken, async (req, res) => {
-  try {
-    const updatedSchool = await School.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedSchool)
-      return res.status(404).json({ message: 'School not found' });
-    res.json(updatedSchool);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+router.put('/:id', verifyToken, schoolController.updateSchool);
 
 // Delete a school by id
-router.delete('/:id', verifyToken, async (req, res) => {
-  try {
-    const school = await School.findByIdAndDelete(req.params.id);
-    if (!school) return res.status(404).json({ message: 'School not found' });
-    res.json({ message: 'School deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.delete('/:id', verifyToken, schoolController.deleteSchool);
 
 module.exports = router;
