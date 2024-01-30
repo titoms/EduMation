@@ -50,7 +50,7 @@ const UserRow: React.FC<UserRowProps> = ({
             startIcon={<Edit />}
             onClick={() => onShowUpdateModal(user)}
           >
-            Update
+            <span className="hidden md:inline">Update</span>
           </Button>
           <Button
             size="small"
@@ -59,7 +59,7 @@ const UserRow: React.FC<UserRowProps> = ({
             startIcon={<DeleteIcon />}
             onClick={() => onShowDeleteModal(user)}
           >
-            Delete
+            <span className="hidden md:inline">Delete</span>
           </Button>
         </div>
       </td>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Course } from '../../../services/Types';
 import CoursesService from '../../../services/CoursesService';
 import { Button, Grid, Skeleton } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import Edit from '@mui/icons-material/Edit';
 import SearchBar from '../../../components/ui/SearchBar';
 

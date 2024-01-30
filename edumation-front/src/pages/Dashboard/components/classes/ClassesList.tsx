@@ -116,7 +116,7 @@ const ClassesList = () => {
                   startIcon={<Edit />}
                   onClick={() => handleOpenUpdate(group._id, group.name)}
                 >
-                  Update
+                  <span className="hidden md:inline">Update</span>
                 </Button>
 
                 <Button
@@ -126,7 +126,7 @@ const ClassesList = () => {
                   startIcon={<DeleteIcon />}
                   onClick={() => handleOpenDelete(group._id, group.name)}
                 >
-                  Delete
+                  <span className="hidden md:inline">Delete</span>
                 </Button>
               </div>
             </div>

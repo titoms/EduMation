@@ -25,7 +25,7 @@ const Dashboard = () => {
       <div className="flex-grow w-full overflow-auto h-screen p-4">
         <UserProvider>
           <Routes>
-            <Route path="/" element={<MainDashboard />} />
+            <Route index element={<MainDashboard />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
 
