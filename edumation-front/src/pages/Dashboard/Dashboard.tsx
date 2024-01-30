@@ -17,6 +17,7 @@ import SchoolCreation from './components/school/SchoolCreation';
 import ClassCreation from './components/classes/ClassCreation';
 import CourseCreation from './components/courses/CourseCreation';
 import ScheduleCreation from './components/schedule/ScheduleCreation';
+import ClassImport from './components/classes/ClassImport';
 
 const Dashboard = () => {
   return (
@@ -37,6 +38,7 @@ const Dashboard = () => {
 
             <Route path="classes" element={<Classes />} />
             <Route path="classes/new" element={<ClassCreation />} />
+            <Route path="classes/import" element={<ClassImport />} />
             <Route path="classes/:id" element={<IndividualClass />} />
 
             <Route path="courses" element={<Courses />} />

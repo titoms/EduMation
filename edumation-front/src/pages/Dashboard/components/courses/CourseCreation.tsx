@@ -6,7 +6,7 @@ const CourseCreation = () => {
       <div className="mb-4">
         <BackButton />
       </div>
-      <h1 className="text-2xl font-semibold">Create new Course</h1> <Outlet />
+      <h1 className="text-2xl font-semibold">Create new Course</h1>
     </>
   );
 };

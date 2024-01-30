@@ -1,11 +1,22 @@
-import { Button } from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { TextField } from '@mui/material';
+import BackButton from '../../../../components/ui/BackButton';
 
 const ClassImport = () => {
   return (
-    <Button startIcon={<ArrowUpwardIcon />} variant="outlined">
-      Import
-    </Button>
+    <>
+      <BackButton />
+      <h2 className="text-lg font-semibold mt-4">Import a class</h2>
+      <form>
+        <label></label>
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Class Name"
+          variant="outlined"
+          name="name"
+        />
+      </form>
+    </>
   );
 };
 

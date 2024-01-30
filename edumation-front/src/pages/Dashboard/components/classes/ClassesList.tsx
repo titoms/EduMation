@@ -9,8 +9,6 @@ import ClassesService from '../../../../services/ClassesService';
 import axios from 'axios';
 import DeleteClassModal from './DeleteClassModal';
 import UpdateClassModal from './UpdateClassModal';
-import ClassCreation from './ClassCreation';
-import ClassImport from './ClassImport';
 import SearchBar from '../../../../components/ui/SearchBar';
 
 const ClassesList = () => {
@@ -95,8 +93,6 @@ const ClassesList = () => {
       <div className="flex my-4 justify-end gap-2">
         {' '}
         <SearchBar onFilterChange={setFilter} />
-        <ClassCreation />
-        <ClassImport />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
@@ -133,6 +129,7 @@ const ClassesList = () => {
           </div>
         ))}
       </div>
+
       {selectedClassId && (
         <DeleteClassModal
           open={openDelete}

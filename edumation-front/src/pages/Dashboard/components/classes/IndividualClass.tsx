@@ -71,11 +71,13 @@ const ClassInfo: React.FC = () => {
               alt={student.name}
             />
             <div className="inline-block">
-              <div>
-                <strong>Name:</strong> {student.name}
-              </div>
-              <div>
-                <strong>Email:</strong> {student.email}
+              <div className="ml-4 flex justify-around gap-8">
+                <p>
+                  <strong>Name:</strong> {student.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {student.email}
+                </p>
               </div>
             </div>
           </div>
