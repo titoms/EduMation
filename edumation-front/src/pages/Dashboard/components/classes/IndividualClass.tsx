@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Button, Grid, Skeleton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import StudentTransfer from './StudentTransfer';
+import Edit from '@mui/icons-material/Edit';
 
 const ClassInfo: React.FC = () => {
   const params = useParams();
@@ -97,6 +98,12 @@ const ClassInfo: React.FC = () => {
         <StudentTransfer
           onSelectedStudentsChange={handleSelectedStudentsChange}
         />
+        <div className="mt-4">
+          {' '}
+          <Button size="small" variant="contained" startIcon={<Edit />}>
+            <span className="hidden md:inline">Update</span>
+          </Button>
+        </div>
       </div>
     </div>
   );

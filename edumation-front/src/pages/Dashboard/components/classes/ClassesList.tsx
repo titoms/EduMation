@@ -98,7 +98,7 @@ const ClassesList = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
         {filteredClasses.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">
-            <div className="flex justify-between gap-4 flex-row md:flex-col flex-wrap md:flex-nowrap">
+            <div className="flex justify-between gap-4 flex-row flex-wrap md:flex-nowrap">
               <Link to={group._id}>
                 <h2 className="text-xl font-bold hover:text-blue-600 overflow-hidden">
                   {group.name}
@@ -106,15 +106,6 @@ const ClassesList = () => {
               </Link>
 
               <div className="flex justify-start gap-2 md:mt-0">
-                <Button
-                  size="small"
-                  variant="contained"
-                  startIcon={<Edit />}
-                  onClick={() => handleOpenUpdate(group._id, group.name)}
-                >
-                  <span className="hidden md:inline">Update</span>
-                </Button>
-
                 <Button
                   size="small"
                   variant="outlined"
@@ -139,7 +130,7 @@ const ClassesList = () => {
           onClassDeleted={handleDeleteClassSuccess}
         />
       )}
-      {selectedClassId && (
+      {/* {selectedClassId && (
         <UpdateClassModal
           open={openUpdate}
           onClose={handleCloseUpdate}
@@ -147,7 +138,7 @@ const ClassesList = () => {
           className={selectedClassName}
           onClassUpdated={handleUpdateClassSuccess}
         />
-      )}
+      )} */}
     </>
   );
 };
