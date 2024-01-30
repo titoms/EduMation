@@ -86,7 +86,7 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   return (
     <>
       <div className="w-full rounded-lg bg-blue-100 pt-4 mt-4">
-        <SearchBar onFilterChange={setFilter} />
+        {/* <SearchBar onFilterChange={setFilter} /> */}
         <div className="p-4 pt-0 mx-2 mt-2">
           <FormControl component="fieldset" error={true} variant="standard">
             <FormGroup>

@@ -41,7 +41,7 @@ const ClassInfo: React.FC = () => {
   }, [params.id]);
 
   const handleSelectedStudentsChange = (selectedStudents) => {
-    // console.log('Selected Students:', selectedStudents);
+    console.log('Selected Students:', selectedStudents);
   };
 
   if (!classInfo) return <p>Loading...</p>;
