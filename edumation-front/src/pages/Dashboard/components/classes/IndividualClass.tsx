@@ -6,6 +6,7 @@ import { Group } from '../../../../services/Types';
 import axios from 'axios';
 import { Button, Grid, Skeleton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import StudentTransfer from './StudentTransfer';
 
 const ClassInfo: React.FC = () => {
   const params = useParams();
@@ -16,10 +17,13 @@ const ClassInfo: React.FC = () => {
 
   useEffect(() => {
     const fetchClasses = async () => {
+      let unsusbscribed = false;
       try {
         const response = await ClassesService.getGroupById(params.id!);
-        setClassInfo(response.data);
-        setLoading(false);
+        if (!unsusbscribed) {
+          setClassInfo(response.data);
+          setLoading(false);
+        }
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           setError(err.response.data);
@@ -28,10 +32,17 @@ const ClassInfo: React.FC = () => {
         }
         setLoading(false);
       }
+      return () => {
+        unsusbscribed = true;
+      };
     };
 
     fetchClasses();
   }, [params.id]);
+
+  const handleSelectedStudentsChange = (selectedStudents) => {
+    // console.log('Selected Students:', selectedStudents);
+  };
 
   if (!classInfo) return <p>Loading...</p>;
   if (loading) {
@@ -82,6 +93,10 @@ const ClassInfo: React.FC = () => {
             </div>
           </div>
         ))}
+        <h3 className="font-semibold my-4">Select Students : </h3>
+        <StudentTransfer
+          onSelectedStudentsChange={handleSelectedStudentsChange}
+        />
       </div>
     </div>
   );

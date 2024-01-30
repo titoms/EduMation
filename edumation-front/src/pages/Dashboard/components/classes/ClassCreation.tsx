@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
-// import { ClassContext } from '../../../../context/ClassContext';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/ui/BackButton';
+import StudentTransfer from './StudentTransfer';
 
 const ClassCreation = () => {
-  // const { refetchGroups } = useContext(ClassContext);
   const navigate = useNavigate();
   const [groupData, setGroupData] = useState({
     name: '',
@@ -30,6 +29,10 @@ const ClassCreation = () => {
     }
   };
 
+  const handleSelectedStudentsChange = (selectedStudents) => {
+    setGroupData({ ...groupData, studentsIds: selectedStudents });
+  };
+
   return (
     <>
       <BackButton />
@@ -44,12 +47,9 @@ const ClassCreation = () => {
           value={groupData.name}
           onChange={handleChange}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Students"
-          variant="outlined"
-          name="name"
+        <h3 className="font-semibold my-4">Select Students : </h3>
+        <StudentTransfer
+          onSelectedStudentsChange={handleSelectedStudentsChange}
         />
 
         <div className="mt-4 flex gap-4">
