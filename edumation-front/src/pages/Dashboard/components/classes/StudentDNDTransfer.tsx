@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -6,6 +6,9 @@ import {
   Droppable,
 } from 'react-beautiful-dnd';
 import { styled } from '@stitches/react';
+import UsersService from '../../../../services/UsersService';
+import { Grid, Skeleton } from '@mui/material';
+import { User } from '../../../../services/Types';
 
 interface ColumnProps {
   col: {
@@ -105,17 +108,52 @@ export const Column: React.FC<ColumnProps> = ({ col: { list, id } }) => {
 };
 
 const StudentDNDTransfer = () => {
-  const initialColumns = {
+  const [students, setStudents] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [columns, setColumns] = useState<Columns>({
     AvailableStudents: {
       id: 'AvailableStudents',
-      list: ['item 1', 'item 2', 'item 3'],
+      list: [],
     },
     NewClassStudents: {
       id: 'NewClassStudents',
       list: [],
     },
-  };
-  const [columns, setColumns] = useState<Columns>(initialColumns);
+  });
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await UsersService.getAllUsers();
+        const studentData = response.data.filter(
+          (user) => user.role === 'student'
+        );
+        setStudents(studentData);
+
+        // Update the AvailableStudents list with student names
+        setColumns((prevColumns) => ({
+          ...prevColumns,
+          AvailableStudents: {
+            ...prevColumns.AvailableStudents,
+            list: studentData.map((student) => student.name),
+          },
+        }));
+
+        setLoading(false);
+      } catch (err) {
+        const error = err as Error;
+        setError(
+          error.message
+            ? error.message
+            : 'An error occurred while fetching students.'
+        );
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     // Make sure we have a valid destination
@@ -123,6 +161,8 @@ const StudentDNDTransfer = () => {
     console.log('Source ID:', source.droppableId);
     console.log('Destination ID:', destination.droppableId);
     console.log('Columns State:', columns);
+    console.log(students);
+
     // Make sure we're actually moving the item
     if (
       source.droppableId === destination.droppableId &&
@@ -184,6 +224,23 @@ const StudentDNDTransfer = () => {
       return null;
     }
   };
+
+  if (loading) {
+    return (
+      <>
+        <Skeleton variant="text" height={60} />
+        <Grid container spacing={2} className="mb-4 w-full">
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={300} />
+          </Grid>
+          <Grid item xs={12} md={6} xl={4}>
+            <Skeleton variant="rounded" height={300} />
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
