@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Button, Grid, Skeleton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Edit from '@mui/icons-material/Edit';
-import StudentDNDTransfer from './StudentDNDTransfer';
 import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
 
 const ClassInfo: React.FC = () => {
@@ -43,10 +42,6 @@ const ClassInfo: React.FC = () => {
     fetchClasses();
   }, [params.id]);
 
-  // const handleSelectedStudentsChange = (selectedStudents) => {
-  //   console.log('Selected Students:', selectedStudents);
-  // };
-
   const handleNewClassStudentsChange = (students) => {
     setNewClassStudents(students);
     console.log('Selected Students:', students);
@@ -72,45 +67,42 @@ const ClassInfo: React.FC = () => {
 
   return (
     <div>
-      <h2 className="font-semibold text-2xl">{classInfo.name}</h2>
-      <div className="mt-4">
-        <Button
-          variant="outlined"
-          onClick={() => navigate(-1)}
-          startIcon={<ArrowBackIosIcon />}
-        >
-          Back
-        </Button>
-        <h3 className="text-lg font-bold my-4">Students:</h3>
-        {classInfo.studentsIds.map((student) => (
-          <div key={student._id} className="mb-2 border-b pb-2">
-            <img
-              className="w-12 h-12 rounded-full mr-2 inline"
-              src={student.profileImage}
-              alt={student.name}
-            />
-            <div className="inline-block">
-              <div className="ml-4 flex justify-around gap-8">
-                <p>
-                  <strong>Name:</strong> {student.name}
-                </p>
-                <p>
-                  <strong>Email:</strong> {student.email}
-                </p>
-              </div>
+      <Button
+        variant="outlined"
+        onClick={() => navigate(-1)}
+        startIcon={<ArrowBackIosIcon />}
+      >
+        Back
+      </Button>
+      <h2 className="font-semibold text-2xl my-4">{classInfo.name}</h2>
+      {classInfo.studentsIds.map((student) => (
+        <div key={student._id} className="mb-2 border-b pb-2">
+          <img
+            className="w-12 h-12 rounded-full mr-2 inline"
+            src={student.profileImage}
+            alt={student.name}
+          />
+          <div className="inline-block">
+            <div className="ml-4 flex justify-around gap-8">
+              <p>
+                <strong>Name:</strong> {student.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {student.email}
+              </p>
             </div>
           </div>
-        ))}
-        <h3 className="font-semibold my-4">Select Students : </h3>
-        <StudentTransfer
-          onNewClassStudentsChange={handleNewClassStudentsChange}
-        />
-        <div className="mt-4">
-          {' '}
-          <Button size="small" variant="contained" startIcon={<Edit />}>
-            <span className="hidden md:inline">Update</span>
-          </Button>
         </div>
+      ))}
+      <h3 className="font-semibold my-4">Select Students : </h3>
+      <StudentTransfer
+        onNewClassStudentsChange={handleNewClassStudentsChange}
+      />
+      <div className="mt-4">
+        {' '}
+        <Button size="small" variant="contained" startIcon={<Edit />}>
+          <span className="hidden md:inline">Update</span>
+        </Button>
       </div>
     </div>
   );

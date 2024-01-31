@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import SearchBar from '../../../../components/ui/SearchBar';
 import { User } from '../../../../services/Types';
 import UsersService from '../../../../services/UsersService';
 import {
@@ -15,7 +14,7 @@ interface StudentTransferProps {
   onSelectedStudentsChange: (selectedStudents: User[]) => void;
 }
 
-const StudentTransfer: React.FC<StudentTransferProps> = ({
+const StudentTransferOld: React.FC<StudentTransferProps> = ({
   onSelectedStudentsChange,
 }) => {
   const [filter, setFilter] = useState('');
@@ -86,7 +85,6 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   return (
     <>
       <div className="w-full rounded-lg bg-blue-100 pt-4 mt-4">
-        {/* <SearchBar onFilterChange={setFilter} /> */}
         <div className="p-4 pt-0 mx-2 mt-2">
           <FormControl component="fieldset" error={true} variant="standard">
             <FormGroup>
@@ -106,4 +104,4 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   );
 };
 
-export default StudentTransfer;
+export default StudentTransferOld;

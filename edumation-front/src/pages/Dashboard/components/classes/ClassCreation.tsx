@@ -3,13 +3,13 @@ import { Button, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/ui/BackButton';
-import StudentTransfer from './StudentTransfer';
+import StudentTransfer from './StudentTransferOld';
 
 const ClassCreation = () => {
   const navigate = useNavigate();
   const [groupData, setGroupData] = useState({
     name: '',
-    studentsIds: [] as string[], // Update according to your data model
+    studentsIds: [] as string[],
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,8 +21,6 @@ const ClassCreation = () => {
     try {
       const response = await ClassesService.createGroup(groupData);
       console.log('Class created successfully:', response.data);
-      handleCloseCreate();
-      refetchGroups();
       navigate('new');
     } catch (error) {
       console.error('Error creating class:', error);

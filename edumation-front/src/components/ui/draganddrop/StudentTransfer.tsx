@@ -28,7 +28,6 @@ const StyledColumns = styled('div', {
 const StudentTransfer: React.FC<StudentTransferProps> = ({
   onNewClassStudentsChange,
 }) => {
-  const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [columns, setColumns] = useState<Columns>({
