@@ -18,17 +18,21 @@ interface ColumnProps {
 }
 
 interface ItemProps {
-  text: string;
+  student: User;
   index: number;
 }
 
 interface Column {
   id: string;
-  list: string[]; // or whatever the type of the items in the list is
+  list: User[]; // Changed from string[] to User[]
 }
 
 interface Columns {
   [key: string]: Column;
+}
+
+interface StudentTransferProps {
+  onNewClassStudentsChange: (newClassStudents: User[]) => void;
 }
 
 const StyledColumns = styled('div', {
@@ -73,16 +77,16 @@ const StyledItem = styled('div', {
   },
 });
 
-export const Item: React.FC<ItemProps> = ({ text, index }) => {
+export const Item: React.FC<ItemProps> = ({ student, index }) => {
   return (
-    <Draggable draggableId={text} index={index}>
+    <Draggable draggableId={student._id} index={index}>
       {(provided) => (
         <StyledItem
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {text}
+          {student.name} {/* Display the student's name or any property */}
         </StyledItem>
       )}
     </Draggable>
@@ -96,8 +100,8 @@ export const Column: React.FC<ColumnProps> = ({ col: { list, id } }) => {
         <StyledColumn>
           <h2>{id}</h2>
           <StyledList {...provided.droppableProps} ref={provided.innerRef}>
-            {list.map((text, index) => (
-              <Item key={text} text={text} index={index} />
+            {list.map((student, index) => (
+              <Item key={student._id} student={student} index={index} />
             ))}
             {provided.placeholder}
           </StyledList>
@@ -107,7 +111,9 @@ export const Column: React.FC<ColumnProps> = ({ col: { list, id } }) => {
   );
 };
 
-const StudentDNDTransfer = () => {
+const StudentDNDTransfer: React.FC<StudentTransferProps> = ({
+  onNewClassStudentsChange,
+}) => {
   const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -136,7 +142,7 @@ const StudentDNDTransfer = () => {
           ...prevColumns,
           AvailableStudents: {
             ...prevColumns.AvailableStudents,
-            list: studentData.map((student) => student.name),
+            list: studentData,
           },
         }));
 
@@ -158,10 +164,6 @@ const StudentDNDTransfer = () => {
   const onDragEnd = ({ source, destination }: DropResult) => {
     // Make sure we have a valid destination
     if (!destination) return;
-    console.log('Source ID:', source.droppableId);
-    console.log('Destination ID:', destination.droppableId);
-    console.log('Columns State:', columns);
-    console.log(students);
 
     // Make sure we're actually moving the item
     if (
@@ -221,6 +223,7 @@ const StudentDNDTransfer = () => {
         [newStartCol.id]: newStartCol,
         [newEndCol.id]: newEndCol,
       }));
+      onNewClassStudentsChange(columns['NewClassStudents'].list);
       return null;
     }
   };

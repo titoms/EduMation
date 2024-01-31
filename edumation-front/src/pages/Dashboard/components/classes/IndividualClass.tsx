@@ -6,7 +6,6 @@ import { Group } from '../../../../services/Types';
 import axios from 'axios';
 import { Button, Grid, Skeleton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import StudentTransfer from './StudentTransfer';
 import Edit from '@mui/icons-material/Edit';
 import StudentDNDTransfer from './StudentDNDTransfer';
 
@@ -16,6 +15,7 @@ const ClassInfo: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [classInfo, setClassInfo] = useState<Group | null>(null);
   const navigate = useNavigate();
+  const [newClassStudents, setNewClassStudents] = useState([]);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -42,8 +42,13 @@ const ClassInfo: React.FC = () => {
     fetchClasses();
   }, [params.id]);
 
-  const handleSelectedStudentsChange = (selectedStudents) => {
-    console.log('Selected Students:', selectedStudents);
+  // const handleSelectedStudentsChange = (selectedStudents) => {
+  //   console.log('Selected Students:', selectedStudents);
+  // };
+
+  const handleNewClassStudentsChange = (students) => {
+    setNewClassStudents(students);
+    console.log('Selected Students:', students);
   };
 
   if (!classInfo) return <p>Loading...</p>;
@@ -95,12 +100,10 @@ const ClassInfo: React.FC = () => {
             </div>
           </div>
         ))}
-        {/* <h3 className="font-semibold my-4">Select Students : </h3>
-        <StudentTransfer
-          onSelectedStudentsChange={handleSelectedStudentsChange}
-        /> */}
         <h3 className="font-semibold my-4">Select Students : </h3>
-        <StudentDNDTransfer />
+        <StudentDNDTransfer
+          onNewClassStudentsChange={handleNewClassStudentsChange}
+        />
         <div className="mt-4">
           {' '}
           <Button size="small" variant="contained" startIcon={<Edit />}>
