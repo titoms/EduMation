@@ -8,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ClassesService from '../../../../services/ClassesService';
 import axios from 'axios';
 import DeleteClassModal from './DeleteClassModal';
-import UpdateClassModal from './UpdateClassModal';
 import SearchBar from '../../../../components/ui/SearchBar';
 
 const ClassesList = () => {
@@ -16,7 +15,6 @@ const ClassesList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [openDelete, setOpenDelete] = useState(false);
-  const [openUpdate, setOpenUpdate] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
   const [selectedClassName, setSelectedClassName] = useState<string>('');
   const { refetchGroups } = useContext(ClassContext);
@@ -29,13 +27,6 @@ const ClassesList = () => {
     setOpenDelete(true);
   };
   const handleCloseDelete = () => setOpenDelete(false);
-
-  const handleOpenUpdate = (groupId: string, groupName: string) => {
-    setSelectedClassId(groupId);
-    setSelectedClassName(groupName);
-    setOpenUpdate(true);
-  };
-  const handleCloseUpdate = () => setOpenUpdate(false);
 
   const handleDeleteClassSuccess = () => {
     setClasses(classes.filter((group) => group._id !== selectedClassId));
