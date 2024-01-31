@@ -75,25 +75,32 @@ const ClassInfo: React.FC = () => {
         Back
       </Button>
       <h2 className="font-semibold text-2xl my-4">{classInfo.name}</h2>
-      {classInfo.studentsIds.map((student) => (
-        <div key={student._id} className="mb-2 border-b pb-2">
-          <img
-            className="w-12 h-12 rounded-full mr-2 inline"
-            src={student.profileImage}
-            alt={student.name}
-          />
-          <div className="inline-block">
-            <div className="ml-4 flex justify-around gap-8">
-              <p>
-                <strong>Name:</strong> {student.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {student.email}
-              </p>
+      {classInfo.studentsIds.length > 0 ? (
+        classInfo.studentsIds.map((student) => (
+          <div key={student._id} className="mb-2 border-b pb-2">
+            <img
+              className="w-12 h-12 rounded-full mr-2 inline"
+              src={student.profileImage}
+              alt={student.name}
+            />
+            <div className="inline-block">
+              <div className="ml-4 flex justify-around gap-8">
+                <p>
+                  <strong>Name:</strong> {student.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {student.email}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <h3 className="text-center text-2xl text-gray-600 bg-gray-200 rounded-lg p-4">
+          No students in this class...
+        </h3>
+      )}
+
       <h3 className="font-semibold my-4">Select Students : </h3>
       <StudentTransfer
         onNewClassStudentsChange={handleNewClassStudentsChange}

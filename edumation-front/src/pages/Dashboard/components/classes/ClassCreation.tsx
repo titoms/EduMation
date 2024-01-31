@@ -3,7 +3,8 @@ import { Button, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/ui/BackButton';
-import StudentTransfer from './StudentTransferOld';
+import StudentTransferOld from './StudentTransferOld';
+import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
 
 const ClassCreation = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const ClassCreation = () => {
     name: '',
     studentsIds: [] as string[],
   });
+  const [newClassStudents, setNewClassStudents] = useState([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGroupData({ ...groupData, [e.target.name]: e.target.value });
@@ -21,7 +23,7 @@ const ClassCreation = () => {
     try {
       const response = await ClassesService.createGroup(groupData);
       console.log('Class created successfully:', response.data);
-      navigate('new');
+      navigate('/dashboard/classes');
     } catch (error) {
       console.error('Error creating class:', error);
     }
@@ -29,6 +31,11 @@ const ClassCreation = () => {
 
   const handleSelectedStudentsChange = (selectedStudents) => {
     setGroupData({ ...groupData, studentsIds: selectedStudents });
+  };
+
+  const handleNewClassStudentsChange = (students) => {
+    setNewClassStudents(students);
+    console.log('Selected Students:', students);
   };
 
   return (
@@ -46,10 +53,12 @@ const ClassCreation = () => {
           onChange={handleChange}
         />
         <h3 className="font-semibold my-4">Select Students : </h3>
-        <StudentTransfer
+        <StudentTransferOld
           onSelectedStudentsChange={handleSelectedStudentsChange}
         />
-
+        <StudentTransfer
+          onNewClassStudentsChange={handleNewClassStudentsChange}
+        />
         <div className="mt-4 flex gap-4">
           <Button type="submit" variant="contained">
             Create

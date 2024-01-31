@@ -3,7 +3,6 @@ import { Grid, Button, Skeleton } from '@mui/material';
 import { Group } from '../../../../services/Types';
 import { Link } from 'react-router-dom';
 import { ClassContext } from '../../../../context/ClassContext';
-import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClassesService from '../../../../services/ClassesService';
 import axios from 'axios';
@@ -32,11 +31,6 @@ const ClassesList = () => {
     setClasses(classes.filter((group) => group._id !== selectedClassId));
     setSelectedClassId(null);
     setOpenDelete(false);
-  };
-
-  const handleUpdateClassSuccess = () => {
-    // Refresh the list or handle the updated class info
-    setOpenUpdate(false);
   };
 
   useEffect(() => {
@@ -121,15 +115,6 @@ const ClassesList = () => {
           onClassDeleted={handleDeleteClassSuccess}
         />
       )}
-      {/* {selectedClassId && (
-        <UpdateClassModal
-          open={openUpdate}
-          onClose={handleCloseUpdate}
-          groupId={selectedClassId}
-          className={selectedClassName}
-          onClassUpdated={handleUpdateClassSuccess}
-        />
-      )} */}
     </>
   );
 };
