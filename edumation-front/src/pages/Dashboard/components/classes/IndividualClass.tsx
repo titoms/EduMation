@@ -8,6 +8,7 @@ import { Button, Grid, Skeleton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Edit from '@mui/icons-material/Edit';
 import StudentDNDTransfer from './StudentDNDTransfer';
+import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
 
 const ClassInfo: React.FC = () => {
   const params = useParams();
@@ -101,7 +102,7 @@ const ClassInfo: React.FC = () => {
           </div>
         ))}
         <h3 className="font-semibold my-4">Select Students : </h3>
-        <StudentDNDTransfer
+        <StudentTransfer
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
         <div className="mt-4">
