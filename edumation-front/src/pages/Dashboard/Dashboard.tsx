@@ -23,7 +23,7 @@ const Dashboard = () => {
   return (
     <div className="flex bg-gray-100 overflow-hidden">
       <SideBar />
-      <div className="flex-grow w-full overflow-auto h-screen p-4">
+      <div className="flex-grow w-full overflow-auto p-4">
         <UserProvider>
           <Routes>
             <Route index element={<MainDashboard />} />

@@ -70,11 +70,11 @@ const IndividualClass: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <>
       <BackButton />
       <h2 className="text-2xl font-semibold my-4">{classData.name}</h2>
 
-      <form onSubmit={handleUpdateGroup}>
+      <form onSubmit={handleUpdateGroup} className="mb-12">
         <div className="my-4">
           <TextField
             fullWidth
@@ -94,7 +94,11 @@ const IndividualClass: React.FC = () => {
             <div key={student._id} className="my-8 border-b pb-2">
               <img
                 className="w-12 h-12 rounded-full mr-2 inline"
-                src={student.profileImage}
+                src={
+                  student.profileImage
+                    ? student.profileImage
+                    : 'https://via.placeholder.com/150'
+                }
                 alt={student.name}
               />
               <div className="inline-block">
@@ -130,7 +134,7 @@ const IndividualClass: React.FC = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 

@@ -30,7 +30,7 @@ export const DraggableItem: React.FC<ItemProps> = ({ student, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {student.name}
+          {student.name} - {student.email}
         </StyledItem>
       )}
     </Draggable>

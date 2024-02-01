@@ -3,7 +3,7 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { styled } from '@stitches/react';
 import UsersService from '../../../services/UsersService';
 import { User } from '../../../services/Types';
-import { DroppableColumn } from './DraggableColumn';
+import { DraggableColumn } from './DraggableColumn';
 import UserSkeleton from '../skeletons/UserSkeleton';
 
 interface StudentTransferProps {
@@ -130,7 +130,7 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     <DragDropContext onDragEnd={onDragEnd}>
       <StyledColumns>
         {Object.values(columns).map((col) => (
-          <DroppableColumn col={col} key={col.id} />
+          <DraggableColumn col={col} key={col.id} />
         ))}
       </StyledColumns>
     </DragDropContext>

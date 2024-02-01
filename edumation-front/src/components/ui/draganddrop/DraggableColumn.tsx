@@ -32,7 +32,7 @@ const StyledList = styled('div', {
   marginTop: 8,
 });
 
-export const DroppableColumn: React.FC<ColumnProps> = ({
+export const DraggableColumn: React.FC<ColumnProps> = ({
   col: { list, id },
 }) => {
   return (
