@@ -18,13 +18,14 @@ import ClassCreation from './components/classes/ClassCreation';
 import CourseCreation from './components/courses/CourseCreation';
 import ScheduleCreation from './components/schedule/ScheduleCreation';
 import ClassImport from './components/classes/ClassImport';
+import ConditionalHeightWrapper from '../../utils/ConditionalHeightWrapper';
 
 const Dashboard = () => {
   return (
-    <div className="flex bg-gray-100 overflow-hidden">
+    <div className="flex bg-gray-100">
       <SideBar />
-      <div className="flex-grow w-full overflow-auto p-4">
-        <UserProvider>
+      <UserProvider>
+        <ConditionalHeightWrapper>
           <Routes>
             <Route index element={<MainDashboard />} />
             <Route path="profile" element={<Profile />} />
@@ -50,8 +51,8 @@ const Dashboard = () => {
             <Route path="quizz" element={<Quizz />} />
             <Route path="quizz/new" element={<QuizzCreation />} />
           </Routes>
-        </UserProvider>
-      </div>
+        </ConditionalHeightWrapper>
+      </UserProvider>
     </div>
   );
 };

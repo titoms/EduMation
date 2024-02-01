@@ -28,10 +28,12 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   const [columns, setColumns] = useState({
     AvailableStudents: {
       id: 'AvailableStudents',
+      name: 'Available Students',
       list: [] as User[],
     },
     NewClassStudents: {
       id: 'NewClassStudents',
+      name: 'Class Students',
       list: initialStudents || [],
     },
   });

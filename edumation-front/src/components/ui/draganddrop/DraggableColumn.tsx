@@ -7,6 +7,7 @@ import { User } from '../../../services/Types';
 interface ColumnProps {
   col: {
     id: string;
+    name: string;
     list: User[];
   };
 }
@@ -33,7 +34,7 @@ const StyledList = styled('div', {
 });
 
 export const DraggableColumn: React.FC<ColumnProps> = ({
-  col: { list, id },
+  col: { list, id, name },
 }) => {
   return (
     <Droppable droppableId={id}>
