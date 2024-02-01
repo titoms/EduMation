@@ -20,9 +20,7 @@ const ConditionalHeightWrapper = ({ children }) => {
     };
   }, [children]);
 
-  const wrapperClass = `flex-grow w-full p-4 ${
-    applyScreenHeight ? 'h-screen' : 'h-auto'
-  }`;
+  const wrapperClass = `flex-grow w-full p-4 ${applyScreenHeight ? '' : ''}`;
 
   return (
     <div ref={wrapperRef} className={wrapperClass}>

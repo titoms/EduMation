@@ -28,12 +28,10 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   const [columns, setColumns] = useState({
     AvailableStudents: {
       id: 'AvailableStudents',
-      name: 'Available Students',
       list: [] as User[],
     },
     NewClassStudents: {
       id: 'NewClassStudents',
-      name: 'Class Students',
       list: initialStudents || [],
     },
   });
@@ -83,12 +81,6 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) return;
 
-    if (
-      source.droppableId === destination.droppableId &&
-      destination.index === source.index
-    )
-      return;
-
     const start = columns[source.droppableId as keyof typeof columns];
     const end = columns[destination.droppableId as keyof typeof columns];
 
@@ -115,6 +107,15 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
 
       if (destination.droppableId === 'NewClassStudents') {
         const newClassStudentIds = newEndCol.list.map((student) => student._id);
+        onNewClassStudentsChange(newClassStudentIds);
+      } else if (
+        source.droppableId === 'NewClassStudents' &&
+        destination.droppableId === 'AvailableStudents'
+      ) {
+        // Handle removing student from NewClassStudents when dragged back to AvailableStudents
+        const newClassStudentIds = newStartCol.list.map(
+          (student) => student._id
+        );
         onNewClassStudentsChange(newClassStudentIds);
       }
     }
