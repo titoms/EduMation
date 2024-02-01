@@ -12,7 +12,7 @@ interface ColumnProps {
 }
 
 const StyledColumn = styled('div', {
-  padding: '0 16px',
+  padding: '0',
   display: 'flex',
   flexDirection: 'column',
   marginTop: 8,

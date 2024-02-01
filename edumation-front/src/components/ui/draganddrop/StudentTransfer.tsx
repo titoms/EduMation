@@ -16,7 +16,7 @@ const StyledColumns = styled('div', {
   gridTemplateColumns: '1fr 1fr',
   width: '80%',
   height: '80%',
-  gap: '8px',
+  gap: '24px',
 });
 
 const StudentTransfer: React.FC<StudentTransferProps> = ({

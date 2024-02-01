@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Register: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    role: 'student',
+    role: '',
   });
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -60,6 +61,35 @@ const Register: React.FC = () => {
         setErrorMessage('Registration failed. Please try again.');
       }
     }
+  };
+
+  const RoleSelection = () => {
+    const handleChangeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData({ ...formData, role: event.target.value as string });
+    };
+
+    return (
+      <>
+        <Box sx={{ minWidth: 120, marginTop: 2, marginBottom: 2 }}>
+          <FormControl fullWidth>
+            <InputLabel id="roleSelectionInputLabel">Role</InputLabel>
+            <Select
+              labelId="roleSelectionInputLabel"
+              id="roleSelectionInput"
+              required
+              fullWidth
+              value={formData.role}
+              label="Role"
+              onChange={handleChangeRole}
+            >
+              <MenuItem value={'student'}>Student</MenuItem>
+              <MenuItem value={'teacher'}>Teacher</MenuItem>
+              <MenuItem value={'school'}>School</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </>
+    );
   };
 
   return (
@@ -144,6 +174,7 @@ const Register: React.FC = () => {
                 onChange={handleChange}
                 autoComplete="current-password"
               />
+              <RoleSelection />
               <DragAndDrop onFileDrop={handleFileDrop} />
               <FormControlLabel
                 className="mt-4"
