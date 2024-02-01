@@ -55,7 +55,7 @@ const Courses: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className="h-screen">
       <h1 className="text-2xl font-semibold">Courses</h1>
       <div className="mt-4 flex justify-end gap-4">
         <SearchBar onFilterChange={setFilter} />
@@ -85,7 +85,7 @@ const Courses: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

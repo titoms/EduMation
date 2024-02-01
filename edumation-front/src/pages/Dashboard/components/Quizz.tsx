@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Quizz: React.FC = () => {
   return (
-    <>
+    <div className="h-screen">
       <h1 className="text-2xl font-semibold">Quizz</h1>
       <div className="mt-4 flex justify-end">
         <Link to="new">
@@ -16,7 +16,7 @@ const Quizz: React.FC = () => {
         </Link>
       </div>
       <QuizzList />
-    </>
+    </div>
   );
 };
 

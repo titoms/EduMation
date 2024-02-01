@@ -58,7 +58,7 @@ const Schools: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className="h-screen">
       <h1 className="text-2xl font-semibold">Schools</h1>
       <div className="mt-4 flex justify-end gap-2">
         <SearchBar onFilterChange={setFilter} />
@@ -71,7 +71,7 @@ const Schools: React.FC = () => {
       <div className="mt-8">
         <SchoolsList schools={filteredSchools} />
       </div>
-    </>
+    </div>
   );
 };
 

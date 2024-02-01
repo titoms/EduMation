@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { User } from '../../../../services/Types';
 import UsersService from '../../../../services/UsersService';
 import { toast } from 'react-toastify';
-import DragAndDrop from '../../../../components/DragAndDrop';
+import DragAndDrop from '../../../../components/ProfilePicDragAndDrop';
 import { Select, Option } from '@material-tailwind/react';
 
 interface UpdateUserModalProps {

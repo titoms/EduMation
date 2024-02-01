@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Grid, Button, Skeleton } from '@mui/material';
+import { Button, Checkbox } from '@mui/material';
 import { Group } from '../../../../services/Types';
 import { Link } from 'react-router-dom';
 import { ClassContext } from '../../../../context/ClassContext';
@@ -8,6 +8,9 @@ import ClassesService from '../../../../services/ClassesService';
 import axios from 'axios';
 import DeleteClassModal from './DeleteClassModal';
 import SearchBar from '../../../../components/ui/SearchBar';
+import Edit from '@mui/icons-material/Edit';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -18,7 +21,6 @@ const ClassesList = () => {
   const [selectedClassName, setSelectedClassName] = useState<string>('');
   const { refetchGroups } = useContext(ClassContext);
   const [filter, setFilter] = useState('');
-  const [filteredClasses, setFilteredClasses] = useState(classes);
 
   const handleOpenDelete = (groupId: string, groupName: string) => {
     setSelectedClassId(groupId);
@@ -38,10 +40,6 @@ const ClassesList = () => {
       try {
         const response = await ClassesService.getAllGroups();
         setClasses(response.data);
-        const result = classes.filter((classe) =>
-          classe.name.toLowerCase().includes(filter.toLowerCase())
-        );
-        setFilteredClasses(result);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -54,23 +52,13 @@ const ClassesList = () => {
     };
 
     fetchClasses();
-  }, [refetchGroups, filter, classes]);
+  }, [refetchGroups]);
 
-  if (loading) {
-    return (
-      <>
-        <Skeleton variant="text" height={60} />
-        <Grid container spacing={2} className="mb-4 w-full">
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={300} />
-          </Grid>
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={300} />
-          </Grid>
-        </Grid>
-      </>
-    );
-  }
+  const filteredClasses = classes.filter((classe) =>
+    classe.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -78,16 +66,32 @@ const ClassesList = () => {
       <div className="flex my-4 justify-end gap-2">
         {' '}
         <SearchBar onFilterChange={setFilter} />
+        <Link to="new">
+          <Button startIcon={<Edit />} variant="contained">
+            Create new class
+          </Button>
+        </Link>
+        <Link to="import">
+          <Button startIcon={<ArrowUpwardIcon />} variant="outlined">
+            Import
+          </Button>
+        </Link>
+        <Link to="">
+          <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
+            <span className="hidden md:inline">Delete Bulk</span>
+          </Button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
         {filteredClasses.map((group) => (
           <div key={group._id} className="bg-white shadow rounded-lg p-6">
             <div className="flex justify-between gap-4 flex-row flex-wrap md:flex-nowrap">
-              <Link to={group._id}>
-                <h2 className="text-xl font-bold hover:text-blue-600 overflow-hidden">
+              <Checkbox />
+              <Link to={group._id} className="pt-2">
+                <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
                   {group.name}
-                </h2>
+                </span>
               </Link>
 
               <div className="flex justify-start gap-2 md:mt-0">

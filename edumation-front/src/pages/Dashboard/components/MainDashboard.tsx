@@ -55,7 +55,7 @@ const MainDashboard = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className="h-screen">
       <h1 className="text-2xl font-semibold">Dashboard</h1>
 
       {/* RESUME */}
@@ -755,7 +755,7 @@ const MainDashboard = () => {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 };
 
