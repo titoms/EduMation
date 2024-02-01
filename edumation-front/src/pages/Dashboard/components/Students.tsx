@@ -1,7 +1,7 @@
 // Students.tsx
 import { useEffect, useState } from 'react';
 import UserTable from './users/UserTable';
-import UpdateUserModal from './users/UpdateUserModal';
+import UpdateUserModal from '../../../components/ui/UpdateProfileModal';
 import DeleteUserConfirmationModal from './users/DeleteUserConfirmationModal';
 import { useUserContext } from '../../../context/UserContext';
 import { User } from '../../../services/Types';

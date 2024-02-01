@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { User } from '../../../../services/Types';
 import UsersService from '../../../../services/UsersService';
-import UpdateProfileModal from './UpdateProfileModal';
+import UpdateProfileModal from '../../../../components/ui/UpdateProfileModal';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { Button } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
