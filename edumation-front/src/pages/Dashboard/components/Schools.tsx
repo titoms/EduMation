@@ -3,10 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { School } from '../../../services/Types';
 import SchoolsService from '../../../services/SchoolsService';
-import { Button, Grid, Skeleton } from '@mui/material';
+import { Button } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import SearchBar from '../../../components/ui/SearchBar';
 import SchoolsList from './school/SchoolsList';
+import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
 
 const Schools: React.FC = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -37,24 +38,7 @@ const Schools: React.FC = () => {
     fetchSchools();
   }, [filter, schools]);
 
-  if (loading) {
-    return (
-      <>
-        <Skeleton variant="text" height={60} />
-        <Grid container spacing={2} className="mb-4 w-full">
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={250} />
-          </Grid>
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={250} />
-          </Grid>
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={250} />
-          </Grid>
-        </Grid>
-      </>
-    );
-  }
+  if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (

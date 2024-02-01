@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Course } from '../../../services/Types';
 import CoursesService from '../../../services/CoursesService';
-import { Button, Grid, Skeleton } from '@mui/material';
-import { Link, Outlet } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import Edit from '@mui/icons-material/Edit';
 import SearchBar from '../../../components/ui/SearchBar';
+import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -37,21 +38,7 @@ const Courses: React.FC = () => {
     fetchCourses();
   }, [filter, courses]);
 
-  if (loading) {
-    return (
-      <>
-        <Skeleton variant="text" height={60} />
-        <Grid container spacing={2} className="mb-4 w-full">
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={300} />
-          </Grid>
-          <Grid item xs={12} md={6} xl={4}>
-            <Skeleton variant="rounded" height={300} />
-          </Grid>
-        </Grid>
-      </>
-    );
-  }
+  if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (

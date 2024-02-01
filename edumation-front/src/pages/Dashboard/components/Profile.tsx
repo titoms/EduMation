@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Corrected import for jwt-decode
-import { Skeleton } from '@mui/material';
 import UsersService from '../../../services/UsersService';
 import { User } from '../../../services/Types';
 import ProfileInformation from './profile/ProfileInformation';
+import ProfileSkeleton from '../../../components/ui/skeletons/ProfileSkeleton';
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState<User | null>(null);
@@ -46,7 +46,7 @@ const Profile = () => {
     setLoading(false);
   };
 
-  if (loading) return <SkeletonComponent />;
+  if (loading) return <ProfileSkeleton />;
   if (error) return <ErrorComponent errorMessage={error} />;
 
   return (
@@ -56,13 +56,6 @@ const Profile = () => {
     </div>
   );
 };
-
-const SkeletonComponent = () => (
-  <>
-    <Skeleton variant="text" height={60} />
-    <Skeleton variant="rounded" height={200} />
-  </>
-);
 
 const ErrorComponent = ({ errorMessage }) => <div>Error: {errorMessage}</div>;
 

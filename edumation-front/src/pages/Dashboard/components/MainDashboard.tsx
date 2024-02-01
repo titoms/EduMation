@@ -3,6 +3,7 @@ import axios from 'axios';
 import SchoolsService from '../../../services/SchoolsService';
 import UsersService from '../../../services/UsersService';
 import { User, School } from '../../../services/Types';
+import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
 
 const MainDashboard = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -51,7 +52,7 @@ const MainDashboard = () => {
     fetchStudents();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (
