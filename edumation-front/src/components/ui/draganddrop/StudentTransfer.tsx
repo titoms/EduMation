@@ -6,15 +6,9 @@ import { User } from '../../../services/Types';
 import { DroppableColumn } from './DraggableColumn';
 import UserSkeleton from '../skeletons/UserSkeleton';
 
-interface Columns {
-  [key: string]: {
-    id: string;
-    list: User[];
-  };
-}
-
 interface StudentTransferProps {
-  onNewClassStudentsChange: (newClassStudents: User[]) => void;
+  initialStudents: User[];
+  onNewClassStudentsChange: (students: string[]) => void;
 }
 
 const StyledColumns = styled('div', {
@@ -26,13 +20,20 @@ const StyledColumns = styled('div', {
 });
 
 const StudentTransfer: React.FC<StudentTransferProps> = ({
+  initialStudents,
   onNewClassStudentsChange,
 }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [columns, setColumns] = useState<Columns>({
-    AvailableStudents: { id: 'AvailableStudents', list: [] },
-    NewClassStudents: { id: 'NewClassStudents', list: [] },
+  const [columns, setColumns] = useState({
+    AvailableStudents: {
+      id: 'AvailableStudents',
+      list: [] as User[],
+    },
+    NewClassStudents: {
+      id: 'NewClassStudents',
+      list: initialStudents || [],
+    },
   });
 
   useEffect(() => {
@@ -42,9 +43,18 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
         const studentData = response.data.filter(
           (user) => user.role === 'student'
         );
+        const availableStudents = studentData.filter(
+          (student) =>
+            !initialStudents.some(
+              (initialStudent) => initialStudent._id === student._id
+            )
+        );
         setColumns({
-          AvailableStudents: { id: 'AvailableStudents', list: studentData },
-          NewClassStudents: { id: 'NewClassStudents', list: [] },
+          AvailableStudents: {
+            id: 'AvailableStudents',
+            list: availableStudents,
+          },
+          NewClassStudents: { id: 'NewClassStudents', list: initialStudents },
         });
         setLoading(false);
       } catch (err) {
@@ -59,7 +69,7 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     };
 
     fetchStudents();
-  }, []);
+  }, [initialStudents]);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) return;
@@ -70,8 +80,8 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     )
       return;
 
-    const start = columns[source.droppableId];
-    const end = columns[destination.droppableId];
+    const start = columns[source.droppableId as keyof typeof columns];
+    const end = columns[destination.droppableId as keyof typeof columns];
 
     if (start === end) {
       const newList = Array.from(start.list);
@@ -95,7 +105,10 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
       });
 
       if (destination.droppableId === 'NewClassStudents') {
-        onNewClassStudentsChange(newEndCol.list);
+        const newClassStudentIds = columns['NewClassStudents'].list.map(
+          (student) => student._id
+        );
+        onNewClassStudentsChange(newClassStudentIds);
       }
     }
   };

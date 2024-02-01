@@ -6,6 +6,8 @@ import DeleteUserConfirmationModal from './users/DeleteUserConfirmationModal';
 import { useUserContext } from '../../../context/UserContext';
 import { User } from '../../../services/Types';
 import { Grid, Skeleton } from '@mui/material';
+import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
+import TableSkeleton from '../../../components/ui/skeletons/TableSkeleton';
 
 const Users = () => {
   const userContext = useUserContext();
@@ -16,6 +18,7 @@ const Users = () => {
   const [students, setStudents] = useState<User[]>([]);
   const [teachers, setTeachers] = useState<User[]>([]);
   const [schools, setSchools] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (userContext && userContext.users) {
@@ -24,6 +27,7 @@ const Users = () => {
       setTeachers(userContext.users.filter((user) => user.role === 'teacher'));
       setSchools(userContext.users.filter((user) => user.role === 'school'));
     }
+    setLoading(false);
   }, [userContext]);
 
   if (!userContext) {
@@ -51,6 +55,8 @@ const Users = () => {
     setSelectedUser(user);
     setShowDeleteModal(true);
   };
+
+  if (loading) return <TableSkeleton />;
 
   return (
     <>

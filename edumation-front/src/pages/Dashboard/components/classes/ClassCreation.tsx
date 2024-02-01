@@ -3,8 +3,14 @@ import { Button, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/ui/BackButton';
-import StudentTransferOld from './StudentTransferOld';
 import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
+import { User } from '../../../../services/Types';
+
+export interface Group {
+  name: string;
+  studentsIds: string[];
+  schoolId?: string;
+}
 
 const ClassCreation = () => {
   const navigate = useNavigate();
@@ -12,7 +18,6 @@ const ClassCreation = () => {
     name: '',
     studentsIds: [] as string[],
   });
-  const [newClassStudents, setNewClassStudents] = useState([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGroupData({ ...groupData, [e.target.name]: e.target.value });
@@ -22,6 +27,7 @@ const ClassCreation = () => {
     event.preventDefault();
     try {
       const response = await ClassesService.createGroup(groupData);
+      console.log('GroupData after change:', groupData);
       console.log('Class created successfully:', response.data);
       navigate('/dashboard/classes');
     } catch (error) {
@@ -29,13 +35,9 @@ const ClassCreation = () => {
     }
   };
 
-  const handleSelectedStudentsChange = (selectedStudents) => {
-    setGroupData({ ...groupData, studentsIds: selectedStudents });
-  };
-
-  const handleNewClassStudentsChange = (students) => {
-    setNewClassStudents(students);
-    console.log('Selected Students:', students);
+  const handleNewClassStudentsChange = (students: User[]) => {
+    const studentIds = students.map((student) => student._id); // Extracting IDs
+    setGroupData({ ...groupData, studentsIds: studentIds });
   };
 
   return (
@@ -53,9 +55,6 @@ const ClassCreation = () => {
           onChange={handleChange}
         />
         <h3 className="font-semibold my-4">Select Students : </h3>
-        <StudentTransferOld
-          onSelectedStudentsChange={handleSelectedStudentsChange}
-        />
         <StudentTransfer
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
