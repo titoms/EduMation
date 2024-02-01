@@ -17,7 +17,6 @@ const Schedules = () => {
       try {
         const response = await ScheduleService.getAllSchedules();
         setSchedules(response.data);
-        console.log(response.data);
       } catch (error) {
         toast.error('Failed to fetch schedules');
       }

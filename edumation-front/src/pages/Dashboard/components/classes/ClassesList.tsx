@@ -3,10 +3,10 @@ import { Group } from '../../../../services/Types';
 import { ClassContext } from '../../../../context/ClassContext';
 import ClassesService from '../../../../services/ClassesService';
 import axios from 'axios';
-import DeleteClassModal from './DeleteClassModal';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import ClassCard from './ClassCard';
 import ClassActions from './ClassActions';
+import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -25,10 +25,11 @@ const ClassesList = () => {
   };
   const handleCloseDelete = () => setOpenDelete(false);
 
-  const handleDeleteClassSuccess = () => {
+  const handleDeleteClassSuccess = async (itemId) => {
     setClasses(classes.filter((group) => group._id !== selectedClassId));
     setSelectedClassId(null);
     setOpenDelete(false);
+    await ClassesService.deleteGroup(itemId);
   };
 
   useEffect(() => {
@@ -70,12 +71,12 @@ const ClassesList = () => {
         ))}
       </div>
       {selectedClassId && (
-        <DeleteClassModal
+        <DeleteConfirmationModal
           open={openDelete}
           onClose={handleCloseDelete}
-          groupId={selectedClassId}
-          className={selectedClassName}
-          onClassDeleted={handleDeleteClassSuccess}
+          onDelete={handleDeleteClassSuccess}
+          itemId={selectedClassId}
+          confirmationMessage={`Are you sure you want to delete the class ${selectedClassName}?`}
         />
       )}
     </>

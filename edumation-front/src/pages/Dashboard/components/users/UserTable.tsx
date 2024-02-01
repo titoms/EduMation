@@ -30,7 +30,7 @@ const UserTable: React.FC<UserTableProps> = ({
 
   return (
     <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-      <div className="my-2">
+      <div className="my-2 ml-2">
         <SearchBar onFilterChange={setFilter} />
       </div>
 

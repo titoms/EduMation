@@ -123,15 +123,11 @@ const IndividualClass: React.FC = () => {
           initialStudents={classData?.studentsIds}
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
-        <div className="mt-4">
-          <Button
-            type="submit"
-            size="small"
-            variant="contained"
-            startIcon={<Edit />}
-          >
+        <div className="flex gap-4 justify-end mt-8">
+          <Button type="submit" variant="contained" startIcon={<Edit />}>
             Update
           </Button>
+          <BackButton title="Cancel" icon={false} />
         </div>
       </form>
     </>

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Modal, Box } from '@mui/material';
-import ClassesService from '../../../../services/ClassesService';
 
-interface DeleteClassModalProps {
+interface DeleteConfirmationModalProps {
   open: boolean;
   onClose: () => void;
-  groupId: string;
-  className: string;
-  onClassDeleted: () => void;
+  onDelete: (itemId: string) => Promise<void>;
+  itemId: string;
+  confirmationMessage: string;
 }
 
 const style = {
@@ -22,20 +21,18 @@ const style = {
   p: 4,
 };
 
-const DeleteClassModal: React.FC<DeleteClassModalProps> = ({
+const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
   open,
   onClose,
-  groupId,
-  className,
-  onClassDeleted,
+  onDelete,
+  itemId,
+  confirmationMessage,
 }) => {
   const handleDelete = async () => {
     try {
-      await ClassesService.deleteGroup(groupId);
-      onClassDeleted();
-      console.log('Group deleted with ID:', groupId);
+      await onDelete(itemId);
     } catch (error) {
-      console.error('Error deleting group:', error);
+      console.error('Error during deletion:', error);
     }
     onClose();
   };
@@ -43,10 +40,7 @@ const DeleteClassModal: React.FC<DeleteClassModalProps> = ({
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
-        <h3 className="text-center">
-          Are you sure to delete class{' '}
-          <span className="font-bold">{className}</span> ?
-        </h3>
+        <h3 className="text-center">{confirmationMessage}</h3>
         <div className="mt-4 flex justify-center gap-4">
           <button
             onClick={handleDelete}
@@ -66,4 +60,4 @@ const DeleteClassModal: React.FC<DeleteClassModalProps> = ({
   );
 };
 
-export default DeleteClassModal;
+export default DeleteConfirmationModal;

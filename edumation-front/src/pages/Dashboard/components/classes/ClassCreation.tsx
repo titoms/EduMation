@@ -55,9 +55,9 @@ const ClassCreation = () => {
         <StudentTransfer
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
-        <div className="mt-4 flex gap-4">
+        <div className="flex gap-4 justify-end mt-8">
           <Button type="submit" variant="contained">
-            Create
+            Update
           </Button>
           <BackButton title="Cancel" icon={false} />
         </div>
