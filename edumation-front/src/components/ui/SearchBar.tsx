@@ -1,6 +1,5 @@
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconButton } from '@mui/material';
+import { InputBase, Paper, IconButton } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 interface SearchBarProps {
   onFilterChange: (filterValue: string) => void;
@@ -8,18 +7,25 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onFilterChange }) => {
   return (
-    <div className="ml-2">
-      <IconButton aria-label="Search...">
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
-      </IconButton>
-      <input
-        type="text"
-        id="classSearchBar"
+    <Paper
+      component="form"
+      sx={{
+        bgcolor: '#fff',
+        display: 'flex',
+        alignItems: 'center',
+        width: 300,
+      }}
+    >
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
         placeholder="Search..."
-        className="px-3 py-2 border rounded-full"
+        inputProps={{ 'aria-label': 'Search bar' }}
         onChange={(e) => onFilterChange(e.target.value)}
       />
-    </div>
+      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </Paper>
   );
 };
 
