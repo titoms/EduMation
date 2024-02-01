@@ -112,9 +112,7 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
       });
 
       if (destination.droppableId === 'NewClassStudents') {
-        const newClassStudentIds = columns['NewClassStudents'].list.map(
-          (student) => student._id
-        );
+        const newClassStudentIds = newEndCol.list.map((student) => student._id);
         onNewClassStudentsChange(newClassStudentIds);
       }
     }
@@ -129,15 +127,13 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   }
 
   return (
-    <>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <StyledColumns>
-          {Object.values(columns).map((col) => (
-            <DroppableColumn col={col} key={col.id} />
-          ))}
-        </StyledColumns>
-      </DragDropContext>
-    </>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <StyledColumns>
+        {Object.values(columns).map((col) => (
+          <DroppableColumn col={col} key={col.id} />
+        ))}
+      </StyledColumns>
+    </DragDropContext>
   );
 };
 

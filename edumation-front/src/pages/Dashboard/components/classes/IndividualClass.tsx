@@ -12,7 +12,7 @@ import BackButton from '../../../../components/ui/BackButton';
 const IndividualClass: React.FC = () => {
   const params = useParams();
   const groupId = params.id!;
-  const [classInfo, setClassInfo] = useState<Group | null>(null);
+  const [classData, setClassData] = useState<Group | null>(null);
   const [updatedStudents, setUpdatedStudents] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const IndividualClass: React.FC = () => {
     const fetchClasses = async () => {
       try {
         const response = await ClassesService.getGroupById(groupId);
-        setClassInfo(response.data);
+        setClassData(response.data);
         setUpdatedStudents(
           response.data.studentsIds.map((student) => student._id)
         );
@@ -42,12 +42,13 @@ const IndividualClass: React.FC = () => {
 
   const handleUpdateGroup = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (classInfo) {
+    if (classData) {
       try {
         const updatedGroup = {
-          ...classInfo,
+          ...classData,
           studentsIds: updatedStudents,
         };
+        console.log(updatedGroup);
         const response = await ClassesService.updateGroup(
           groupId,
           updatedGroup
@@ -60,29 +61,18 @@ const IndividualClass: React.FC = () => {
     }
   };
 
-  const mergeStudents = (newStudentIds: string[]) => {
-    const existingStudentIds =
-      classInfo?.studentsIds.map((student) => student._id) || [];
-    const mergedStudentIds = Array.from(
-      new Set([...existingStudentIds, ...newStudentIds])
-    );
-    return mergedStudentIds;
-  };
-
   const handleNewClassStudentsChange = (newStudentIds: string[]) => {
-    console.log('Already present Student IDs:', newStudentIds);
-    const mergedIds = mergeStudents(newStudentIds);
-    console.log('Merged Student IDs:', mergedIds);
-    setUpdatedStudents(mergedIds);
+    setUpdatedStudents(newStudentIds);
+    console.log('New students array : ', newStudentIds);
   };
 
-  if (!classInfo || loading) return <UserSkeleton />;
+  if (!classData || loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
       <BackButton />
-      <h2 className="text-2xl font-semibold my-4">{classInfo.name}</h2>
+      <h2 className="text-2xl font-semibold my-4">{classData.name}</h2>
 
       <form onSubmit={handleUpdateGroup}>
         <div className="my-4">
@@ -92,15 +82,15 @@ const IndividualClass: React.FC = () => {
             label="Class Name"
             variant="outlined"
             name="name"
-            value={classInfo?.name}
+            value={classData?.name}
             onChange={(e) =>
-              setClassInfo({ ...classInfo, name: e.target.value })
+              setClassData({ ...classData, name: e.target.value })
             }
           />
         </div>
-        <h3 className="font-semibold my-4">Students : </h3>
-        {classInfo.studentsIds.length > 0 ? (
-          classInfo.studentsIds.map((student) => (
+        <h3 className="font-semibold my-4">Students:</h3>
+        {classData.studentsIds.length > 0 ? (
+          classData.studentsIds.map((student) => (
             <div key={student._id} className="my-8 border-b pb-2">
               <img
                 className="w-12 h-12 rounded-full mr-2 inline"
@@ -124,21 +114,19 @@ const IndividualClass: React.FC = () => {
             No students in this class...
           </h3>
         )}
-
-        <h3 className="font-semibold my-4">Edit Students : </h3>
+        <h3 className="font-semibold my-4">Edit Students:</h3>
         <StudentTransfer
-          initialStudents={classInfo?.studentsIds}
+          initialStudents={classData?.studentsIds}
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
         <div className="mt-4">
-          {' '}
           <Button
             type="submit"
             size="small"
             variant="contained"
             startIcon={<Edit />}
           >
-            <span className="hidden md:inline">Update</span>
+            Update
           </Button>
         </div>
       </form>
