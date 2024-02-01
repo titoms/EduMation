@@ -4,7 +4,6 @@ import ClassesService from '../../../../services/ClassesService';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/ui/BackButton';
 import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
-import { User } from '../../../../services/Types';
 
 export interface Group {
   name: string;
@@ -35,7 +34,7 @@ const ClassCreation = () => {
     }
   };
 
-  const handleNewClassStudentsChange = (students: User[]) => {
+  const handleNewClassStudentsChange = (students: string[]) => {
     const studentIds = students.map((student) => student._id); // Extracting IDs
     setGroupData({ ...groupData, studentsIds: studentIds });
   };

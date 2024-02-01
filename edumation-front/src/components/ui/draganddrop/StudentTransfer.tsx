@@ -7,7 +7,7 @@ import { DroppableColumn } from './DraggableColumn';
 import UserSkeleton from '../skeletons/UserSkeleton';
 
 interface StudentTransferProps {
-  initialStudents: User[];
+  initialStudents?: User[];
   onNewClassStudentsChange: (students: string[]) => void;
 }
 
@@ -15,7 +15,7 @@ const StyledColumns = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   width: '80%',
-  height: '40vh',
+  height: '80%',
   gap: '8px',
 });
 
@@ -43,18 +43,25 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
         const studentData = response.data.filter(
           (user) => user.role === 'student'
         );
-        const availableStudents = studentData.filter(
-          (student) =>
-            !initialStudents.some(
-              (initialStudent) => initialStudent._id === student._id
-            )
-        );
+        let availableStudents;
+        if (initialStudents) {
+          availableStudents = studentData.filter(
+            (student) =>
+              !initialStudents.some(
+                (initialStudent) => initialStudent._id === student._id
+              )
+          );
+        }
+
         setColumns({
           AvailableStudents: {
             id: 'AvailableStudents',
-            list: availableStudents,
+            list: availableStudents ? availableStudents : studentData,
           },
-          NewClassStudents: { id: 'NewClassStudents', list: initialStudents },
+          NewClassStudents: {
+            id: 'NewClassStudents',
+            list: initialStudents ? initialStudents : [],
+          },
         });
         setLoading(false);
       } catch (err) {
@@ -122,13 +129,15 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <StyledColumns>
-        {Object.values(columns).map((col) => (
-          <DroppableColumn col={col} key={col.id} />
-        ))}
-      </StyledColumns>
-    </DragDropContext>
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <StyledColumns>
+          {Object.values(columns).map((col) => (
+            <DroppableColumn col={col} key={col.id} />
+          ))}
+        </StyledColumns>
+      </DragDropContext>
+    </>
   );
 };
 
