@@ -14,6 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFilterChange }) => {
         display: 'flex',
         alignItems: 'center',
         width: 300,
+        height: 35,
       }}
     >
       <InputBase

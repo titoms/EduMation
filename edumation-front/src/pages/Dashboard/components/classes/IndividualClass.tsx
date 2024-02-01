@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ClassesService from '../../../../services/ClassesService';
 import { Group } from '../../../../services/Types';
 import axios from 'axios';
 import { Button, TextField } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
-import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
+import StudentTransfer from './StudentTransfer';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import BackButton from '../../../../components/ui/BackButton';
+import { toast } from 'react-toastify';
 
 const IndividualClass: React.FC = () => {
   const params = useParams();
@@ -16,7 +17,6 @@ const IndividualClass: React.FC = () => {
   const [updatedStudents, setUpdatedStudents] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -54,16 +54,16 @@ const IndividualClass: React.FC = () => {
           updatedGroup
         );
         console.log('Group updated successfully:', response.data);
-        navigate('/dashboard/classes/' + groupId);
+        toast.success('Class updated successfully');
+        //Rerender component instead of navigate
       } catch (error) {
-        console.error('Error updating group:', error);
+        toast.error('Error updating group:', error);
       }
     }
   };
 
   const handleNewClassStudentsChange = (newStudentIds: string[]) => {
     setUpdatedStudents(newStudentIds);
-    console.log('New students array : ', newStudentIds);
   };
 
   if (!classData || loading) return <UserSkeleton />;

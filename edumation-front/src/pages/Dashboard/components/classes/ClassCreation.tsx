@@ -3,7 +3,7 @@ import { Button, TextField } from '@mui/material';
 import ClassesService from '../../../../services/ClassesService';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/ui/BackButton';
-import StudentTransfer from '../../../../components/ui/draganddrop/StudentTransfer';
+import StudentTransfer from './StudentTransfer';
 
 export interface Group {
   name: string;

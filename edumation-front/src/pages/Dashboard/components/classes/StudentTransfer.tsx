@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { styled } from '@stitches/react';
-import UsersService from '../../../services/UsersService';
-import { User } from '../../../services/Types';
-import { DraggableColumn } from './DraggableColumn';
-import UserSkeleton from '../skeletons/UserSkeleton';
+import UsersService from '../../../../services/UsersService';
+import { User } from '../../../../services/Types';
+import { DraggableColumn } from '../../../../components/ui/draganddrop/DraggableColumn';
+import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 
 interface StudentTransferProps {
   initialStudents?: User[];
@@ -14,9 +14,9 @@ interface StudentTransferProps {
 const StyledColumns = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  width: '80%',
+  width: '100%',
   height: '80%',
-  gap: '24px',
+  gap: '12px',
 });
 
 const StudentTransfer: React.FC<StudentTransferProps> = ({
