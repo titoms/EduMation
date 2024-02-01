@@ -11,7 +11,7 @@ import { Group } from '../services/Types';
 
 interface ClassContextType {
   groups: Group[];
-  refetchGroups: () => void;
+  refetchGroups?: () => void;
 }
 
 export const ClassContext = createContext<ClassContextType | null>(null);
