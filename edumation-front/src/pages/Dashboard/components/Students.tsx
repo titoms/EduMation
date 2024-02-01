@@ -2,18 +2,19 @@
 import { useEffect, useState } from 'react';
 import UserTable from './users/UserTable';
 import UpdateUserModal from '../../../components/ui/UpdateProfileModal';
-import DeleteUserConfirmationModal from './users/DeleteUserConfirmationModal';
+import DeleteConfirmationModal from '../../../components/ui/DeleteConfirmationModal';
 import { useUserContext } from '../../../context/UserContext';
 import { User } from '../../../services/Types';
-import { Grid, Skeleton } from '@mui/material';
 import TableSkeleton from '../../../components/ui/skeletons/TableSkeleton';
+import UsersService from '../../../services/UsersService';
+import { toast } from 'react-toastify';
 
 const Students = () => {
   const userContext = useUserContext();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [students, setStudents] = useState<User[]>([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     if (userContext && userContext.users) {
@@ -32,7 +33,19 @@ const Students = () => {
 
   const onShowDeleteModal = (user: User) => {
     setSelectedUser(user);
-    setShowDeleteModal(true);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      await UsersService.deleteUser(userId);
+      setUsers(users.filter((u) => u._id !== userId));
+      toast.success('User deleted successfully');
+      setIsDeleteModalOpen(false);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      toast.error('Failed to delete user');
+    }
   };
 
   return (
@@ -58,11 +71,13 @@ const Students = () => {
             />
           )}
 
-          {showDeleteModal && selectedUser && (
-            <DeleteUserConfirmationModal
-              user={selectedUser}
-              onClose={() => setShowDeleteModal(false)}
-              setUsers={setUsers}
+          {isDeleteModalOpen && selectedUser && (
+            <DeleteConfirmationModal
+              itemId={selectedUser._id}
+              open={isDeleteModalOpen}
+              onClose={() => setIsDeleteModalOpen(false)}
+              onDelete={handleDeleteUser}
+              confirmationMessage={`Are you sure you want to delete ${selectedUser.name}?`}
             />
           )}
         </div>
