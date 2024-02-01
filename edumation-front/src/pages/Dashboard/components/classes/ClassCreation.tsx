@@ -13,9 +13,9 @@ export interface Group {
 
 const ClassCreation = () => {
   const navigate = useNavigate();
-  const [groupData, setGroupData] = useState({
+  const [groupData, setGroupData] = useState<Group>({
     name: '',
-    studentsIds: [] as string[],
+    studentsIds: [],
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,6 @@ const ClassCreation = () => {
     event.preventDefault();
     try {
       const response = await ClassesService.createGroup(groupData);
-      console.log('GroupData after change:', groupData);
       console.log('Class created successfully:', response.data);
       navigate('/dashboard/classes');
     } catch (error) {
@@ -34,9 +33,8 @@ const ClassCreation = () => {
     }
   };
 
-  const handleNewClassStudentsChange = (students: string[]) => {
-    const studentIds = students.map((student) => student._id); // Extracting IDs
-    setGroupData({ ...groupData, studentsIds: studentIds });
+  const handleNewClassStudentsChange = (studentsIds: string[]) => {
+    setGroupData({ ...groupData, studentsIds });
   };
 
   return (
@@ -53,7 +51,7 @@ const ClassCreation = () => {
           value={groupData.name}
           onChange={handleChange}
         />
-        <h3 className="font-semibold my-4">Select Students : </h3>
+        <h3 className="font-semibold my-4">Select Students:</h3>
         <StudentTransfer
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
