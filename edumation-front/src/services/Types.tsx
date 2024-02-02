@@ -6,6 +6,7 @@ export interface ClassTime {
 }
 
 export interface Schedule {
+  _id?: string;
   courseId: string;
   classTimes: ClassTime[];
   recurring: boolean;
