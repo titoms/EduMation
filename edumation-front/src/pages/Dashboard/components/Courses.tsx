@@ -61,9 +61,17 @@ const Courses: React.FC = () => {
                 <p className="mt-2">School ID: {course.schoolId}</p>
                 <p className="mt-2">Teacher ID: {course.teacherId}</p>
                 <p className="mt-2">
-                  Student IDs: {course.studentIds.join(', ')}
+                  Student IDs:{' '}
+                  {course.studentIds
+                    ? course.studentIds.join(', ')
+                    : course.studentIds}
                 </p>
-                <p className="mt-2">Quiz IDs: {course.quizIds.join(', ')}</p>
+                <p className="mt-2">
+                  Quiz IDs:{' '}
+                  {course.studentIds
+                    ? course.quizIds.join(', ')
+                    : course.quizIds}
+                </p>
                 <p className="mt-2">Schedule ID: {course.scheduleId}</p>
               </div>
               <hr />
