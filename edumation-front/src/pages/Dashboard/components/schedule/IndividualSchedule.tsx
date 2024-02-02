@@ -1,50 +1,56 @@
-import Calendar from './Calendar';
-import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
+import Calendar from './Calendar';
 import { Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
-import { toast } from 'react-toastify';
+import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
 
 const IndividualSchedule = () => {
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const params = useParams<{ id: string }>();
+  const scheduleId = params.id;
+  const [schedule, setSchedule] = useState<Schedule | null>(null);
+  const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchSchedule = async () => {
+    const fetchScheduleAndCourse = async () => {
       try {
-        //Change this to get individual schedule
-        const response = await SchedulesService.getAllSchedules();
-        setSchedules(response.data);
+        const scheduleResponse = await SchedulesService.getScheduleById(
+          scheduleId
+        );
+        setSchedule(scheduleResponse.data);
+        // Fetch the course details using the courseId from the schedule
+        if (scheduleResponse.data.courseId) {
+          const courseResponse = await CoursesService.getCoursesById(
+            scheduleResponse.data.courseId
+          );
+          setCourseName(courseResponse.data.title);
+        }
       } catch (error) {
-        toast.error('Failed to fetch schedules');
+        toast.error('Failed to fetch schedule or course details');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    fetchSchedule();
-  }, []);
-  const events: Event[] = [];
+    fetchScheduleAndCourse();
+  }, [scheduleId]);
 
-  const fromAPItoDates = () => {
-    {
-      schedules.map((schedule) => {
-        {
-          schedule.classTimes.map((classTime) => {
-            events.push({ date: classTime.date, title: schedule.courseId });
-          });
-        }
-      });
-    }
-  };
-  fromAPItoDates();
+  const events =
+    schedule?.classTimes.map((classTime) => ({
+      date: classTime.date,
+      title: courseName, // Use the fetched course name here
+    })) || [];
 
   if (loading) return <ScheduleSkeleton />;
 
   return (
     <>
       <BackButton />
-      <h1 className="text-2xl my-4 font-semibold">Schedule</h1>
+      <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
       <Calendar events={events} />
     </>
   );

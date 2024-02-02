@@ -1,34 +1,32 @@
-import { Button, Checkbox } from '@mui/material';
+// ScheduleCard.tsx
+import React from 'react';
+import { Schedule } from '../../../../services/Types';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Schedule } from '../../../../services/Types';
+import { Button } from '@mui/material';
 
 interface ScheduleCardProps {
-  schedule: Schedule;
+  schedule: Schedule & { courseName?: string };
   onDelete: (scheduleId: string) => void;
 }
 
 const ScheduleCard: React.FC<ScheduleCardProps> = ({ schedule, onDelete }) => {
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <div className="flex justify-between gap-4 flex-row flex-wrap md:flex-nowrap">
-        <Checkbox />
-        <Link to={schedule._id} className="pt-2">
+    <div className="bg-white shadow rounded-lg p-4">
+      <div className="flex justify-between gap-4 items-center">
+        <Link to={schedule._id}>
           <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
-            {schedule.courseId}
+            {schedule.courseName || 'Unknown Course'}
           </span>
         </Link>
-        <div className="flex justify-start gap-2 md:mt-0">
-          <Button
-            size="small"
-            variant="outlined"
-            color="error"
-            startIcon={<DeleteIcon />}
-            onClick={() => onDelete(schedule._id)}
-          >
-            <span className="hidden md:inline">Delete</span>
-          </Button>
-        </div>
+        <Button
+          variant="outlined"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={() => onDelete(schedule._id)}
+        >
+          Delete
+        </Button>
       </div>
     </div>
   );
