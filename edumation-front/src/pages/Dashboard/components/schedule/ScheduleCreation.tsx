@@ -17,7 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import FileDragAndDrop from '../../../../components/FileDragAndDrop';
+import DragAndDrop from '../../../../components/DragAndDrop';
 
 const ScheduleCreation = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -100,7 +100,7 @@ const ScheduleCreation = () => {
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
                   <InputLabel>Upload CSV</InputLabel>
-                  <FileDragAndDrop onFileDrop={handleFileDrop} />
+                  <DragAndDrop fileType="csv" onFileDrop={handleFileDrop} />
                 </div>
               </div>
               <div>

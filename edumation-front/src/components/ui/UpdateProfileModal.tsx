@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { User } from '../../services/Types';
 import UsersService from '../../services/UsersService';
 import { toast } from 'react-toastify';
-import DragAndDrop from '../ProfilePicDragAndDrop';
+import DragAndDrop from '../DragAndDrop';
 
 interface UpdateUserModalProps {
   user: User;
@@ -116,7 +116,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
           </select>
 
           <p className="font-semibold mt-2">New Profile Picture</p>
-          <DragAndDrop onFileDrop={handleFileDrop} />
+          <DragAndDrop fileType="image" onFileDrop={handleFileDrop} />
 
           <button
             type="submit"
