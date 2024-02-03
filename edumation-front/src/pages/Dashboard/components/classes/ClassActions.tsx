@@ -11,7 +11,7 @@ export interface ClassActionsProps {
 
 const ClassActions: React.FC<ClassActionsProps> = ({ setFilter }) => {
   return (
-    <div className="flex justify-end gap-2">
+    <div className="flex justify-end mt-4 gap-2">
       {' '}
       <SearchBar onFilterChange={setFilter} />
       <Link to="new">

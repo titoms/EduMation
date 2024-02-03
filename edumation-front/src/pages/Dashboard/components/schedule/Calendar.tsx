@@ -19,6 +19,12 @@ import Tooltip from '@mui/material/Tooltip';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+interface Event {
+  date: Date;
+  title: string;
+  eventType: 'availableEvent' | 'notAvailableEvent' | 'otherEvent';
+}
+
 interface EventCalendarProps {
   events: Event[];
 }
@@ -55,6 +61,19 @@ const Calendar = ({ events }: EventCalendarProps) => {
       return acc;
     }, {});
   }, [events]);
+
+  const getEventStyles = (eventType: Event['eventType']) => {
+    switch (eventType) {
+      case 'availableEvent':
+        return 'bg-green-300 text-green-800';
+      case 'notAvailableEvent':
+        return 'bg-red-300 text-red-800';
+      case 'otherEvent':
+        return 'bg-yellow-200 text-yellow-800';
+      default:
+        return '';
+    }
+  };
 
   return (
     <div className="container mx-auto py-4">
@@ -95,7 +114,7 @@ const Calendar = ({ events }: EventCalendarProps) => {
             <div
               key={index}
               className={clsx(
-                'border h-16 md:h-32 text-center hover:bg-gray-200',
+                'border h-16 md:h-36 text-center hover:bg-gray-200',
                 {
                   'bg-blue-200 font-bold': isToday(day),
                   'text-blue-900': isToday(day),
@@ -104,17 +123,19 @@ const Calendar = ({ events }: EventCalendarProps) => {
             >
               {format(day, 'd')}
               {todaysEvents.map((event) => {
+                const eventStyles = getEventStyles(event.eventType);
                 return (
-                  <div
+                  <Tooltip
                     key={event.title}
-                    className="bg-green-300 p-1 rounded-md text-green-900"
+                    title={event.title}
+                    placement="top"
                   >
-                    <Tooltip title={event.title} placement="top">
+                    <div className={`p-1 rounded-md ${eventStyles}`}>
                       <span className="overflow-hidden hidden md:block">
                         {event.title}
                       </span>
-                    </Tooltip>
-                  </div>
+                    </div>
+                  </Tooltip>
                 );
               })}
             </div>

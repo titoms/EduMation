@@ -10,19 +10,25 @@ import BackButton from '../../../../components/ui/BackButton';
 
 const IndividualSchedule = () => {
   const params = useParams<{ id: string }>();
-  const scheduleId = params.id;
+  const scheduleId = params.id || '';
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchScheduleAndCourse = async () => {
+      if (!scheduleId) {
+        toast.error('Schedule ID is undefined');
+        setLoading(false);
+        return;
+      }
+
       try {
         const scheduleResponse = await SchedulesService.getScheduleById(
           scheduleId
         );
         setSchedule(scheduleResponse.data);
-        // Fetch the course details using the courseId from the schedule
+
         if (scheduleResponse.data.courseId) {
           const courseResponse = await CoursesService.getCoursesById(
             scheduleResponse.data.courseId
@@ -41,8 +47,12 @@ const IndividualSchedule = () => {
 
   const events =
     schedule?.classTimes.map((classTime) => ({
-      date: classTime.date,
-      title: courseName, // Use the fetched course name here
+      date: new Date(classTime.date),
+      title: courseName,
+      eventType: 'availableEvent' as
+        | 'availableEvent'
+        | 'notAvailableEvent'
+        | 'otherEvent',
     })) || [];
 
   if (loading) return <ScheduleSkeleton />;
