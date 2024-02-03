@@ -50,10 +50,10 @@ const Profile = () => {
   if (error) return <ErrorComponent errorMessage={error} />;
 
   return (
-    <div className="h-screen">
+    <>
       <h1 className="text-2xl font-semibold mb-8">Profile</h1>
       <ProfileInformation userProfile={userProfile} />
-    </div>
+    </>
   );
 };
 

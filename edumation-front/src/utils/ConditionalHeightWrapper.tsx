@@ -20,7 +20,7 @@ const ConditionalHeightWrapper = ({ children }) => {
     };
   }, [children]);
 
-  const wrapperClass = `flex-grow w-full p-4 mb-24 ${
+  const wrapperClass = `flex-grow w-full min-h-screen p-4 mb-24 ${
     applyScreenHeight ? '' : ''
   }`;
 

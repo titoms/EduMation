@@ -59,14 +59,14 @@ const ScheduleCreation = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="min-h-screen">
+    <>
       <div className="mb-4">
         <BackButton />
       </div>
       <h1 className="text-2xl font-semibold">Create new Schedule :</h1>{' '}
       <div className="flex justify-around flex-col md:flex-row gap-4 mt-4">
         {/* FIRST COLUMN */}
-        <div className="bg-gray-200 shadow-md w-full rounded-lg p-4">
+        <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
           <div className="max-w-md w-full space-y-6">
             <div className="space-y-2 text-center">
               <h1 className="text-3xl font-bold">Import Schedule :</h1>
@@ -129,7 +129,7 @@ const ScheduleCreation = () => {
           </div>
         </div>
         {/* SECOND COLUMN  */}
-        <div className="bg-gray-200 shadow-md w-full rounded-lg p-4">
+        <div className="bg-gray-200 shadow-md w-full rounded-lg p-8">
           {' '}
           <div className="space-y-2 text-center">
             <h1 className="text-3xl font-bold">Schedule Settings :</h1>
@@ -187,7 +187,7 @@ const ScheduleCreation = () => {
           </form>
         </div>
         {/* THIRD COLUMN  */}
-        <div className="bg-gray-200 shadow-md w-full rounded-lg p-4">
+        <div className="bg-gray-200 shadow-md w-full rounded-lg p-8">
           {' '}
           <div className="mx-auto max-w-md space-y-6">
             <div className="space-y-2 text-center">
@@ -205,7 +205,7 @@ const ScheduleCreation = () => {
         </Button>
         <BackButton title="Cancel" icon={false} />
       </div>
-    </div>
+    </>
   );
 };
 

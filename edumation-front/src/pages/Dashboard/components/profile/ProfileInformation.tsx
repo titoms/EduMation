@@ -2,15 +2,18 @@ import { useState, useEffect } from 'react';
 import { User } from '../../../../services/Types';
 import UsersService from '../../../../services/UsersService';
 import UpdateProfileModal from '../../../../components/ui/UpdateProfileModal';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
+import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 import { Button } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileInformations = (user) => {
   const [userProfile, setUserProfile] = useState<User | null>(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -32,9 +35,15 @@ const ProfileInformations = (user) => {
     }
   };
 
-  const handleDelete = () => {
-    // Logic after deletion, like redirecting the user
-    console.log('User profile deleted');
+  const handleDelete = async (userId) => {
+    try {
+      await UsersService.deleteUser(userId);
+      localStorage.removeItem('token');
+      toast.success('Account deleted successfully');
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to delete account');
+    }
   };
 
   if (!userProfile) return <div>Loading...</div>;
@@ -93,9 +102,11 @@ const ProfileInformations = (user) => {
 
       {showDeleteModal && (
         <DeleteConfirmationModal
-          userId={userProfile._id}
+          itemId={userProfile._id}
+          open={showDeleteModal}
           onClose={() => setShowDeleteModal(false)}
           onDelete={handleDelete}
+          confirmationMessage={`Are you sure you want to delete your account ?`}
         />
       )}
     </div>

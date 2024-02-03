@@ -5,7 +5,7 @@ import ScheduleList from './schedule/ScheduleList';
 
 const Schedules = () => {
   return (
-    <div className="min-h-screen">
+    <>
       <h1 className="text-2xl font-semibold">Schedules</h1>
       <div className="mt-4 flex justify-end">
         <Link to="new">
@@ -15,7 +15,7 @@ const Schedules = () => {
         </Link>
       </div>
       <ScheduleList />
-    </div>
+    </>
   );
 };
 
