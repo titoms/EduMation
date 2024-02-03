@@ -57,7 +57,7 @@ const ClassCreation = () => {
         />
         <div className="flex gap-4 justify-end mt-8">
           <Button type="submit" variant="contained">
-            Update
+            Create
           </Button>
           <BackButton title="Cancel" icon={false} />
         </div>
