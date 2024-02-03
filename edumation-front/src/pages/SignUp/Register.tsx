@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import DragAndDrop from '../../components/DragAndDrop';
+import DragAndDrop from '../../components/ui/draganddrop/DragAndDrop';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
