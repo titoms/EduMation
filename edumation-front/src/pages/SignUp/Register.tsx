@@ -3,7 +3,7 @@ import axios from 'axios';
 import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import DragAndDrop from '../../components/ProfilePicDragAndDrop';
+import ProfilePicDragAndDrop from '../../components/ProfilePicDragAndDrop';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -175,7 +175,7 @@ const Register: React.FC = () => {
                 autoComplete="current-password"
               />
               <RoleSelection />
-              <DragAndDrop onFileDrop={handleFileDrop} />
+              <ProfilePicDragAndDrop onFileDrop={handleFileDrop} />
               <FormControlLabel
                 className="mt-4"
                 control={<Checkbox value="remember" color="primary" />}

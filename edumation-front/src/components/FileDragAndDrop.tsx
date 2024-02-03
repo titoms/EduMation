@@ -4,7 +4,7 @@ interface DragAndDropProps {
   onFileDrop: (file: File) => void;
 }
 
-const ProfilePicDragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
+const FileDragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<any>([]);
@@ -65,8 +65,8 @@ const ProfilePicDragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
     <div
       className={`${
         dragActive
-          ? 'bg-blue-400 border-blue-300'
-          : 'bg-blue-100 border-gray-300'
+          ? 'bg-gray-400 border-gray-300'
+          : 'bg-gray-100 border-gray-300'
       }  p-4 w-full rounded-lg  border-2 border-dashed min-h-[8rem] text-center flex flex-col items-center justify-center mt-2`}
       onDragEnter={handleDragEnter}
       onSubmit={(e) => e.preventDefault()}
@@ -83,13 +83,13 @@ const ProfilePicDragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
         type="file"
         multiple={true}
         onChange={handleChange}
-        accept="image/*"
+        accept=".xlsx,.xls,.csv"
       />
       {dragActive ? (
         <p>
           Drag & Drop files or{' '}
           <span
-            className="font-bold text-blue-600 cursor-pointer"
+            className="font-bold text-gray-600 cursor-pointer"
             onClick={openFileExplorer}
           >
             <u>Select files</u>
@@ -101,7 +101,7 @@ const ProfilePicDragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
           <p>
             Drag & Drop files or{' '}
             <span
-              className="font-bold text-blue-600 cursor-pointer"
+              className="font-bold text-gray-600 cursor-pointer"
               onClick={openFileExplorer}
             >
               <u>Select files</u>
@@ -127,4 +127,4 @@ const ProfilePicDragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop }) => {
   );
 };
 
-export default ProfilePicDragAndDrop;
+export default FileDragAndDrop;
