@@ -137,29 +137,17 @@ const ScheduleCreation = () => {
           <div className="max-w-md w-full space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">Schedule Settings :</h2>
-              <p className="text-gray-500 text-gray-400">
-                Enter the Schedule details
-              </p>
+              <p className="text-gray-500">Enter the Schedule details</p>
             </div>
             <div className="space-y-4">
-              {/* <div className="space-y-2">
-                <InputLabel>Schedule name :</InputLabel>
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  label="..."
-                  variant="outlined"
-                  name="name"
-                />
-              </div> */}
               <div className="grid grid-cols-2 gap-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <div className="space-y-2">
-                    <InputLabel>Start time :</InputLabel>
+                    <InputLabel>Start date :</InputLabel>
                     <DatePicker />
                   </div>
                   <div className="space-y-2">
-                    <InputLabel>End time :</InputLabel>
+                    <InputLabel>End date :</InputLabel>
                     <DatePicker />
                   </div>
                 </LocalizationProvider>
@@ -198,9 +186,7 @@ const ScheduleCreation = () => {
             <div className="mx-auto max-w-md space-y-6">
               <div className="space-y-2 text-center">
                 <h2 className="text-3xl font-bold">Courses Settings :</h2>
-                <p className="text-gray-500 text-gray-400">
-                  Enter the Courses details
-                </p>
+                <p className="text-gray-500">Enter the Courses details</p>
               </div>
               <FormControl sx={{ my: 2 }} fullWidth>
                 <h4 className="mb-4">Add courses name :</h4>
