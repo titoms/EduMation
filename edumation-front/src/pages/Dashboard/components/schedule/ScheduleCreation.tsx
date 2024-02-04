@@ -217,11 +217,11 @@ const ScheduleCreation = () => {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {classes.map((group) => (
-                    <MenuItem key={group._id} value={group.name}>
+                  {courses.map((group) => (
+                    <MenuItem key={group._id} value={group.title}>
                       <Checkbox />
-                      {/* <Checkbox checked={group.indexOf(name) > -1} /> */}
-                      <ListItemText primary={group.name} />
+                      {/* <Checkbox checked={group.indexOf(title) > -1} /> */}
+                      <ListItemText primary={group.title} />
                     </MenuItem>
                   ))}
                 </Select>
