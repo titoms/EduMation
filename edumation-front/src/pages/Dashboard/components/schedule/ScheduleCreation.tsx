@@ -3,7 +3,9 @@ import {
   Checkbox,
   FormControl,
   InputLabel,
+  ListItemText,
   MenuItem,
+  OutlinedInput,
   TextField,
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -24,6 +26,7 @@ import { Course } from '../../../../services/Types';
 const ScheduleCreation = () => {
   const [classes, setClasses] = useState<Group[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
+  const [groupsList, setGroupsList] = useState<string[]>([]);
   const [classSchedule, setClassSchedule] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -50,8 +53,20 @@ const ScheduleCreation = () => {
     fetchClassesAndCourses();
   }, []);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleClassSelectionChange = (event: SelectChangeEvent) => {
     setClassSchedule(event.target.value);
+  };
+
+  const handleCoursesSelectChange = (
+    event: SelectChangeEvent<typeof groupsList>
+  ) => {
+    const {
+      target: { value },
+    } = event;
+    setGroupsList(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
+    );
   };
 
   const handleFileDrop = (file: File) => {
@@ -133,7 +148,7 @@ const ScheduleCreation = () => {
           </div>
         </div>
         {/* SECOND COLUMN  */}
-        <div className="bg-gray-200 shadow-md w-full rounded-lg p-8">
+        <div className="bg-gray-200 shadow-md w-full flex justify-center  rounded-lg p-8">
           <div className="max-w-md w-full space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">Schedule Settings :</h2>
@@ -160,7 +175,7 @@ const ScheduleCreation = () => {
                     id="class-selection"
                     value={classSchedule}
                     label="Class name :"
-                    onChange={handleChange}
+                    onChange={handleClassSelectionChange}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -181,7 +196,7 @@ const ScheduleCreation = () => {
           </div>
         </div>
         {/* THIRD COLUMN  */}
-        <div className="bg-gray-200 shadow-md w-full rounded-lg p-8">
+        <div className="bg-gray-200 shadow-md w-full flex justify-center  rounded-lg p-8">
           <div className="max-w-md w-full space-y-6">
             <div className="mx-auto max-w-md space-y-6">
               <div className="space-y-2 text-center">
@@ -189,7 +204,27 @@ const ScheduleCreation = () => {
                 <p className="text-gray-500">Enter the Courses details</p>
               </div>
               <FormControl sx={{ my: 2 }} fullWidth>
-                <h4 className="mb-4">Add courses name :</h4>
+                <InputLabel className="mb-4">Add courses :</InputLabel>
+                <Select
+                  labelId="course-select-label"
+                  id="course-select"
+                  multiple
+                  value={groupsList}
+                  onChange={handleCoursesSelectChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) => selected.join(', ')}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {classes.map((group) => (
+                    <MenuItem key={group._id} value={group.name}>
+                      <Checkbox />
+                      {/* <Checkbox checked={group.indexOf(name) > -1} /> */}
+                      <ListItemText primary={group.name} />
+                    </MenuItem>
+                  ))}
+                </Select>
               </FormControl>
             </div>
           </div>
