@@ -44,8 +44,8 @@ const CourseCreation = () => {
         <BackButton />
       </div>
       <h1 className="text-2xl font-semibold">Create new Course</h1>
-      <form onSubmit={handleCreateCourse}>
-        <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
+      <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
+        <form onSubmit={handleCreateCourse}>
           <div className="max-w-md w-full space-y-6">
             <div className="mx-auto max-w-md space-y-6">
               <div className="space-y-2 text-center">
@@ -101,14 +101,14 @@ const CourseCreation = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex gap-4 justify-end mt-8">
-          <Button type="submit" variant="contained">
-            Create
-          </Button>
-          <BackButton title="Cancel" icon={false} />
-        </div>
-      </form>
+          <div className="flex gap-4 justify-end mt-8">
+            <Button type="submit" variant="contained">
+              Create
+            </Button>
+            <BackButton title="Cancel" icon={false} />
+          </div>
+        </form>
+      </div>
     </>
   );
 };

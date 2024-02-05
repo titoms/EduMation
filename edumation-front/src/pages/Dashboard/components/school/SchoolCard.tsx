@@ -1,11 +1,17 @@
 import { NavLink } from 'react-router-dom';
 import { School } from '../../../../services/Types';
+import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface SchoolCardProps {
   school: School;
+  onShowDeleteModal: (school: School) => void;
 }
 
-const SchoolCard: React.FC<SchoolCardProps> = ({ school }) => {
+const SchoolCard: React.FC<SchoolCardProps> = ({
+  school,
+  onShowDeleteModal,
+}) => {
   return (
     <div className="w-full">
       <div className="bg-white rounded-lg overflow-hidden mb-10">
@@ -46,6 +52,17 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school }) => {
               </a>
             </p>
           </div>
+        </div>
+        <div className="flex justify-end  m-4 gap-4">
+          <Button
+            size="small"
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={() => onShowDeleteModal(school)}
+          >
+            <span className="hidden md:inline">Delete</span>
+          </Button>
         </div>
       </div>
     </div>

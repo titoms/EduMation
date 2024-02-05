@@ -48,13 +48,12 @@ const SchoolCreation = () => {
       <div className="mb-4">
         <BackButton />
       </div>
-      <h1 className="text-2xl font-semibold">Create new School</h1>
-      <form onSubmit={handleCreateSchool}>
-        <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
+      <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
+        <form onSubmit={handleCreateSchool}>
           <div className="max-w-md w-full space-y-6">
             <div className="mx-auto max-w-md space-y-6">
               <div className="space-y-2 text-center">
-                <h2 className="text-3xl font-bold">School Settings :</h2>
+                <h1 className="text-2xl font-semibold">New School Creation</h1>
                 <p className="text-gray-500">Enter the School details</p>
               </div>
               <TextField
@@ -98,14 +97,14 @@ const SchoolCreation = () => {
               />
             </div>
           </div>
-        </div>
-        <div className="flex gap-4 justify-end mt-8">
-          <Button type="submit" variant="contained">
-            Create
-          </Button>
-          <BackButton title="Cancel" icon={false} />
-        </div>
-      </form>
+          <div className="flex gap-4 justify-end mt-8">
+            <Button type="submit" variant="contained">
+              Create
+            </Button>
+            <BackButton title="Cancel" icon={false} />
+          </div>
+        </form>
+      </div>
     </>
   );
 };
