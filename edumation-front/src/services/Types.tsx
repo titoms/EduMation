@@ -13,14 +13,12 @@ export interface Schedule {
 }
 
 export interface Course {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
-  schoolId: string;
-  teacherId: string;
-  studentIds: string[];
-  quizIds: string[];
-  scheduleId: string;
+  courseDuration: number;
+  quizIds?: string[];
+  scheduleId?: string;
 }
 
 export interface Group {

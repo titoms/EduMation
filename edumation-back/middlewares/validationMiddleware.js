@@ -34,8 +34,6 @@ const updateUserValidation = [
 const createCourseValidation = [
   body('title').trim().not().isEmpty().withMessage('Title is required'),
   body('description').trim().optional(),
-  body('schoolId').isMongoId().withMessage('Invalid school ID'),
-  body('teacherId').isMongoId().withMessage('Invalid teacher ID'),
 ];
 
 const updateCourseValidation = [

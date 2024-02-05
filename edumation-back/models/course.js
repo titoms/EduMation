@@ -17,12 +17,7 @@ const courseSchema = new mongoose.Schema(
     schoolId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'School',
-      required: true,
     },
-    // teacherId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'User',
-    // },
     groupId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Group',
