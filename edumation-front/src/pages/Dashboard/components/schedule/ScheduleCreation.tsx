@@ -63,10 +63,7 @@ const ScheduleCreation = () => {
     const {
       target: { value },
     } = event;
-    setGroupsList(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    );
+    setGroupsList(typeof value === 'string' ? value.split(',') : value);
   };
 
   const handleFileDrop = (file: File) => {
@@ -204,23 +201,23 @@ const ScheduleCreation = () => {
                 <p className="text-gray-500">Enter the Courses details</p>
               </div>
               <FormControl sx={{ my: 2 }} fullWidth>
-                <InputLabel className="mb-4">Add courses :</InputLabel>
+                <InputLabel>Courses :</InputLabel>
                 <Select
-                  labelId="course-select-label"
-                  id="course-select"
+                  labelId="course-selection-label"
+                  id="course-selection"
                   multiple
-                  value={groupsList}
-                  onChange={handleCoursesSelectChange}
+                  value={[]}
+                  label="Courses :"
                   input={<OutlinedInput label="Tag" />}
                   renderValue={(selected) => selected.join(', ')}
+                  onChange={handleCoursesSelectChange}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
                   {courses.map((group) => (
-                    <MenuItem key={group._id} value={group.title}>
+                    <MenuItem key={group._id} value={group._id}>
                       <Checkbox />
-                      {/* <Checkbox checked={group.indexOf(title) > -1} /> */}
                       <ListItemText primary={group.title} />
                     </MenuItem>
                   ))}

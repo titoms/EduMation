@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import UserTable from './users/UserTable';
-import UpdateUserModal from '../../../components/ui/UpdateProfileModal';
-import DeleteConfirmationModal from '../../../components/ui/DeleteConfirmationModal';
+import UpdateUserModal from '../../../components/UpdateProfileModal';
+import DeleteConfirmationModal from '../../../components/DeleteConfirmationModal';
 import { useUserContext } from '../../../context/UserContext';
 import { User } from '../../../services/Types';
 import TableSkeleton from '../../../components/ui/skeletons/TableSkeleton';

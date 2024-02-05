@@ -6,7 +6,7 @@ import axios from 'axios';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import ClassCard from './ClassCard';
 import ClassActions from './ClassActions';
-import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
+import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);

@@ -31,6 +31,7 @@ exports.createCourse = async (req, res) => {
     const newCourse = new Course({
       title: req.body.title,
       description: req.body.description,
+      courseDuration: req.body.courseDuration,
       schoolId: req.body.schoolId,
       teacherId: req.body.teacherId,
     });

@@ -11,15 +11,18 @@ const courseSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    courseDuration: {
+      type: Number,
+    },
     schoolId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'School',
       required: true,
     },
-    teacherId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
+    // teacherId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'User',
+    // },
     groupId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Group',

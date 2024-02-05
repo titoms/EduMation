@@ -5,7 +5,7 @@ import SchedulesService from '../../../../services/SchedulesService';
 import CoursesService from '../../../../services/CoursesService';
 import { toast } from 'react-toastify';
 import ScheduleCard from './ScheduleCard';
-import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
+import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
 
 const ScheduleList = () => {
   const [schedules, setSchedules] = useState<

@@ -1,9 +1,9 @@
 // UpdateUserModal.tsx
 import React, { useState } from 'react';
-import { User } from '../../services/Types';
-import UsersService from '../../services/UsersService';
+import { User } from '../services/Types';
+import UsersService from '../services/UsersService';
 import { toast } from 'react-toastify';
-import DragAndDrop from './draganddrop/DragAndDrop';
+import DragAndDrop from './ui/draganddrop/DragAndDrop';
 
 interface UpdateUserModalProps {
   user: User;

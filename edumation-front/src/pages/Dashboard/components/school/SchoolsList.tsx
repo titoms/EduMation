@@ -7,11 +7,13 @@ interface SchoolsListProps {
 
 const SchoolsList: React.FC<SchoolsListProps> = ({ schools }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {schools.map((school) => (
-        <SchoolCard key={school._id} school={school} />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {schools.map((school) => (
+          <SchoolCard key={school._id} school={school} />
+        ))}
+      </div>
+    </>
   );
 };
 
