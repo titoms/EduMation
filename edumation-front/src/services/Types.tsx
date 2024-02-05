@@ -30,7 +30,7 @@ export interface Group {
 }
 
 export interface User {
-  _id: string;
+  _id?: string;
   name: string;
   email: string;
   profileImage: string;
@@ -39,14 +39,14 @@ export interface User {
 }
 
 export interface Quiz {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   questions: { questionText: string; options: string[]; answer: string }[];
 }
 
 export interface School {
-  _id: string;
+  _id?: string;
   name: string;
   address: string;
   contactInfo: {
