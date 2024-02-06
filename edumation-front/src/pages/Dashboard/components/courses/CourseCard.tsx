@@ -21,13 +21,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
   return (
     <div className="bg-white shadow rounded-lg p-4">
       <h3 className="text-lg font-semibold">{course.title}</h3>
-      <div className="mt-4">
+      <div className="my-4">
         <p>School ID: {course.schoolId}</p>
         <p>Teacher ID: {course.teacherId}</p>
-        <p>
-          Student IDs:{' '}
-          {course.studentIds ? course.studentIds.join(', ') : 'N/A'}
-        </p>
         <p>Quiz IDs: {course.quizIds ? course.quizIds.join(', ') : 'N/A'}</p>
         <p>
           Duration:{' '}

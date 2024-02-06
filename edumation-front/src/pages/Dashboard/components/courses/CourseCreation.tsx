@@ -19,7 +19,6 @@ const CourseCreation = () => {
     description: '',
     schoolId: '',
     teacherId: '',
-    studentIds: [],
     courseDuration: 0,
   });
 
