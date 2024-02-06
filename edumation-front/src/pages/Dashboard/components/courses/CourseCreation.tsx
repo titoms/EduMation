@@ -17,6 +17,9 @@ const CourseCreation = () => {
   const [createCourseData, setCreateCourseData] = useState<Course>({
     title: '',
     description: '',
+    schoolId: '',
+    teacherId: '',
+    studentIds: [],
     courseDuration: 0,
   });
 

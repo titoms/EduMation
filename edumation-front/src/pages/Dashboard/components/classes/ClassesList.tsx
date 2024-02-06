@@ -7,6 +7,7 @@ import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import ClassCard from './ClassCard';
 import ClassActions from './ClassActions';
 import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
+import { toast } from 'react-toastify';
 
 const ClassesList = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -30,6 +31,7 @@ const ClassesList = () => {
     setSelectedClassId(null);
     setOpenDelete(false);
     await ClassesService.deleteGroup(itemId);
+    toast.success('Class succesfully deleted !');
   };
 
   useEffect(() => {
