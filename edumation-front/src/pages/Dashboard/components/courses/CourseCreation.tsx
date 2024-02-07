@@ -45,7 +45,7 @@ const CourseCreation = () => {
       <div className="mb-4">
         <BackButton />
       </div>
-      <h1 className="text-2xl font-semibold">Create new Course</h1>
+      {/* <h1 className="text-2xl font-semibold">Create new Course</h1> */}
       <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
         <form onSubmit={handleCreateCourse}>
           <div className="max-w-md w-full space-y-6">
