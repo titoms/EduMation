@@ -3,6 +3,7 @@ import { Course } from '../../../../services/Types';
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 interface CourseCardProps {
   course: Course;
@@ -20,18 +21,23 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
 
   return (
     <div className="bg-white shadow rounded-lg p-4">
-      <h3 className="text-lg font-semibold">{course.title}</h3>
+      <Link to={course._id}>
+        <h3 className="text-lg font-semibold">{course.title}</h3>
+      </Link>
       <div className="my-4">
-        <p>School ID: {course.schoolId}</p>
-        <p>Teacher ID: {course.teacherId}</p>
-        <p>Quiz IDs: {course.quizIds ? course.quizIds.join(', ') : 'N/A'}</p>
+        {course.schoolId && <p>School ID: {course.schoolId}</p>}
+        {course.teacherId && <p>Teacher ID: {course.teacherId}</p>}
+        {course.quizIds && course.quizIds.length > 0 && (
+          <p>Quiz IDs: {course.quizIds.join(', ')}</p>
+        )}
         <p>
           Duration:{' '}
           {course.courseDuration
-            ? `${course.courseDuration} hours`
+            ? `${course.courseDuration} days`
             : 'Not specified'}
         </p>
       </div>
+
       <hr />
       <p className="mt-4">{course.description}</p>
       <div className="flex justify-end gap-2 mt-4">
