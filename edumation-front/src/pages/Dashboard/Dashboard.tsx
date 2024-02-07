@@ -20,6 +20,7 @@ import ConditionalHeightWrapper from '../../utils/ConditionalHeightWrapper';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 import IndividualSchedule from './components/schedule/IndividualSchedule';
+import IndividualCourse from './components/courses/IndividualCourse';
 
 const Dashboard = () => {
   return (
@@ -45,6 +46,7 @@ const Dashboard = () => {
 
             <Route path="courses" element={<Courses />} />
             <Route path="courses/new" element={<CourseCreation />} />
+            <Route path="courses/:id" element={<IndividualCourse />} />
 
             <Route path="schedules" element={<Scheduler />} />
             <Route path="schedules/:id" element={<IndividualSchedule />} />
