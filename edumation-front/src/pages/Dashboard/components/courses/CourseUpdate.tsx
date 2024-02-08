@@ -23,6 +23,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
     title: '',
     description: '',
     courseDuration: 0,
+    teacherId: '',
   });
   useEffect(() => {
     const fetchCourseData = async () => {
