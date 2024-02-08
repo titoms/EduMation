@@ -17,7 +17,7 @@ export interface Course {
   title: string;
   description: string;
   schoolId: string;
-  teacherId?: string;
+  teacherId: string;
   courseDuration: number;
   quizIds?: string[];
   scheduleId?: string;
