@@ -1,5 +1,5 @@
 import React from 'react';
-import { Course } from '../../../../services/Types';
+import { Course, School, User } from '../../../../services/Types';
 import {
   Button,
   TextField,
@@ -12,12 +12,16 @@ import BackButton from '../../../../components/ui/BackButton';
 
 interface CourseUpdateProps {
   course: Course;
+  school: School | undefined;
+  teacher: User | undefined;
   handleCourseDataChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleUpdateCourse: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const CourseUpdate: React.FC<CourseUpdateProps> = ({
   course,
+  teacher,
+  school,
   handleCourseDataChange,
   handleUpdateCourse,
 }) => {

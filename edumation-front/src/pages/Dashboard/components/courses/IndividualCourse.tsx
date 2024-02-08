@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CoursesService from '../../../../services/CoursesService';
-import { Course } from '../../../../services/Types';
+import { Course, School, User } from '../../../../services/Types';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import BackButton from '../../../../components/ui/BackButton';
 import CourseInformation from './CourseInformation';
 import CourseUpdate from './CourseUpdate';
+import SchoolsService from '../../../../services/SchoolsService';
+import UsersService from '../../../../services/UsersService';
 
 const IndividualCourse: React.FC = () => {
   const params = useParams<{ id: string }>();
   const [course, setCourse] = useState<Course | undefined>();
+  const [school, setSchool] = useState<School | undefined>();
+  const [teacher, setTeacher] = useState<User>();
   const courseId = params.id || '';
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchCourseData = async () => {
       if (!courseId) {
         toast.error('Course ID is undefined');
         setLoading(false);
@@ -23,7 +27,32 @@ const IndividualCourse: React.FC = () => {
       }
       try {
         const courseResponse = await CoursesService.getCoursesById(courseId);
-        setCourse(courseResponse.data);
+        const fetchedCourse = courseResponse.data;
+        setCourse(fetchedCourse);
+        if (fetchedCourse.schoolId) {
+          SchoolsService.getSchoolsById(fetchedCourse.schoolId)
+            .then((response) => {
+              setSchool(response.data);
+            })
+            .catch((error) => {
+              toast.error('Failed to fetch School details');
+              console.log(error);
+            });
+        }
+        if (fetchedCourse.teacherId) {
+          UsersService.getUserById(fetchedCourse.teacherId)
+            .then((response) => {
+              if (response.data.role === 'teacher') {
+                setTeacher(response.data);
+              } else {
+                toast.error('The user is not a teacher');
+              }
+            })
+            .catch((error) => {
+              toast.error('Failed to fetch teacher details');
+              console.log(error);
+            });
+        }
       } catch (error) {
         toast.error('Failed to fetch course details');
       } finally {
@@ -31,7 +60,7 @@ const IndividualCourse: React.FC = () => {
       }
     };
 
-    fetchCourse();
+    fetchCourseData();
   }, [courseId]);
 
   const handleCourseDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,10 +91,18 @@ const IndividualCourse: React.FC = () => {
       <h1 className="text-2xl my-4 font-semibold">{course?.title}</h1>
       <div className="flex gap-8 justify-around">
         {/* FIRST COLUMN */}
-        {course && <CourseInformation course={course} />}
+        {course && (
+          <CourseInformation
+            course={course}
+            school={school}
+            teacher={teacher}
+          />
+        )}
         {/* SECOND COLUMN */}
         <CourseUpdate
           course={course}
+          school={school}
+          teacher={teacher}
           handleCourseDataChange={handleCourseDataChange}
           handleUpdateCourse={handleUpdateCourse}
         />
