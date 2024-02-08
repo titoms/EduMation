@@ -12,14 +12,19 @@ import { Course } from '../../../../services/Types';
 import { toast } from 'react-toastify';
 import CoursesService from '../../../../services/CoursesService';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
+import TeacherSelect from './TeacherSelect';
 
 interface CourseUpdateProps {
   courseId: string;
 }
 
 const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
-  const [courseData, setCourseData] = useState<Course | undefined>(undefined);
-
+  const [courseData, setCourseData] = useState<Course>({
+    title: '',
+    description: '',
+    courseDuration: 0,
+    teacherId: '',
+  });
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -33,11 +38,21 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
     fetchCourseData();
   }, [courseId]);
 
-  const handleCourseDataChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setCourseData((prev) => ({ ...prev, [name]: value }));
+  const handleCourseDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    let value: string | number = e.target.value;
+
+    if (e.target.type === 'number') {
+      value = parseInt(e.target.value, 10);
+    }
+
+    setCourseData((courseData) => {
+      if (!courseData) return null;
+      return {
+        ...courseData,
+        [name]: value,
+      };
+    });
   };
 
   const handleUpdateCourse = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,6 +61,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
       try {
         await CoursesService.updateCourses(courseId, courseData);
         toast.success('Course updated successfully');
+        console.log(courseData);
       } catch (error) {
         console.error('Error updating course:', error);
         toast.error('Error updating course.');
@@ -114,20 +130,11 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
             </div>
             <div className="space-y-2">
               {' '}
-              <FormControl fullWidth onChange={handleCourseDataChange}>
-                <InputLabel>Teacher :</InputLabel>
-                <Select
-                  labelId="teacher-update-label"
-                  id="teacher-update"
-                  label="Teacher :"
-                  name="teacher"
-                  defaultValue={'teacher1'}
-                >
-                  <MenuItem value="teacher1">Teacher 1</MenuItem>
-                  <MenuItem value="teacher2">Teacher 2</MenuItem>
-                  <MenuItem value="teacher3">Teacher 3</MenuItem>
-                </Select>
-              </FormControl>
+              <TeacherSelect
+                value={courseData.teacherId}
+                name="teacherId"
+                onChange={handleCourseDataChange}
+              />
             </div>
           </div>
         </div>
