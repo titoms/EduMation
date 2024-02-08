@@ -13,7 +13,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import Edit from '@mui/icons-material/Edit';
+import CourseInformation from './CourseInformation';
 
 const IndividualCourse: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -64,43 +64,7 @@ const IndividualCourse: React.FC = () => {
       <h1 className="text-2xl my-4 font-semibold">{course?.title}</h1>
       <div className="flex gap-8 justify-around">
         {/* FIRST COLUMN */}
-        <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
-          <form onSubmit={handleUpdateCourse} className="">
-            <div className="max-w-md w-full space-y-6">
-              <div className="mx-auto max-w-md space-y-6">
-                <div className="space-y-2 text-center">
-                  <h2 className="text-3xl font-bold">Course information :</h2>
-                  <p className="text-gray-500">{course?.description}</p>
-                </div>
-                <div className="space-y-2 text-center">
-                  <h2 className="text-3xl font-bold">
-                    {course?.courseDuration ? course.courseDuration : 0} Days
-                  </h2>
-                </div>
-                <div className="space-y-2 flex justify-around text-center">
-                  <div className="">
-                    {' '}
-                    <img
-                      className="w-32 h-32 rounded-full"
-                      src="https://via.placeholder.com/150"
-                      alt="School Pic"
-                    />
-                    <h3 className="mt-2">School Name</h3>
-                  </div>
-                  <div className="">
-                    {' '}
-                    <img
-                      className="w-32 h-32 rounded-full"
-                      src="https://via.placeholder.com/150"
-                      alt="Teacher Pic"
-                    />
-                    <h3 className="mt-2">Teacher Name</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+        {course && <CourseInformation course={course} />}
         {/* SECOND COLUMN */}
         <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
           <form onSubmit={handleUpdateCourse} className="">
