@@ -43,28 +43,30 @@ const TeacherSelect: React.FC<TeacherSelectProps> = ({
   }, []);
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="teacher-select-label">Teacher</InputLabel>
-      <Select
-        labelId="teacher-select-label"
-        id="teacher-select"
-        value={value}
-        onChange={onChange}
-        name={name}
-      >
-        {loading ? (
-          <MenuItem value="" disabled>
-            Loading...
-          </MenuItem>
-        ) : (
-          teachers.map((teacher) => (
-            <MenuItem key={teacher._id} value={teacher._id}>
-              {teacher.name} - {teacher.email}
+    <>
+      <InputLabel id="teacher-select-label">Select Teacher :</InputLabel>
+      <FormControl fullWidth>
+        <Select
+          labelId="teacher-select-label"
+          id="teacher-select"
+          value={value}
+          onChange={onChange}
+          name={name}
+        >
+          {loading ? (
+            <MenuItem value="" disabled>
+              Loading...
             </MenuItem>
-          ))
-        )}
-      </Select>
-    </FormControl>
+          ) : (
+            teachers.map((teacher) => (
+              <MenuItem key={teacher._id} value={teacher._id}>
+                {teacher.name} - {teacher.email}
+              </MenuItem>
+            ))
+          )}
+        </Select>
+      </FormControl>
+    </>
   );
 };
 

@@ -23,7 +23,6 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
     title: '',
     description: '',
     courseDuration: 0,
-    teacherId: '',
   });
   useEffect(() => {
     const fetchCourseData = async () => {
@@ -85,6 +84,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
               label="Course Title"
               variant="outlined"
               name="title"
+              value={courseData.title}
               fullWidth
               onChange={handleCourseDataChange}
             />
@@ -93,6 +93,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
               label="Course Description"
               name="description"
               variant="outlined"
+              value={courseData.description}
               fullWidth
               onChange={handleCourseDataChange}
             />
@@ -104,6 +105,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
                   label="Course Duration"
                   type="number"
                   name="courseDuration"
+                  value={courseData.courseDuration}
                   InputLabelProps={{
                     shrink: true,
                   }}
