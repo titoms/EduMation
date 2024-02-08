@@ -1,16 +1,52 @@
+import React, { useEffect, useState } from 'react';
 import { Course, School, User } from '../../../../services/Types';
+import { toast } from 'react-toastify';
+import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
+import SchoolsService from '../../../../services/SchoolsService';
+import UsersService from '../../../../services/UsersService';
 
 interface CourseInformationProps {
   course: Course;
-  school: School | undefined; // Updated to accept undefined
-  teacher: User | undefined; // Updated to accept undefined
 }
 
-const CourseInformation: React.FC<CourseInformationProps> = ({
-  course,
-  teacher,
-  school,
-}) => {
+const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
+  const [school, setSchool] = useState<School | undefined>();
+  const [teacher, setTeacher] = useState<User>();
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchSchool = async () => {
+      try {
+        const response = await SchoolsService.getSchoolsById(course.schoolId);
+        setSchool(response.data);
+      } catch (error) {
+        toast.error('Failed to fetch School details');
+      } finally {
+        setLoading(false);
+      }
+    };
+    const fetchTeacher = async () => {
+      if (course.teacherId) {
+        try {
+          const response = await UsersService.getUserById(course.teacherId);
+          if (response.data.role === 'teacher') {
+            setTeacher(response.data);
+          } else {
+            toast.error('The user is not a teacher');
+          }
+        } catch (error) {
+          toast.error('Failed to fetch teacher details');
+        }
+      } else {
+        toast.error('Teacher ID is not defined');
+      }
+    };
+    fetchTeacher();
+    fetchSchool();
+  }, [course]);
+
+  if (loading) return <UserSkeleton />;
+
   return (
     <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
       <div className="max-w-md w-full space-y-8">

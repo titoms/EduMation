@@ -1,5 +1,4 @@
 import React from 'react';
-import { Course, School, User } from '../../../../services/Types';
 import {
   Button,
   TextField,
@@ -10,21 +9,16 @@ import {
 } from '@mui/material';
 import BackButton from '../../../../components/ui/BackButton';
 
-interface CourseUpdateProps {
-  course: Course;
-  school: School | undefined;
-  teacher: User | undefined;
-  handleCourseDataChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleUpdateCourse: (e: React.FormEvent<HTMLFormElement>) => void;
-}
+const CourseUpdate = () => {
+  const handleCourseDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Implement the logic to handle form data changes
+  };
 
-const CourseUpdate: React.FC<CourseUpdateProps> = ({
-  course,
-  teacher,
-  school,
-  handleCourseDataChange,
-  handleUpdateCourse,
-}) => {
+  const handleUpdateCourse = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Implement the logic to update the course details
+  };
+
   return (
     <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
       <form onSubmit={handleUpdateCourse} className="">
