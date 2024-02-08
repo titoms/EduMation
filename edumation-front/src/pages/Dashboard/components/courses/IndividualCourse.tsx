@@ -56,7 +56,7 @@ const IndividualCourse: React.FC = () => {
         {/* FIRST COLUMN */}
         {course && <CourseInformation course={course} />}
         {/* SECOND COLUMN */}
-        <CourseUpdate />
+        <CourseUpdate courseId={courseId} />
       </div>
     </>
   );
