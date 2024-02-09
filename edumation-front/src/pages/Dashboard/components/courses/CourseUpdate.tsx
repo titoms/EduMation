@@ -18,9 +18,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 interface CourseUpdateProps {
   courseId: string;
   onDelete: (courseId: string) => void;
+  onCourseUpdate: () => void;
 }
 
-const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId, onDelete }) => {
+const CourseUpdate: React.FC<CourseUpdateProps> = ({
+  courseId,
+  onDelete,
+  onCourseUpdate,
+}) => {
   const [courseData, setCourseData] = useState<Course>({
     title: '',
     description: '',
@@ -72,7 +77,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId, onDelete }) => {
       try {
         await CoursesService.updateCourses(courseId, courseData);
         toast.success('Course updated successfully');
-        console.log(courseData);
+        onCourseUpdate();
       } catch (error) {
         console.error('Error updating course:', error);
         toast.error('Error updating course.');

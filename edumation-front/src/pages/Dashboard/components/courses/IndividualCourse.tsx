@@ -15,7 +15,9 @@ const IndividualCourse: React.FC = () => {
   const courseId = params.id || '';
   const [loading, setLoading] = useState<boolean>(true);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState<number>(0); // Update trigger state
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchCourseData = async () => {
       if (!courseId) {
@@ -35,7 +37,7 @@ const IndividualCourse: React.FC = () => {
     };
 
     fetchCourseData();
-  }, [courseId]);
+  }, [courseId, updateTrigger]);
 
   if (loading) return <UserSkeleton />;
   if (!course) {
@@ -50,6 +52,10 @@ const IndividualCourse: React.FC = () => {
   }
   const handleOpenDelete = () => setOpenDeleteModal(true);
   const handleCloseDelete = () => setOpenDeleteModal(false);
+
+  const onCourseUpdate = () => {
+    setUpdateTrigger((prev) => prev + 1);
+  };
 
   const handleCourseDelete = async () => {
     if (!courseId) return;
@@ -72,7 +78,11 @@ const IndividualCourse: React.FC = () => {
         {/* FIRST COLUMN */}
         {course && <CourseInformation course={course} />}
         {/* SECOND COLUMN */}
-        <CourseUpdate courseId={courseId} onDelete={handleOpenDelete} />
+        <CourseUpdate
+          courseId={courseId}
+          onDelete={handleOpenDelete}
+          onCourseUpdate={onCourseUpdate}
+        />
         {courseId && (
           <DeleteConfirmationModal
             open={openDeleteModal}
