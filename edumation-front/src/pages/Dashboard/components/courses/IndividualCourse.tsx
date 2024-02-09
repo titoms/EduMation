@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CoursesService from '../../../../services/CoursesService';
 import { Course } from '../../../../services/Types';
@@ -7,13 +7,15 @@ import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import BackButton from '../../../../components/ui/BackButton';
 import CourseInformation from './CourseInformation';
 import CourseUpdate from './CourseUpdate';
+import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
 
 const IndividualCourse: React.FC = () => {
   const params = useParams<{ id: string }>();
   const [course, setCourse] = useState<Course | undefined>();
   const courseId = params.id || '';
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCourseData = async () => {
       if (!courseId) {
@@ -36,7 +38,6 @@ const IndividualCourse: React.FC = () => {
   }, [courseId]);
 
   if (loading) return <UserSkeleton />;
-
   if (!course) {
     return (
       <>
@@ -47,6 +48,21 @@ const IndividualCourse: React.FC = () => {
       </>
     );
   }
+  const handleOpenDelete = () => setOpenDeleteModal(true);
+  const handleCloseDelete = () => setOpenDeleteModal(false);
+
+  const handleCourseDelete = async () => {
+    if (!courseId) return;
+    try {
+      await CoursesService.deleteCourses(courseId);
+      toast.success('Course deleted successfully');
+      navigate('/dashboard/courses');
+    } catch (error) {
+      toast.error('Failed to delete course');
+    } finally {
+      setOpenDeleteModal(false);
+    }
+  };
 
   return (
     <>
@@ -56,7 +72,16 @@ const IndividualCourse: React.FC = () => {
         {/* FIRST COLUMN */}
         {course && <CourseInformation course={course} />}
         {/* SECOND COLUMN */}
-        <CourseUpdate courseId={courseId} />
+        <CourseUpdate courseId={courseId} onDelete={handleOpenDelete} />
+        {courseId && (
+          <DeleteConfirmationModal
+            open={openDeleteModal}
+            onClose={handleCloseDelete}
+            onDelete={() => handleCourseDelete()}
+            itemId={courseId}
+            confirmationMessage="Are you sure you want to delete this course?"
+          />
+        )}
       </div>
     </>
   );

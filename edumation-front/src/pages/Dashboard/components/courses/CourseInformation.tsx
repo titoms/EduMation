@@ -59,7 +59,7 @@ const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
             {course?.courseDuration ? course.courseDuration : 0} Days
           </h2>
         </div>
-        <div className="mt-8 flex justify-between content-center text-center">
+        <div className="mt-8 flex justify-between items-center text-center">
           <div className="space-y-4">
             <img
               className="w-32 h-32 m-auto rounded-full"

@@ -13,18 +13,29 @@ import { toast } from 'react-toastify';
 import CoursesService from '../../../../services/CoursesService';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import TeacherSelect from './TeacherSelect';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface CourseUpdateProps {
   courseId: string;
+  onDelete: (courseId: string) => void;
 }
 
-const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
+const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId, onDelete }) => {
   const [courseData, setCourseData] = useState<Course>({
     title: '',
     description: '',
     courseDuration: 0,
     teacherId: '',
   });
+
+  const handleDelete = () => {
+    if (courseId) {
+      onDelete(courseId);
+    } else {
+      toast.error('Attempted to delete a course without an ID.');
+    }
+  };
+
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -138,6 +149,20 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
                 name="teacherId"
                 onChange={handleCourseDataChange}
               />
+            </div>
+            <div className="space-y-2">
+              <div className="text-red-900 bg-red-200 border-red-500 p-4 rounded-lg flex justify-between items-center">
+                <p>Delete course ?</p>
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleDelete}
+                >
+                  <span className="hidden md:inline">Delete</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
