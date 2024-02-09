@@ -150,7 +150,7 @@ const CourseUpdate: React.FC<CourseUpdateProps> = ({
             <div className="space-y-2">
               {' '}
               <TeacherSelect
-                value={courseData.teacherId}
+                value={courseData.teacherId || ''}
                 name="teacherId"
                 onChange={handleCourseDataChange}
               />

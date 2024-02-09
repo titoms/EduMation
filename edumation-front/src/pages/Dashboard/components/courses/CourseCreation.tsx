@@ -25,13 +25,19 @@ const CourseCreation = () => {
     quizIds: [],
   });
 
-  const handleDataChange = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  const handleDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setCreateCourseData({ ...createCourseData, [name]: value });
+  };
+
+  // Corrected to specifically handle SelectChangeEvent from TeacherSelect
+  const handleTeacherSelectChange = (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    setCreateCourseData((prev) => ({
+      ...prev,
+      teacherId: event.target.value as string,
+    }));
   };
 
   const handleCreateCourse = async (
@@ -112,9 +118,7 @@ const CourseCreation = () => {
                 <TeacherSelect
                   name="teacherId"
                   value={createCourseData.teacherId || ''}
-                  onChange={(e) =>
-                    handleDataChange(e as React.ChangeEvent<HTMLInputElement>)
-                  }
+                  onChange={handleTeacherSelectChange}
                 />
               </div>
             </div>
