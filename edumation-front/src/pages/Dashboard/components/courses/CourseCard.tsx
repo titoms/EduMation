@@ -40,13 +40,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
       <div className="bg-white shadow rounded-lg p-4">
         <Link to={`${course._id}`}>
           <h3 className="text-lg text-center font-semibold">{course.title}</h3>
-
           <div className="my-4">
             {course.teacherId && (
               <>
                 <div className="flex justify-around items-center">
-                  <p>Teacher:</p>
-                  <div className="flex justify-evenly my-8 flex-col items-center text-center">
+                  <p className="font-semibold">Teacher:</p>
+                  <div className="flex justify-evenly my-4 flex-col items-center text-center">
                     <img
                       className="w-8 h-8 rounded-full"
                       src={
@@ -55,7 +54,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
                       }
                       alt="Teacher Pic"
                     />
-                    <span>{teacher?.name}</span>
+                    <span className="my-2">{teacher?.name}</span>
                   </div>
                 </div>
               </>
@@ -71,7 +70,6 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
                 : 'Not specified'}
             </p>
           </div>
-
           <hr />
           <p className="mt-4">{course.description}</p>
         </Link>
