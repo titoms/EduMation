@@ -11,6 +11,8 @@ import {
 import { Course } from '../../../../services/Types';
 import { useNavigate } from 'react-router-dom';
 import CoursesService from '../../../../services/CoursesService';
+import TeacherSelect from './TeacherSelect';
+import { toast } from 'react-toastify';
 
 const CourseCreation = () => {
   const navigate = useNavigate();
@@ -20,23 +22,28 @@ const CourseCreation = () => {
     schoolId: '',
     teacherId: '',
     courseDuration: 0,
+    quizIds: [],
   });
 
-  const handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreateCourseData({
-      ...createCourseData,
-      [e.target.name]: e.target.value,
-    });
+  const handleDataChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    const { name, value } = event.target;
+    setCreateCourseData({ ...createCourseData, [name]: value });
   };
 
-  const handleCreateCourse = async (event: React.FormEvent) => {
+  const handleCreateCourse = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     try {
-      const response = await CoursesService.createCourses(createCourseData);
-      console.log('Course created successfully:', response.data);
+      await CoursesService.createCourses(createCourseData);
+      toast.success('Course created successfully');
       navigate('/dashboard/courses');
     } catch (error) {
-      console.error('Error creating class:', error);
+      toast.error('Error creating course');
     }
   };
 
@@ -45,7 +52,6 @@ const CourseCreation = () => {
       <div className="mb-4">
         <BackButton />
       </div>
-      {/* <h1 className="text-2xl font-semibold">Create new Course</h1> */}
       <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
         <form onSubmit={handleCreateCourse}>
           <div className="max-w-md w-full space-y-6">
@@ -100,6 +106,16 @@ const CourseCreation = () => {
                     </Select>
                   </FormControl>
                 </div>
+              </div>
+              <div className="space-y-2">
+                {' '}
+                <TeacherSelect
+                  name="teacherId"
+                  value={createCourseData.teacherId || ''}
+                  onChange={(e) =>
+                    handleDataChange(e as React.ChangeEvent<HTMLInputElement>)
+                  }
+                />
               </div>
             </div>
           </div>

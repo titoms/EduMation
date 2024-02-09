@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react';
-import UsersService from '../../../../services/UsersService';
+// TeacherSelect.tsx
+import React, { useEffect, useState } from 'react';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { toast } from 'react-toastify';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import UsersService from '../../../../services/UsersService';
 import { User } from '../../../../services/Types';
 
 interface TeacherSelectProps {
-  onChange: (event: SelectChangeEvent) => void;
+  onChange: (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => void;
   value: string;
   name: string;
 }
@@ -43,30 +40,28 @@ const TeacherSelect: React.FC<TeacherSelectProps> = ({
   }, []);
 
   return (
-    <>
-      <InputLabel id="teacher-select-label">Select Teacher :</InputLabel>
-      <FormControl fullWidth>
-        <Select
-          labelId="teacher-select-label"
-          id="teacher-select"
-          value={value}
-          onChange={onChange}
-          name={name}
-        >
-          {loading ? (
-            <MenuItem value="" disabled>
-              Loading...
+    <FormControl fullWidth>
+      <InputLabel id={`${name}-label`}>Teacher</InputLabel>
+      <Select
+        labelId={`${name}-label`}
+        id={name}
+        value={value}
+        onChange={onChange}
+        name={name}
+      >
+        {loading ? (
+          <MenuItem value="">
+            <em>Loading...</em>
+          </MenuItem>
+        ) : (
+          teachers.map((teacher) => (
+            <MenuItem key={teacher._id} value={teacher._id}>
+              {teacher.name}
             </MenuItem>
-          ) : (
-            teachers.map((teacher) => (
-              <MenuItem key={teacher._id} value={teacher._id}>
-                {teacher.name} - {teacher.email}
-              </MenuItem>
-            ))
-          )}
-        </Select>
-      </FormControl>
-    </>
+          ))
+        )}
+      </Select>
+    </FormControl>
   );
 };
 

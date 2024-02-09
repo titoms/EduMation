@@ -32,6 +32,7 @@ exports.createCourse = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       courseDuration: req.body.courseDuration,
+      teacherId: req.body.teacherId,
     });
     const savedCourse = await newCourse.save();
     res.status(201).json(savedCourse);
