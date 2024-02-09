@@ -1,4 +1,3 @@
-// Adjusted CoursesList component
 import React, { useEffect, useState } from 'react';
 import CoursesService from '../../../../services/CoursesService';
 import { Course } from '../../../../services/Types';
@@ -6,13 +5,16 @@ import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import { toast } from 'react-toastify';
 import CourseCard from './CourseCard';
 import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
+import { useCoursesContext } from '../../../../context/CourseContext';
 
 interface CoursesListProps {
   filter: string;
 }
 
 const CoursesList: React.FC<CoursesListProps> = ({ filter }) => {
+  const courseContext = useCoursesContext();
   const [courses, setCourses] = useState<Course[]>([]);
+
   const [selectedCourseId, setSelectedCourseId] = useState<string | undefined>(
     undefined
   );
@@ -24,12 +26,9 @@ const CoursesList: React.FC<CoursesListProps> = ({ filter }) => {
     setSelectedCourseId(courseId);
     setOpenDeleteModal(true);
   };
-
   const handleCloseDelete = () => setOpenDeleteModal(false);
-
   const handleCourseDelete = async () => {
     if (!selectedCourseId) return;
-
     try {
       await CoursesService.deleteCourses(selectedCourseId);
       toast.success('Course deleted successfully');
@@ -44,22 +43,14 @@ const CoursesList: React.FC<CoursesListProps> = ({ filter }) => {
   };
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await CoursesService.getAllCourses();
-        const filteredCourses = response.data.filter((course) =>
-          course.title.toLowerCase().includes(filter.toLowerCase())
-        );
-        setCourses(filteredCourses);
-      } catch (err) {
-        toast.error('An error occurred while fetching courses.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-  }, [filter, refreshKey]);
+    if (courseContext && courseContext.courses) {
+      const filteredCourses = courseContext.courses.filter((course) =>
+        course.title.toLowerCase().includes(filter.toLowerCase())
+      );
+      setCourses(filteredCourses);
+    }
+    setLoading(false);
+  }, [courseContext, filter, refreshKey]);
 
   if (loading) return <UserSkeleton />;
   if (!courses.length) return <div>No courses available.</div>;

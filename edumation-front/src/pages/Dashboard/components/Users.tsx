@@ -34,7 +34,7 @@ const Users = () => {
   }
   const { users, setUsers } = userContext;
 
-  const handleDeleteUser = async (userId) => {
+  const handleDeleteUser = async (userId: string) => {
     try {
       await UsersService.deleteUser(userId);
       setUsers(users.filter((u) => u._id !== userId));
@@ -46,12 +46,12 @@ const Users = () => {
     }
   };
 
-  const onShowUpdateModal = (user) => {
+  const onShowUpdateModal = (user: User) => {
     setSelectedUser(user);
     setShowUpdateModal(true);
   };
 
-  const onShowDeleteModal = (user) => {
+  const onShowDeleteModal = (user: User) => {
     setSelectedUser(user);
     setIsDeleteModalOpen(true);
   };
