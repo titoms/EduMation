@@ -52,7 +52,10 @@ const QuizzList = () => {
       <div className="mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quizzes.map((quiz) => (
-            <div key={quiz._id} className="bg-white shadow rounded-lg p-4">
+            <div
+              key={quiz._id}
+              className="bg-white dark:bg-slate-800 shadow rounded-lg p-4"
+            >
               <h3 className="text-lg font-semibold">{quiz.title}</h3>
               <p>{quiz.description}</p>
               <ul>
@@ -67,11 +70,18 @@ const QuizzList = () => {
                   </li>
                 ))}
               </ul>
+
               <div className="mt-4">
-                <IconButton aria-label="add to favorites">
+                <IconButton
+                  className="text-black dark:text-gray-200"
+                  aria-label="add to favorites"
+                >
                   <FavoriteIcon />
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton
+                  className="text-black dark:text-gray-200"
+                  aria-label="share"
+                >
                   <ShareIcon />
                 </IconButton>
               </div>
