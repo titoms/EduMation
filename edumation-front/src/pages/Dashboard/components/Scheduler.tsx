@@ -7,7 +7,7 @@ const Schedules = () => {
   return (
     <>
       <h1 className="text-2xl font-semibold">Schedules</h1>
-      <div className="mt-4 flex justify-end">
+      <div className="my-4 flex justify-end">
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">
             Create new Schedule

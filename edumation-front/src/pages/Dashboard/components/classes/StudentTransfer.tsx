@@ -106,28 +106,24 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
       });
 
       if (destination.droppableId === 'NewClassStudents') {
-        const newClassStudentIds = newEndCol.list.map((student) => student._id);
+        const newClassStudentIds = newEndCol.list
+          .map((student) => student._id)
+          .filter((id): id is string => !!id);
         onNewClassStudentsChange(newClassStudentIds);
       } else if (
         source.droppableId === 'NewClassStudents' &&
         destination.droppableId === 'AvailableStudents'
       ) {
-        // Handle removing student from NewClassStudents when dragged back to AvailableStudents
-        const newClassStudentIds = newStartCol.list.map(
-          (student) => student._id
-        );
+        const newClassStudentIds = newStartCol.list
+          .map((student) => student._id)
+          .filter((id): id is string => !!id);
         onNewClassStudentsChange(newClassStudentIds);
       }
     }
   };
 
-  if (loading) {
-    return <UserSkeleton />;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (loading) return <UserSkeleton />;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

@@ -9,7 +9,6 @@ interface ItemProps {
 }
 
 const StyledItem = styled('div', {
-  backgroundColor: '#eee',
   borderRadius: 4,
   padding: '4px 8px',
   transition: 'background-color .8s ease-out',
@@ -23,9 +22,10 @@ const StyledItem = styled('div', {
 
 export const DraggableItem: React.FC<ItemProps> = ({ student, index }) => {
   return (
-    <Draggable draggableId={student._id} index={index}>
+    <Draggable draggableId={student._id!} index={index}>
       {(provided) => (
         <StyledItem
+          className="bg-gray-100 dark:bg-slate-800"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

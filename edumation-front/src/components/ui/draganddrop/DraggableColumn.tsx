@@ -23,7 +23,6 @@ const StyledColumn = styled('div', {
 });
 
 const StyledList = styled('div', {
-  backgroundColor: '#ddd',
   borderRadius: 8,
   padding: 16,
   display: 'flex',
@@ -34,10 +33,8 @@ const StyledList = styled('div', {
 
 const StyledSearch = styled('input', {
   marginBottom: '4px',
-  backgroundColor: '#ddd',
   padding: '4px',
   borderRadius: '4px',
-  border: '1px solid #ccc',
   width: '100%',
   boxSizing: 'border-box',
 });
@@ -61,9 +58,14 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
         <StyledColumn>
           <h2>{id}</h2>
 
-          <StyledList {...provided.droppableProps} ref={provided.innerRef}>
+          <StyledList
+            className="bg-gray-400 dark:bg-slate-600"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
             <StyledSearch
               type="text"
+              className="bg-gray-100 dark:bg-slate-700 border-1 border-white"
               placeholder="Search students..."
               onChange={handleSearchChange}
             />
