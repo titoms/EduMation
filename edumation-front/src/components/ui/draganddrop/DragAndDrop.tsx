@@ -63,8 +63,8 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop, fileType }) => {
     <div
       className={`${
         dragActive
-          ? 'bg-gray-400 border-gray-300'
-          : 'bg-gray-100 border-gray-300'
+          ? 'bg-gray-400 border-gray-300 dark:bg-slate-700 dark:border-slate-500'
+          : 'bg-gray-100 border-gray-300 dark:bg-slate-600 dark:border-slate-400'
       }  p-4 w-full rounded-lg border-2 border-dashed min-h-[8rem] text-center flex flex-col items-center justify-center mt-2`}
       onDragEnter={handleDragEnter}
       onDrop={handleDrop}
@@ -83,7 +83,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop, fileType }) => {
         <p>
           Drag & Drop files or{' '}
           <span
-            className="font-bold text-gray-600 cursor-pointer"
+            className="font-bold text-gray-600 dark:text-white cursor-pointer"
             onClick={openFileExplorer}
           >
             <u>Select files</u>
@@ -95,7 +95,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop, fileType }) => {
           <p>
             Drag & Drop files or{' '}
             <span
-              className="font-bold text-gray-600 cursor-pointer"
+              className="font-bold text-gray-600 dark:text-white cursor-pointer"
               onClick={openFileExplorer}
             >
               <u>Select files</u>

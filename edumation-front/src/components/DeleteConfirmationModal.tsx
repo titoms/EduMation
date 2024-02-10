@@ -15,8 +15,6 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
@@ -39,7 +37,10 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={style}>
+      <Box
+        sx={style}
+        className="bg-gray-200 dark:bg-slate-800 text-black dark:text-white border-gray-200 dark:border-gray-600"
+      >
         <h3 className="text-center">{confirmationMessage}</h3>
         <div className="mt-4 flex justify-center gap-4">
           <button

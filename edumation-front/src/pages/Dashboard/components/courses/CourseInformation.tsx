@@ -48,7 +48,7 @@ const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
   if (loading) return <UserSkeleton />;
 
   return (
-    <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
+    <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center rounded-lg p-8">
       <div className="max-w-md w-full space-y-8">
         <div className="space-y-4 text-center">
           <h2 className="text-3xl font-bold">Course information :</h2>

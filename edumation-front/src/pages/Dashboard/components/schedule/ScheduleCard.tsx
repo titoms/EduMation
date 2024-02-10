@@ -12,7 +12,7 @@ interface ScheduleCardProps {
 
 const ScheduleCard: React.FC<ScheduleCardProps> = ({ schedule, onDelete }) => {
   return (
-    <div className="bg-white shadow rounded-lg p-4">
+    <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4">
       <div className="flex justify-between gap-4 items-center">
         <Link to={schedule._id}>
           <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">

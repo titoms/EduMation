@@ -11,7 +11,7 @@ interface ClassCardProps {
 
 const ClassCard: React.FC<ClassCardProps> = ({ group, onDelete }) => {
   return (
-    <div className="bg-white flex align-middle items-center shadow rounded-lg p-6">
+    <div className="bg-white dark:bg-slate-800 flex align-middle items-center shadow rounded-lg p-6">
       <div className="flex justify-between gap-4 flex-row flex-wrap md:flex-nowrap">
         <Checkbox />
         <Link to={group._id} className="pt-2">

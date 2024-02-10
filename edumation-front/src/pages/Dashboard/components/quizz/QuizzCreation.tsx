@@ -33,7 +33,7 @@ const QuizzCreation: React.FC = () => {
           <Typography
             variant="h6"
             component="h1"
-            className="text-lg font-semibold"
+            className="text-lg font-semibold text-black dark:text-white"
           >
             Create new Quizz
           </Typography>

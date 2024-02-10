@@ -58,7 +58,7 @@ const CourseCreation = () => {
       <div className="mb-4">
         <BackButton />
       </div>
-      <div className="bg-gray-200 shadow-md w-full flex justify-center rounded-lg p-8">
+      <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center rounded-lg p-8">
         <form onSubmit={handleCreateCourse}>
           <div className="max-w-md w-full space-y-6">
             <div className="mx-auto max-w-md space-y-6">

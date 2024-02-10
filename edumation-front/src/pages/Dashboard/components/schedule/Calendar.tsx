@@ -80,31 +80,37 @@ const Calendar = ({ events }: EventCalendarProps) => {
       <div className="mb-4 text-center flex justify">
         <button
           onClick={previousMonth}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 ml-2"
+          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 ml-2"
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <button
           onClick={nextMonth}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 ml-2"
+          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 ml-2"
         >
           <FontAwesomeIcon icon={faChevronRight} />
         </button>
-        <h2 className="px-8 py-2 bg-gray-200 text-black font-bold rounded ml-2">
+        <h2 className="px-8 py-2 bg-slate-200 dark:bg-slate-600 text-black dark:text-slate-200 font-bold rounded ml-2">
           {format(firstDayCurrentMonth, 'MMMM yyyy')}
         </h2>
       </div>
       <div className="grid grid-cols-7">
         {WEEKDAYS.map((day) => {
           return (
-            <div key={day} className="font-bold text-center hover:bg-gray-200">
+            <div
+              key={day}
+              className="font-bold text-center hover:bg-gray-200 dark:hover:bg-slate-800"
+            >
               {day}
             </div>
           );
         })}
         {Array.from({ length: startingDayIndex }).map((_, index) => {
           return (
-            <div key={`empty-${index}`} className="border p-4 text-center" />
+            <div
+              key={`empty-${index}`}
+              className="border dark:border-slate-800 p-4 text-center"
+            />
           );
         })}
         {days.map((day, index) => {
@@ -114,10 +120,10 @@ const Calendar = ({ events }: EventCalendarProps) => {
             <div
               key={index}
               className={clsx(
-                'border h-16 md:h-36 text-center hover:bg-gray-200',
+                'border dark:border-slate-800 h-16 md:h-36 text-center hover:bg-gray-200 dark:hover:bg-slate-800 dark:hover:text-white',
                 {
-                  'bg-blue-200 font-bold': isToday(day),
-                  'text-blue-900': isToday(day),
+                  'bg-slate-300 dark:bg-slate-500 font-bold': isToday(day),
+                  'text-slate-900': isToday(day),
                 }
               )}
             >

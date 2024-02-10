@@ -37,7 +37,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
 
   return (
     <>
-      <div className="bg-white shadow rounded-lg p-4">
+      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4">
         <Link to={`${course._id}`}>
           <h3 className="text-lg text-center font-semibold">{course.title}</h3>
           <div className="my-4">

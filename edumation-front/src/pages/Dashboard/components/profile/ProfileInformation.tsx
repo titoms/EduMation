@@ -49,7 +49,7 @@ const ProfileInformations = (user) => {
   if (!userProfile) return <div>Loading...</div>;
 
   return (
-    <div className="bg-white w-full shadow rounded-lg p-6">
+    <div className="bg-white dark:bg-slate-800 w-full shadow rounded-lg p-6">
       <div className="flex flex-col justify-between md:flex-row items-center gap-8">
         <div className="flex-shrink-0">
           <img
@@ -63,10 +63,10 @@ const ProfileInformations = (user) => {
           />
         </div>
         <div className="">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-xl font-semibold dark:text-white text-gray-800 mb-4">
             Name: {userProfile.name}
           </h2>
-          <p className="text-sm text-gray-600 mt-4">
+          <p className="text-sm dark:text-gray-400 text-gray-600 mt-4">
             <b>Email: </b>
             {userProfile.email}
           </p>

@@ -8,7 +8,7 @@ import {
 
 const Question = ({ question, index }) => {
   return (
-    <Card className="w-full p-2 mt-4">
+    <Card className="w-full bg-white dark:bg-slate-800 text-black dark:text-white p-2 mt-4">
       <CardHeader
         title={`Question ${index + 1}`}
         titleTypographyProps={{ className: 'font-bold' }}

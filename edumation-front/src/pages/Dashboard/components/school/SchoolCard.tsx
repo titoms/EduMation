@@ -14,7 +14,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({
 }) => {
   return (
     <div className="w-full">
-      <div className="bg-white rounded-lg overflow-hidden mb-10">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden mb-10">
         <img
           src="https://cdn.tailgrids.com/1.0/assets/images/cards/card-01/image-01.jpg"
           alt="image"
