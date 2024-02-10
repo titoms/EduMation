@@ -62,8 +62,8 @@ const MainDashboard = () => {
       {/* RESUME */}
       <div className="mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-            <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 dark:bg-slate-900 dark:text-white shadow-md">
+            <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-black dark:text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ const MainDashboard = () => {
               </p>
             </div>
           </div>
-          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 dark:bg-slate-900 dark:text-white shadow-md">
             <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@ const MainDashboard = () => {
               </p>
             </div>
           </div>
-          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 dark:bg-slate-900 dark:text-white shadow-md">
             <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-600 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -153,7 +153,7 @@ const MainDashboard = () => {
               </p>
             </div>
           </div>
-          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+          <div className="mt-4 relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 dark:bg-slate-900 dark:text-white shadow-md">
             <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

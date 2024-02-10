@@ -1,4 +1,4 @@
-import SideBar from '../../components/ui/SideBar';
+import SideBar from '../../components/layout/SideBar';
 import MainDashboard from './components/MainDashboard';
 import Profile from './components/Profile';
 import Users from './components/Users';
@@ -24,7 +24,7 @@ import IndividualCourse from './components/courses/IndividualCourse';
 
 const Dashboard = () => {
   return (
-    <div className="flex bg-gray-100 dark:bg-slate-800 dark:text-white text-black">
+    <div className="flex bg-gray-100 dark:bg-gray-700 dark:text-white text-black">
       <SideBar />
       <UserProvider>
         <ConditionalHeightWrapper>

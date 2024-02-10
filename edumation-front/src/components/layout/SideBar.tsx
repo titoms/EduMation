@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
-import NavSection from './sidebar/NavSection';
-import NavLinkItem from './sidebar/NavLinkItem';
+import NavSection from '../ui/sidebar/NavSection';
+import NavLinkItem from '../ui/sidebar/NavLinkItem';
 import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
@@ -13,13 +13,13 @@ const SideBar = () => {
   }
 
   return (
-    <div className="flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-gray-300 dark:bg-gray-900 dark:text-white text-black transition-all duration-300 border-none z-10 sidebar">
+    <div className="flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-gray-200 dark:bg-gray-900 dark:text-white text-black transition-all duration-300 border-none z-10 sidebar">
       <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
-        <ul className="flex flex-col py-4 space-y-1">
+        <ul className="flex flex-col py-4">
           <NavSection title="Main">
             <NavLink
               to="/dashboard/"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 dark:hover:bg-slate-800 text-black dark:text-white hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-800 pr-6"
+              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-300 dark:hover:bg-slate-800 text-black dark:text-white hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-800 pr-6"
             >
               <span className="inline-flex justify-center items-center ml-4">
                 🏠

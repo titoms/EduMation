@@ -29,7 +29,7 @@ const UserTable: React.FC<UserTableProps> = ({
   }, [filter, users]);
 
   return (
-    <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+    <div className="inline-block min-w-full shadow rounded-lg bg-slate-200 dark:bg-gray-800 overflow-hidden">
       <div className="my-2 ml-2">
         <SearchBar onFilterChange={setFilter} />
       </div>
@@ -37,16 +37,16 @@ const UserTable: React.FC<UserTableProps> = ({
       <table className="min-w-full leading-normal">
         <thead>
           <tr>
-            <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-slate-600 text-left text-xs font-semibold text-gray-600 dark:text-white uppercase tracking-wider">
               Name
             </th>
-            <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-slate-600 text-left text-xs font-semibold text-gray-600 dark:text-white uppercase tracking-wider">
               Email
             </th>
-            <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-slate-600 text-left text-xs font-semibold text-gray-600 dark:text-white uppercase tracking-wider">
               Role
             </th>
-            <th className="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-slate-600 text-left text-xs font-semibold text-gray-600 dark:text-white uppercase tracking-wider">
               Actions
             </th>
           </tr>
