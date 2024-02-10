@@ -17,7 +17,7 @@ const ThemeModeSwitcher = () => {
 
   return (
     <>
-      <div className="rounded-lg p-2 bg-gray-100 dark:bg-slate-800">
+      <div className="rounded-lg p-2 bg-gray-300 dark:bg-slate-800">
         <DarkModeSwitch
           checked={darkMode}
           onChange={toggleDarkMode}

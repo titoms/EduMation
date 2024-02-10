@@ -29,7 +29,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="dark:bg-navy dark:text-white text-black bg-gray-200 flex justify-between p-2 center">
+    <nav className=" text-white bg-navy dark:bg-slate-950 flex justify-between p-2 center">
       <Link to="/">
         <img src={logo} className="h-10 w-10" alt="Logo" />
       </Link>

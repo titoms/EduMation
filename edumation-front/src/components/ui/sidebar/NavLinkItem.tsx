@@ -22,7 +22,7 @@ const NavLinkItem: React.FC<NavLinkItemProps> = ({
       <NavLink
         to={to}
         className={({ isActive }) =>
-          `relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-800 pr-6 ${
+          `relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 dark:hover:bg-slate-800 text-black dark:text-white hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-blue-800 pr-6 ${
             isActive ? ' bg-gray-700' : ''
           }`
         }
