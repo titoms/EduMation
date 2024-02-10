@@ -24,7 +24,7 @@ import IndividualCourse from './components/courses/IndividualCourse';
 
 const Dashboard = () => {
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex bg-gray-100 dark:bg-slate-800 dark:text-white text-black">
       <SideBar />
       <UserProvider>
         <ConditionalHeightWrapper>

@@ -1,6 +1,7 @@
 import logo from '../../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import ThemeModeSwitcher from '../ui/ThemeModeSwitcher';
 
 const Navbar = () => {
   // Check if the user is logged in by verifying the presence of the token
@@ -28,11 +29,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-navy text-white flex justify-between p-2 center">
+    <nav className="dark:bg-navy dark:text-white text-black bg-gray-200 flex justify-between p-2 center">
       <Link to="/">
         <img src={logo} className="h-10 w-10" alt="Logo" />
       </Link>
-      <div className="flex align-middle justify-center">
+      <div className="flex align-middle items-center gap-2 justify-center">
         {/* SEARCHBAR, Maybe we move it elsewhere */}
         {/* <form
           id="searchInput"
@@ -51,18 +52,19 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
         </form> */}
+        <ThemeModeSwitcher />
         {isLoggedIn ? (
           <>
             <Link
               to="/dashboard"
-              className="text-white m-2 no-underline transition-colors hover:text-terciary"
+              className="m-2 no-underline transition-colors hover:text-terciary"
             >
               Dashboard
             </Link>
 
             <button
               onClick={handleLogout}
-              className="text-white m-2 no-underline transition-colors hover:text-terciary"
+              className="m-2 no-underline transition-colors hover:text-terciary"
             >
               Logout
             </button>
