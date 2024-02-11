@@ -4,8 +4,9 @@ import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { useThemeContext } from '../../context/ThemeContext';
 
 const ThemeModeSwitcher = () => {
+  const { toggleColorMode, mode } = useThemeContext();
+  const isDarkMode = mode === 'dark';
   const [colorTheme, setTheme] = useDarkMode();
-  const { mode, toggleColorMode } = useThemeContext();
   const [darkMode, setDarkMode] = useState(colorTheme === 'light');
 
   useEffect(() => {
@@ -13,16 +14,16 @@ const ThemeModeSwitcher = () => {
   }, [colorTheme]);
 
   const toggleDarkMode = (checked: boolean) => {
-    toggleColorMode();
     setTheme(checked ? 'dark' : 'light');
     setDarkMode(checked);
+    toggleColorMode();
   };
 
   return (
     <>
-      <div className="rounded-lg p-2 bg-gray-300 dark:bg-slate-800">
+      <div className="rounded-lg p-2 bg-blue-500 dark:bg-slate-800">
         <DarkModeSwitch
-          checked={darkMode}
+          checked={isDarkMode}
           onChange={toggleDarkMode}
           size={22}
         />

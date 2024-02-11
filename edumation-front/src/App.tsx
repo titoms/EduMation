@@ -9,23 +9,26 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ThemeContextProvider } from './context/ThemeContext';
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <ToastContainer />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard/*" element={<Dashboard />} />
-          </Route>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <Navbar />
+          <ToastContainer />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard/*" element={<Dashboard />} />
+            </Route>
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </ThemeContextProvider>
     </>
   );
 }
