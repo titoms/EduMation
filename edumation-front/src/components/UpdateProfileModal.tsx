@@ -54,7 +54,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   return (
     <Modal open={open} onClose={onClose}>
       <div
-        className="fixed inset-0 bg-gray-700 bg-opacity-50 overflow-y-auto h-full w-full"
+        className="fixed inset-0 bg-gray-700 bg-opacity-50 overflow-y-auto h-full w-full dark:text-slate-200"
         onClick={onClose}
       >
         <div
@@ -70,7 +70,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
               New Name
             </label>
             <input
-              className="w-full p-2 border border-gray-300 rounded mt-2"
+              className="w-full p-2 border border-gray-300 rounded mt-2 dark:text-slate-700"
               type="text"
               value={updatedName}
               onChange={(e) => setUpdatedName(e.target.value)}
@@ -85,7 +85,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
               New Email
             </label>
             <input
-              className="w-full p-2 border border-gray-300 rounded mt-2"
+              className="w-full p-2 border border-gray-300 rounded mt-2 dark:text-slate-700"
               type="email"
               value={updatedEmail}
               onChange={(e) => setUpdatedEmail(e.target.value)}
@@ -100,7 +100,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
               New Password
             </label>
             <input
-              className="w-full p-2 border border-gray-300 rounded mt-2"
+              className="w-full p-2 border border-gray-300 rounded mt-2 dark:text-slate-700"
               type="password"
               value={updatedPassword}
               onChange={(e) => setUpdatedPassword(e.target.value)}
@@ -115,7 +115,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
               New Role
             </label>
             <select
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:text-slate-700"
               name="updateUserRole"
               id="updateUserRole"
               value={updatedRole}
