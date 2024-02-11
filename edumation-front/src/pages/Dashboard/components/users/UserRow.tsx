@@ -18,7 +18,7 @@ const UserRow: React.FC<UserRowProps> = ({
 }) => {
   return (
     <tr key={user._id}>
-      <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-600 text-sm">
+      <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-600  text-sm">
         <div className="flex items-center">
           <div className="flex-shrink-0 w-10 h-10">
             <img

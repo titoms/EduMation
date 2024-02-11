@@ -17,6 +17,7 @@ const IndividualClass: React.FC = () => {
   const [updatedStudents, setUpdatedStudents] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [updateTrigger, setUpdateTrigger] = useState(0);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -38,7 +39,7 @@ const IndividualClass: React.FC = () => {
     };
 
     fetchClasses();
-  }, [groupId]);
+  }, [groupId, updateTrigger]);
 
   const handleUpdateGroup = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -48,14 +49,12 @@ const IndividualClass: React.FC = () => {
           ...classData,
           studentsIds: updatedStudents,
         };
-        console.log(updatedGroup);
         const response = await ClassesService.updateGroup(
           groupId,
           updatedGroup
         );
-        console.log('Group updated successfully:', response.data);
         toast.success('Class updated successfully');
-        //Rerender component instead of navigate
+        setUpdateTrigger((prev) => prev + 1);
       } catch (error) {
         toast.error('Error updating group:', error);
       }
@@ -72,64 +71,76 @@ const IndividualClass: React.FC = () => {
   return (
     <>
       <BackButton />
-      <h2 className="text-2xl font-semibold my-4">{classData.name}</h2>
+      <div className="bg-gray-200 dark:bg-slate-800 p-4 rounded-xl mt-4">
+        <h2 className="text-2xl font-semibold">{classData.name}</h2>
 
-      <form onSubmit={handleUpdateGroup} className="mb-12">
-        <div className="my-4">
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Class Name"
-            variant="outlined"
-            name="name"
-            value={classData?.name}
-            onChange={(e) =>
-              setClassData({ ...classData, name: e.target.value })
-            }
-          />
-        </div>
-        <h3 className="font-semibold my-4">Students:</h3>
-        {classData.studentsIds.length > 0 ? (
-          classData.studentsIds.map((student) => (
-            <div key={student._id} className="my-8 border-b pb-2">
-              <img
-                className="w-12 h-12 rounded-full mr-2 inline"
-                src={
-                  student.profileImage
-                    ? student.profileImage
-                    : 'https://via.placeholder.com/150'
-                }
-                alt={student.name}
-              />
-              <div className="inline-block">
-                <div className="ml-4 flex justify-around gap-8">
-                  <p>
-                    <strong>Name:</strong> {student.name}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {student.email}
-                  </p>
-                </div>
-              </div>
+        <form onSubmit={handleUpdateGroup}>
+          <div className="my-2">
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Class Name"
+              variant="outlined"
+              name="name"
+              value={classData?.name}
+              onChange={(e) =>
+                setClassData({ ...classData, name: e.target.value })
+              }
+            />
+          </div>
+          <div className="flex flex-col md:flex-row justify-around gap-8">
+            <div className="w-full">
+              {' '}
+              <h3 className="font-semibold my-4">Students:</h3>
+              {classData.studentsIds.length > 0 ? (
+                classData.studentsIds.map((student) => (
+                  <div
+                    key={student._id}
+                    className="my-8 border-b border-b-gray-400 pb-2"
+                  >
+                    <img
+                      className="w-12 h-12 rounded-full mr-2 inline"
+                      src={
+                        student.profileImage
+                          ? student.profileImage
+                          : 'https://via.placeholder.com/150'
+                      }
+                      alt={student.name}
+                    />
+                    <div className="inline-block">
+                      <div className="ml-4 flex justify-around gap-8">
+                        <p>
+                          <strong>Name:</strong> {student.name}
+                        </p>
+                        <p>
+                          <strong>Email:</strong> {student.email}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h3 className="text-center text-2xl text-gray-600 bg-gray-200 rounded-lg p-4">
+                  No students in this class...
+                </h3>
+              )}
             </div>
-          ))
-        ) : (
-          <h3 className="text-center text-2xl text-gray-600 bg-gray-200 rounded-lg p-4">
-            No students in this class...
-          </h3>
-        )}
-        <h3 className="font-semibold my-4">Edit Students:</h3>
-        <StudentTransfer
-          initialStudents={classData?.studentsIds}
-          onNewClassStudentsChange={handleNewClassStudentsChange}
-        />
-        <div className="flex gap-4 justify-end mt-8">
-          <Button type="submit" variant="contained" startIcon={<Edit />}>
-            Update
-          </Button>
-          <BackButton title="Cancel" icon={false} />
-        </div>
-      </form>
+            <div className="w-full">
+              <h3 className="font-semibold my-4">Edit Students:</h3>
+              <StudentTransfer
+                initialStudents={classData?.studentsIds}
+                onNewClassStudentsChange={handleNewClassStudentsChange}
+              />
+            </div>
+          </div>
+          <div className="flex gap-4 justify-end">
+            <Button type="submit" variant="contained" startIcon={<Edit />}>
+              Update
+            </Button>
+            <BackButton title="Cancel" icon={false} />
+          </div>
+        </form>
+      </div>
     </>
   );
 };

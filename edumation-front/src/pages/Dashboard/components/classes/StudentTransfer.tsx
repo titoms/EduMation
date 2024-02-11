@@ -122,6 +122,33 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     }
   };
 
+  const handleRemoveStudent = (studentId: string) => {
+    const newClassStudentsList = columns.NewClassStudents.list.filter(
+      (student) => student._id !== studentId
+    );
+    const availableStudentsList = [
+      ...columns.AvailableStudents.list,
+      columns.NewClassStudents.list.find(
+        (student) => student._id === studentId
+      )!,
+    ].filter(Boolean);
+
+    setColumns({
+      ...columns,
+      NewClassStudents: {
+        ...columns.NewClassStudents,
+        list: newClassStudentsList,
+      },
+      AvailableStudents: {
+        ...columns.AvailableStudents,
+        list: availableStudentsList,
+      },
+    });
+    onNewClassStudentsChange(
+      newClassStudentsList.map((student) => student._id!)
+    );
+  };
+
   if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
@@ -129,7 +156,13 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     <DragDropContext onDragEnd={onDragEnd}>
       <StyledColumns>
         {Object.values(columns).map((col) => (
-          <DraggableColumn col={col} key={col.id} />
+          <DraggableColumn
+            col={col}
+            key={col.id}
+            onRemoveStudent={
+              col.id === 'NewClassStudents' ? handleRemoveStudent : undefined
+            }
+          />
         ))}
       </StyledColumns>
     </DragDropContext>

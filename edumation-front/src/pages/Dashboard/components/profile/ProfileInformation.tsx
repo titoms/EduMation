@@ -50,7 +50,7 @@ const ProfileInformations = (user) => {
 
   return (
     <div className="bg-white dark:bg-slate-800 w-full shadow rounded-lg p-6">
-      <div className="flex flex-col justify-between md:flex-row items-center gap-8">
+      <div className="flex flex-col justify-around items-center gap-8">
         <div className="flex-shrink-0">
           <img
             className="w-40 h-40 rounded-full"

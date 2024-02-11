@@ -6,31 +6,44 @@ import { User } from '../../../services/Types';
 interface ItemProps {
   student: User;
   index: number;
+  onRemove: () => void;
+  showRemoveIcon: boolean;
 }
 
 const StyledItem = styled('div', {
   borderRadius: 4,
   padding: '4px 8px',
-  transition: 'background-color .8s ease-out',
+  transition: 'background-color .6s ease-out',
   marginTop: 8,
 
   ':hover': {
-    backgroundColor: '#fff',
     transition: 'background-color .1s ease-in',
   },
 });
 
-export const DraggableItem: React.FC<ItemProps> = ({ student, index }) => {
+export const DraggableItem: React.FC<ItemProps> = ({
+  student,
+  index,
+  onRemove,
+  showRemoveIcon,
+}) => {
   return (
     <Draggable draggableId={student._id!} index={index}>
       {(provided) => (
         <StyledItem
-          className="bg-gray-100 dark:bg-slate-800"
+          className="bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {student.name} - {student.email}
+          <div className="flex justify-between">
+            {student.name} - {student.email}
+            {showRemoveIcon && (
+              <span className="cursor-pointer" onClick={onRemove}>
+                X
+              </span>
+            )}{' '}
+          </div>
         </StyledItem>
       )}
     </Draggable>

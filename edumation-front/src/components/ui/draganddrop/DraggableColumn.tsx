@@ -9,6 +9,7 @@ interface ColumnProps {
     id: string;
     list: User[];
   };
+  onRemoveStudent?: (studentId: string) => void;
 }
 
 const StyledColumn = styled('div', {
@@ -41,6 +42,7 @@ const StyledSearch = styled('input', {
 
 export const DraggableColumn: React.FC<ColumnProps> = ({
   col: { list, id },
+  onRemoveStudent,
 }) => {
   const [searchFilter, setSearchFilter] = useState('');
 
@@ -74,6 +76,8 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
                 key={student._id}
                 student={student}
                 index={index}
+                onRemove={() => onRemoveStudent?.(student._id!)}
+                showRemoveIcon={id === 'NewClassStudents'} // Pass showRemoveIcon based on column ID
               />
             ))}
             {provided.placeholder}
