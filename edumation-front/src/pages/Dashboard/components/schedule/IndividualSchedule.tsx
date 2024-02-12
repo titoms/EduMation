@@ -9,7 +9,9 @@ import BackButton from '../../../../components/ui/BackButton';
 // import Calendar from './Calendar';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import 'react-big-calendar/lib/sass/styles';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -71,6 +73,7 @@ const IndividualSchedule = () => {
       {/* <Calendar events={events} /> */}
       <DnDCalendar
         localizer={localizer}
+        className="text-black dark:text-white"
         // events={events}
         // draggableAccessor={(event) => true}
       />
