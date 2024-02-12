@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
-import Calendar from './Calendar';
 import { Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
+// import Calendar from './Calendar';
+import { Calendar, dayjsLocalizer } from 'react-big-calendar';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import dayjs from 'dayjs';
+
+const DnDCalendar = withDragAndDrop(Calendar);
 
 const IndividualSchedule = () => {
   const params = useParams<{ id: string }>();
@@ -14,6 +20,7 @@ const IndividualSchedule = () => {
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const localizer = dayjsLocalizer(dayjs);
 
   useEffect(() => {
     const fetchScheduleAndCourse = async () => {
@@ -45,15 +52,15 @@ const IndividualSchedule = () => {
     fetchScheduleAndCourse();
   }, [scheduleId]);
 
-  const events =
-    schedule?.classTimes.map((classTime) => ({
-      date: new Date(classTime.date),
-      title: courseName,
-      eventType: 'availableEvent' as
-        | 'availableEvent'
-        | 'notAvailableEvent'
-        | 'otherEvent',
-    })) || [];
+  // const events =
+  //   schedule?.classTimes.map((classTime) => ({
+  //     date: new Date(classTime.date),
+  //     title: courseName,
+  //     eventType: 'availableEvent' as
+  //       | 'availableEvent'
+  //       | 'notAvailableEvent'
+  //       | 'otherEvent',
+  //   })) || [];
 
   if (loading) return <ScheduleSkeleton />;
 
@@ -61,7 +68,12 @@ const IndividualSchedule = () => {
     <>
       <BackButton />
       <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
-      <Calendar events={events} />
+      {/* <Calendar events={events} /> */}
+      <DnDCalendar
+        localizer={localizer}
+        // events={events}
+        // draggableAccessor={(event) => true}
+      />
     </>
   );
 };
