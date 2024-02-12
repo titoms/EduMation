@@ -13,7 +13,7 @@ const SideBar = () => {
   }
 
   return (
-    <div className="flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-gray-200 dark:bg-gray-900 dark:text-white text-black transition-all duration-300 border-none z-10 sidebar">
+    <div className="flex flex-col top-14 left-0 w-14 hover:w-48 md:w-48 bg-gray-200 dark:bg-gray-900 dark:text-white text-black transition-all duration-300 border-none z-10 sidebar">
       <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
         <ul className="flex flex-col py-4">
           <NavSection title="Main">
