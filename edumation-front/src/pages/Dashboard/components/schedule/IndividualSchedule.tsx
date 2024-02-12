@@ -9,8 +9,7 @@ import BackButton from '../../../../components/ui/BackButton';
 // import Calendar from './Calendar';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
-import 'react-big-calendar/lib/sass/styles';
-import 'react-big-calendar/lib/addons/dragAndDrop/styles';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 
@@ -54,15 +53,15 @@ const IndividualSchedule = () => {
     fetchScheduleAndCourse();
   }, [scheduleId]);
 
-  // const events =
-  //   schedule?.classTimes.map((classTime) => ({
-  //     date: new Date(classTime.date),
-  //     title: courseName,
-  //     eventType: 'availableEvent' as
-  //       | 'availableEvent'
-  //       | 'notAvailableEvent'
-  //       | 'otherEvent',
-  //   })) || [];
+  const events =
+    schedule?.classTimes.map((classTime) => ({
+      date: new Date(classTime.date),
+      title: courseName,
+      eventType: 'availableEvent' as
+        | 'availableEvent'
+        | 'notAvailableEvent'
+        | 'otherEvent',
+    })) || [];
 
   if (loading) return <ScheduleSkeleton />;
 
@@ -73,9 +72,9 @@ const IndividualSchedule = () => {
       {/* <Calendar events={events} /> */}
       <DnDCalendar
         localizer={localizer}
-        className="text-black dark:text-white"
-        // events={events}
-        // draggableAccessor={(event) => true}
+        className="my-4"
+        events={events}
+        draggableAccessor={(event) => true}
       />
     </>
   );
