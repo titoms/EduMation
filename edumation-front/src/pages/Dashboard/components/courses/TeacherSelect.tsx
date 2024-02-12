@@ -45,6 +45,7 @@ const TeacherSelect: React.FC<TeacherSelectProps> = ({
       <Select
         labelId={`${name}-label`}
         id={name}
+        label="Teacher"
         value={value}
         onChange={onChange}
         name={name}
