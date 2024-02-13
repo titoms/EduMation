@@ -49,6 +49,10 @@ const Calendar = ({ events }: EventCalendarProps) => {
     setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
   }
 
+  function goToToday() {
+    setCurrentMonth(format(today, 'MMM-yyyy'));
+  }
+
   const startingDayIndex = getDay(firstDayCurrentMonth);
 
   const eventsByDate = useMemo(() => {
@@ -80,13 +84,19 @@ const Calendar = ({ events }: EventCalendarProps) => {
       <div className="mb-4 text-center flex justify">
         <button
           onClick={previousMonth}
-          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 ml-2"
+          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 dark:hover:bg-gray-500 ml-2"
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <button
+          onClick={goToToday}
+          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 dark:hover:bg-gray-500 ml-2"
+        >
+          Today
+        </button>
+        <button
           onClick={nextMonth}
-          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 ml-2"
+          className="px-4 py-2 bg-gray-500 dark:bg-slate-600 text-white rounded hover:bg-gray-600 dark:hover:bg-gray-500 ml-2"
         >
           <FontAwesomeIcon icon={faChevronRight} />
         </button>

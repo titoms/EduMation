@@ -6,7 +6,7 @@ import { Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
-// import Calendar from './Calendar';
+import Calendar2 from './Calendar';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -69,7 +69,7 @@ const IndividualSchedule = () => {
     <>
       <BackButton />
       <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
-      {/* <Calendar events={events} /> */}
+      <Calendar2 events={events} />
       <DnDCalendar
         localizer={localizer}
         className="my-4"
