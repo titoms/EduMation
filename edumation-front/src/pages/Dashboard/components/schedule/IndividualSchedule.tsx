@@ -64,6 +64,13 @@ const IndividualSchedule = () => {
         | 'notAvailableEvent'
         | 'otherEvent',
     })) || [];
+  const events2 =
+    schedule?.classTimes.map((classTime) => ({
+      start: dayjs(classTime.date).toDate(),
+      end: dayjs(classTime.date).toDate(),
+      title: courseName,
+    })) || [];
+  console.log(events2);
 
   if (loading) return <ScheduleSkeleton />;
 
@@ -85,13 +92,13 @@ const IndividualSchedule = () => {
     <>
       <BackButton />
       <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
-      {/* <Calendar2 events={events} /> */}
+      <Calendar2 events={events} />
       <div className="h-screen">
         <DnDCalendar
           style={componentStyle}
           localizer={localizer}
           className="my-4"
-          events={events}
+          events={events2}
           draggableAccessor={(event) => true}
         />
       </div>

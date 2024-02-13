@@ -23,12 +23,22 @@
   --rbc-now-color: #000;
   --bg-dayoff-color: #eee;
   --text-color: #000;
+  --inverted-text-color: #fff;
 }
 
 [data-theme='dark'] {
   --rbc-now-color: #000;
-  --bg-dayoff-color: #171622b3;
+  --bg-dayoff-color: #2f2e35b3;
   --text-color: #fff;
+  --inverted-text-color: #000;
+}
+
+.rbc-date-cell {
+  text-align: center !important;
+}
+
+.rbc-active {
+  background-color: #171622b3 !important;
 }
 
 .rbc-now {
@@ -41,6 +51,18 @@
 
 .rbc-off-range-bg {
   background-color: var(--bg-dayoff-color) !important;
+}
+
+.rbc-today {
+  background-color: var(--bg-dayoff-color) !important;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #171622b3 !important;
+}
+
+.rbc-button-link {
+  color: var(--text-color) !important;
 }
 
 @media (max-width: 740px) {
