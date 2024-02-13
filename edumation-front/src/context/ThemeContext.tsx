@@ -25,9 +25,16 @@ export const ThemeContextProvider = ({ children }) => {
     const root = window.document.documentElement;
     root.classList.remove(mode === 'dark' ? 'light' : 'dark');
     root.classList.add(mode);
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
   }, [mode]);
 
   const toggleColorMode = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
   };
 

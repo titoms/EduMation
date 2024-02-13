@@ -12,12 +12,14 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
-
+import { useThemeContext } from '../../../../context/ThemeContext';
 const DnDCalendar = withDragAndDrop(Calendar);
 
 const IndividualSchedule = () => {
   const params = useParams<{ id: string }>();
   const scheduleId = params.id || '';
+  const { mode } = useThemeContext();
+
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,17 +67,34 @@ const IndividualSchedule = () => {
 
   if (loading) return <ScheduleSkeleton />;
 
+  const styles = {
+    lightMode: {
+      color: '#000',
+      padding: '10px',
+      borderRadius: '5px',
+    },
+    darkMode: {
+      color: '#fff',
+      padding: '10px',
+      borderRadius: '5px',
+    },
+  };
+  const componentStyle = mode === 'light' ? styles.lightMode : styles.darkMode;
+
   return (
     <>
       <BackButton />
       <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
-      <Calendar2 events={events} />
-      <DnDCalendar
-        localizer={localizer}
-        className="my-4"
-        events={events}
-        draggableAccessor={(event) => true}
-      />
+      {/* <Calendar2 events={events} /> */}
+      <div className="h-screen">
+        <DnDCalendar
+          style={componentStyle}
+          localizer={localizer}
+          className="my-4"
+          events={events}
+          draggableAccessor={(event) => true}
+        />
+      </div>
     </>
   );
 };

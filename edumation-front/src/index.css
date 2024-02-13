@@ -19,6 +19,30 @@
   padding: 1em;
 }
 
+:root {
+  --rbc-now-color: #000;
+  --bg-dayoff-color: #eee;
+  --text-color: #000;
+}
+
+[data-theme='dark'] {
+  --rbc-now-color: #000;
+  --bg-dayoff-color: #171622b3;
+  --text-color: #fff;
+}
+
+.rbc-now {
+  color: var(--rbc-now-color);
+}
+
+.rbc-toolbar button {
+  color: var(--text-color) !important;
+}
+
+.rbc-off-range-bg {
+  background-color: var(--bg-dayoff-color) !important;
+}
+
 @media (max-width: 740px) {
   .modals {
     width: 400px;
