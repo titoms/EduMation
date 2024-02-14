@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
-import { Schedule } from '../../../../services/Types';
+import { ClassTime, Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
@@ -64,13 +64,27 @@ const IndividualSchedule = () => {
         | 'notAvailableEvent'
         | 'otherEvent',
     })) || [];
-  const events2 =
-    schedule?.classTimes.map((classTime) => ({
-      start: dayjs(classTime.date).toDate(),
-      end: dayjs(classTime.date).toDate(),
+
+  const getBoundaryDates = (classTimes: ClassTime[]) => {
+    if (classTimes.length === 0) return { start: new Date(), end: new Date() };
+
+    const sortedDates = classTimes
+      .map((ct) => new Date(ct.date))
+      .sort((a, b) => a.getTime() - b.getTime());
+    return { start: sortedDates[0], end: sortedDates[sortedDates.length - 1] };
+  };
+
+  const boundaryDates = schedule
+    ? getBoundaryDates(schedule.classTimes)
+    : { start: new Date(), end: new Date() };
+
+  const events2 = [
+    {
+      start: boundaryDates.start,
+      end: boundaryDates.end,
       title: courseName,
-    })) || [];
-  console.log(events2);
+    },
+  ];
 
   if (loading) return <ScheduleSkeleton />;
 
@@ -92,7 +106,6 @@ const IndividualSchedule = () => {
     <>
       <BackButton />
       <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
-      <Calendar2 events={events} />
       <div className="h-screen">
         <DnDCalendar
           style={componentStyle}
@@ -102,6 +115,7 @@ const IndividualSchedule = () => {
           draggableAccessor={(event) => true}
         />
       </div>
+      {/* <Calendar2 events={events} /> */}
     </>
   );
 };
