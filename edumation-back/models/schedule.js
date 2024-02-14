@@ -19,6 +19,9 @@ const scheduleSchema = new mongoose.Schema(
         type: Date,
       },
     ],
+    scheduleType: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

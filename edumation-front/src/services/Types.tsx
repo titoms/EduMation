@@ -12,6 +12,7 @@ export interface Schedule {
   courses?: Course[];
   classTimes?: ClassTime[];
   linkedUsers?: User[];
+  scheduleType?: string;
 }
 
 export interface Course {
