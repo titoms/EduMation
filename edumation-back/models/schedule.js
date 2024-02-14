@@ -14,7 +14,11 @@ const scheduleSchema = new mongoose.Schema(
         ref: 'User',
       },
     ],
-    recurring: Boolean,
+    classTime: [
+      {
+        type: Date,
+      },
+    ],
   },
   { timestamps: true }
 );
