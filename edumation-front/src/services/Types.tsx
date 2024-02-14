@@ -5,11 +5,13 @@ export interface ClassTime {
   location: string;
 }
 
+//Schedule has multiple courses & multiple linked Users
+// Classtime has to be calculated/updated/managed from the Courses
 export interface Schedule {
   _id?: string;
-  courseId: string;
-  classTimes: ClassTime[];
-  recurring: boolean;
+  courses?: Course[];
+  classTimes?: ClassTime[];
+  linkedUsers?: User[];
 }
 
 export interface Course {

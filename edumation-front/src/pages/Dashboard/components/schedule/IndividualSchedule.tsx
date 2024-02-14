@@ -6,7 +6,6 @@ import { ClassTime, Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
-import Calendar2 from './Calendar';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -55,17 +54,7 @@ const IndividualSchedule = () => {
     fetchScheduleAndCourse();
   }, [scheduleId]);
 
-  const events =
-    schedule?.classTimes.map((classTime) => ({
-      date: new Date(classTime.date),
-      title: courseName,
-      eventType: 'availableEvent' as
-        | 'availableEvent'
-        | 'notAvailableEvent'
-        | 'otherEvent',
-    })) || [];
-
-  const getBoundaryDates = (classTimes: ClassTime[]) => {
+  const getBoundaryDates = (classTimes: ClassTime[] = []) => {
     if (classTimes.length === 0) return { start: new Date(), end: new Date() };
 
     const sortedDates = classTimes
@@ -75,10 +64,10 @@ const IndividualSchedule = () => {
   };
 
   const boundaryDates = schedule
-    ? getBoundaryDates(schedule.classTimes)
+    ? getBoundaryDates(schedule.classTimes || [])
     : { start: new Date(), end: new Date() };
 
-  const events2 = [
+  const events = [
     {
       start: boundaryDates.start,
       end: boundaryDates.end,
@@ -111,11 +100,10 @@ const IndividualSchedule = () => {
           style={componentStyle}
           localizer={localizer}
           className="my-4"
-          events={events2}
+          events={events}
           draggableAccessor={(event) => true}
         />
       </div>
-      {/* <Calendar2 events={events} /> */}
     </>
   );
 };

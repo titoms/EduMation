@@ -23,13 +23,13 @@ const ScheduleList = () => {
         const schedulesResponse = await SchedulesService.getAllSchedules();
         const schedulesData: Schedule[] = schedulesResponse.data;
 
-        // Fetch each course title for its corresponding schedule
         const schedulesWithCourseTitles = await Promise.all(
           schedulesData.map(async (schedule) => {
             try {
               const courseResponse = await CoursesService.getCoursesById(
                 schedule.courseId
               );
+              console.log(schedule);
               return { ...schedule, courseName: courseResponse.data.title };
             } catch (error) {
               console.error(

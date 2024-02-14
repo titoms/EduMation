@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 const scheduleSchema = new mongoose.Schema(
   {
-    groupId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Group',
-      required: true,
-    },
-    courseId: [
+    courses: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
-        required: true,
+      },
+    ],
+    linkedUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
       },
     ],
     recurring: Boolean,
