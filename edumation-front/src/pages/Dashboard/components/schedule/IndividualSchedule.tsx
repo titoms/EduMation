@@ -12,6 +12,7 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 import { useThemeContext } from '../../../../context/ThemeContext';
+import CalendarActions from './CalendarActions';
 const DnDCalendar = withDragAndDrop(Calendar);
 
 const IndividualSchedule = () => {
@@ -96,6 +97,7 @@ const IndividualSchedule = () => {
       <BackButton />
       <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
       <div className="h-screen">
+        <CalendarActions />
         <DnDCalendar
           style={componentStyle}
           localizer={localizer}
