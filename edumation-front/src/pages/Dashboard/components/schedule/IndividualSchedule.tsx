@@ -19,6 +19,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
+import EditEventModal from './EditEventModal';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -177,13 +178,6 @@ const IndividualSchedule = () => {
       )}
     </>
   );
-};
-
-const EditEventModal = ({ event, onClose, onSubmit }) => {
-  // Modal content and form for editing the event
-  // Call onSubmit with the edited event details when the form is submitted
-
-  return <div>Edit Event Modal</div>;
 };
 
 export default IndividualSchedule;
