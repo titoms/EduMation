@@ -37,6 +37,8 @@ const IndividualSchedule = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const localizer = dayjsLocalizer(dayjs);
   const [events, setEvents] = useState<MyEvent[]>([]);
+  const [editingEvent, setEditingEvent] = useState<MyEvent | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchScheduleAndCourse = async () => {
@@ -112,6 +114,20 @@ const IndividualSchedule = () => {
     setEvents(updatedEvents);
   };
 
+  const handleDoubleClickEvent = (event: MyEvent) => {
+    setEditingEvent(event);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSubmitEdit = (editedEvent: MyEvent) => {
+    // Update the event in your state
+    const updatedEvents = events.map((evt) =>
+      evt === editingEvent ? editedEvent : evt
+    );
+    setEvents(updatedEvents);
+    setIsEditModalOpen(false);
+  };
+
   if (loading) return <ScheduleSkeleton />;
 
   const styles = {
@@ -130,24 +146,44 @@ const IndividualSchedule = () => {
 
   return (
     <>
-      <BackButton />
-      <h1 className="text-2xl my-4 font-semibold">Schedule for {courseName}</h1>
-      <div className="h-screen">
-        <CalendarActions />
-        <DnDCalendar
-          style={componentStyle}
-          localizer={localizer}
-          className="my-4"
-          events={events}
-          selectable
-          onSelectSlot={handleSelectSlot}
-          onEventDrop={handleUpdateEvent}
-          onEventResize={handleEventResize}
-          draggableAccessor={(event) => true}
-        />
+      <div className="h-100">
+        <BackButton />
+        <h1 className="text-2xl my-4 font-semibold">
+          Schedule for {courseName}
+        </h1>
+        <div className="h-screen">
+          <CalendarActions />
+          <DnDCalendar
+            style={componentStyle}
+            localizer={localizer}
+            className="my-4"
+            events={events}
+            resizable
+            selectable
+            onDoubleClickEvent={handleDoubleClickEvent}
+            onSelectSlot={handleSelectSlot}
+            onEventDrop={handleUpdateEvent}
+            onEventResize={handleEventResize}
+            draggableAccessor={(event) => true}
+          />
+        </div>
       </div>
+      {isEditModalOpen && (
+        <EditEventModal
+          event={editingEvent}
+          onClose={() => setIsEditModalOpen(false)}
+          onSubmit={handleSubmitEdit}
+        />
+      )}
     </>
   );
+};
+
+const EditEventModal = ({ event, onClose, onSubmit }) => {
+  // Modal content and form for editing the event
+  // Call onSubmit with the edited event details when the form is submitted
+
+  return <div>Edit Event Modal</div>;
 };
 
 export default IndividualSchedule;
