@@ -6,24 +6,36 @@ import { ClassTime, Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
-import { Calendar, dayjsLocalizer } from 'react-big-calendar';
+import {
+  Calendar,
+  dayjsLocalizer,
+  SlotInfo,
+  Event as CalendarEvent,
+} from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
+
 const DnDCalendar = withDragAndDrop(Calendar);
+
+interface Event {
+  start: Date;
+  end: Date;
+  title: string;
+}
 
 const IndividualSchedule = () => {
   const params = useParams<{ id: string }>();
   const scheduleId = params.id || '';
   const { mode } = useThemeContext();
-
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const localizer = dayjsLocalizer(dayjs);
+  const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
     const fetchScheduleAndCourse = async () => {
@@ -37,14 +49,22 @@ const IndividualSchedule = () => {
         const scheduleResponse = await SchedulesService.getScheduleById(
           scheduleId
         );
+        const courseResponse = await CoursesService.getCoursesById(
+          scheduleResponse.data.courseId
+        );
         setSchedule(scheduleResponse.data);
+        setCourseName(courseResponse.data.title);
 
-        if (scheduleResponse.data.courseId) {
-          const courseResponse = await CoursesService.getCoursesById(
-            scheduleResponse.data.courseId
-          );
-          setCourseName(courseResponse.data.title);
-        }
+        const boundaryDates = getBoundaryDates(
+          scheduleResponse.data.classTimes || []
+        );
+        setEvents([
+          {
+            start: boundaryDates.start,
+            end: boundaryDates.end,
+            title: courseName,
+          },
+        ]);
       } catch (error) {
         toast.error('Failed to fetch schedule or course details');
       } finally {
@@ -53,7 +73,7 @@ const IndividualSchedule = () => {
     };
 
     fetchScheduleAndCourse();
-  }, [scheduleId]);
+  }, [scheduleId, courseName]);
 
   const getBoundaryDates = (classTimes: ClassTime[] = []) => {
     if (classTimes.length === 0) return { start: new Date(), end: new Date() };
@@ -64,17 +84,26 @@ const IndividualSchedule = () => {
     return { start: sortedDates[0], end: sortedDates[sortedDates.length - 1] };
   };
 
-  const boundaryDates = schedule
-    ? getBoundaryDates(schedule.classTimes || [])
-    : { start: new Date(), end: new Date() };
+  const handleSelectSlot = ({ start, end }: SlotInfo) => {
+    const title = window.prompt('New Event title');
+    if (title) {
+      setEvents([...events, { start, end, title }]);
+    }
+  };
 
-  const events = [
-    {
-      start: boundaryDates.start,
-      end: boundaryDates.end,
-      title: courseName,
-    },
-  ];
+  const handleUpdateEvent = ({
+    event,
+    start,
+    end,
+  }: CalendarEvent & { start: Date; end: Date }) => {
+    const updatedEvents = events.map((evt) => {
+      if (evt === event) {
+        return { ...evt, start, end };
+      }
+      return evt;
+    });
+    setEvents(updatedEvents);
+  };
 
   if (loading) return <ScheduleSkeleton />;
 
@@ -103,6 +132,9 @@ const IndividualSchedule = () => {
           localizer={localizer}
           className="my-4"
           events={events}
+          selectable
+          onSelectSlot={handleSelectSlot}
+          onEventDrop={handleUpdateEvent}
           draggableAccessor={(event) => true}
         />
       </div>
