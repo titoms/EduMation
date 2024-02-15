@@ -61,7 +61,7 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
           <h2>{id}</h2>
 
           <StyledList
-            className="bg-gray-400 dark:bg-slate-600"
+            className="bg-gray-200 dark:bg-slate-600"
             {...provided.droppableProps}
             ref={provided.innerRef}
           >

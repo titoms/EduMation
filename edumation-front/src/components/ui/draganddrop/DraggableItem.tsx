@@ -31,7 +31,7 @@ export const DraggableItem: React.FC<ItemProps> = ({
     <Draggable draggableId={student._id!} index={index}>
       {(provided) => (
         <StyledItem
-          className="bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700"
+          className="bg-slate-300 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-800"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

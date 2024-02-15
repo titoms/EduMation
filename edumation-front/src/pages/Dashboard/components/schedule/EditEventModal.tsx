@@ -56,10 +56,10 @@ const EditEventModal: React.FC<EditEventModalProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" variant="contained">
             Save
           </Button>
+          <Button onClick={onClose}>Cancel</Button>
         </DialogActions>
       </form>
     </Dialog>
