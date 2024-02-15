@@ -102,6 +102,16 @@ const IndividualSchedule = () => {
     );
   };
 
+  const handleEventResize = ({ event, start, end }) => {
+    const updatedEvents = events.map((evt) => {
+      if (evt === event) {
+        return { ...evt, start, end };
+      }
+      return evt;
+    });
+    setEvents(updatedEvents);
+  };
+
   if (loading) return <ScheduleSkeleton />;
 
   const styles = {
@@ -132,6 +142,7 @@ const IndividualSchedule = () => {
           selectable
           onSelectSlot={handleSelectSlot}
           onEventDrop={handleUpdateEvent}
+          onEventResize={handleEventResize}
           draggableAccessor={(event) => true}
         />
       </div>
