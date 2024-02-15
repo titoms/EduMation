@@ -9,8 +9,9 @@ import BackButton from '../../../../components/ui/BackButton';
 import {
   Calendar,
   dayjsLocalizer,
-  SlotInfo,
   Event as CalendarEvent,
+  SlotInfo,
+  EventInteractionArgs,
 } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -21,7 +22,7 @@ import CalendarActions from './CalendarActions';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
-interface Event {
+interface MyEvent {
   start: Date;
   end: Date;
   title: string;
@@ -35,7 +36,7 @@ const IndividualSchedule = () => {
   const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const localizer = dayjsLocalizer(dayjs);
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<MyEvent[]>([]);
 
   useEffect(() => {
     const fetchScheduleAndCourse = async () => {
@@ -95,14 +96,10 @@ const IndividualSchedule = () => {
     event,
     start,
     end,
-  }: CalendarEvent & { start: Date; end: Date }) => {
-    const updatedEvents = events.map((evt) => {
-      if (evt === event) {
-        return { ...evt, start, end };
-      }
-      return evt;
-    });
-    setEvents(updatedEvents);
+  }: EventInteractionArgs<MyEvent>) => {
+    setEvents(
+      events.map((evt) => (evt === event ? { ...evt, start, end } : evt))
+    );
   };
 
   if (loading) return <ScheduleSkeleton />;
