@@ -6,8 +6,7 @@ import {
   Button,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import TeacherSelect from '../courses/TeacherSelect';
-import StudentTransfer from '../classes/StudentTransfer';
+import UserTransfer from './UserTransfer';
 
 const CalendarActions = () => {
   const handleFormData = () => {};
@@ -24,8 +23,7 @@ const CalendarActions = () => {
         <AccordionDetails>
           {/* Add a form with possibility to import courses with the corresponding classTimes and add them to the calendar */}
           {/* Add a field to assign this schedule to users */}
-          <TeacherSelect name="teacher" value={''} onChange={handleFormData} />
-          {/* Instead of selecting user, maybe affect this schedule to a class */}
+          <UserTransfer onNewClassUserChange={handleFormData} />
         </AccordionDetails>
         <AccordionActions>
           <Button variant="contained">Update</Button>
