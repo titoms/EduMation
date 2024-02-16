@@ -10,6 +10,7 @@ interface ColumnProps {
     list: User[];
   };
   onRemoveStudent?: (studentId: string) => void;
+  onRemoveAllStudents?: (columnId: string) => void; // Add onRemoveAllStudents prop
 }
 
 const StyledColumn = styled('div', {
@@ -43,6 +44,7 @@ const StyledSearch = styled('input', {
 export const DraggableColumn: React.FC<ColumnProps> = ({
   col: { list, id },
   onRemoveStudent,
+  onRemoveAllStudents, // Use onRemoveAllStudents prop
 }) => {
   const [searchFilter, setSearchFilter] = useState('');
 
@@ -58,8 +60,6 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
     <Droppable droppableId={id}>
       {(provided) => (
         <StyledColumn>
-          <h2>{id}</h2>
-
           <StyledList
             className="bg-gray-200 dark:bg-slate-600"
             {...provided.droppableProps}
@@ -71,13 +71,23 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
               placeholder="Search students..."
               onChange={handleSearchChange}
             />
+            {(id === 'NewClassStudents' || id === 'NewClassUsers') && (
+              <div
+                className="flex justify-end text-red-500 cursor-pointer"
+                onClick={() => onRemoveAllStudents?.(id)}
+              >
+                Remove all
+              </div>
+            )}
             {filteredList.map((student, index) => (
               <DraggableItem
                 key={student._id}
                 student={student}
                 index={index}
                 onRemove={() => onRemoveStudent?.(student._id!)}
-                showRemoveIcon={id === 'NewClassStudents'} // Pass showRemoveIcon based on column ID
+                showRemoveIcon={
+                  id === 'NewClassStudents' || id === 'NewClassUsers'
+                }
               />
             ))}
             {provided.placeholder}

@@ -117,7 +117,7 @@ const UserTransfer: React.FC<UserTransferProps> = ({
     }
   };
 
-  const handleRemoveStudent = (userId: string) => {
+  const handleRemoveUser = (userId: string) => {
     const newClassUsersList = columns.NewClassUsers.list.filter(
       (user) => user._id !== userId
     );
@@ -151,7 +151,7 @@ const UserTransfer: React.FC<UserTransferProps> = ({
             col={col}
             key={col.id}
             onRemoveStudent={
-              col.id === 'NewClassStudents' ? handleRemoveStudent : undefined
+              col.id === 'NewClassUsers' ? handleRemoveUser : undefined
             }
           />
         ))}
