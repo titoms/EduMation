@@ -26,7 +26,6 @@ const CalendarActions = () => {
           {/* Add a field to assign this schedule to users */}
           <TeacherSelect name="teacher" value={''} onChange={handleFormData} />
           {/* Instead of selecting user, maybe affect this schedule to a class */}
-          <StudentTransfer onNewClassStudentsChange={handleFormData} />
         </AccordionDetails>
         <AccordionActions>
           <Button variant="contained">Update</Button>

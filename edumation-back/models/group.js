@@ -11,6 +11,10 @@ const groupSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'School',
     },
+    scheduleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Schedule',
+    },
     studentsIds: [
       {
         type: mongoose.Schema.Types.ObjectId,
