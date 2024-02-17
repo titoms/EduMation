@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import SchoolsService from '../../../services/SchoolsService';
 import UsersService from '../../../services/UsersService';
-import { User, School } from '../../../services/Types';
+import { User, School, Course } from '../../../services/Types';
 import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
+import CoursesService from '../../../services/CoursesService';
 
 const MainDashboard = () => {
   const [schools, setSchools] = useState<School[]>([]);
   const [students, setStudents] = useState<User[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [countCourses, setCountCourses] = useState(0);
   const [countStudents, setCountStudents] = useState(0);
   const [loading, setLoading] = useState(true);
   const [countSchools, setCountSchools] = useState(0);
@@ -30,6 +33,23 @@ const MainDashboard = () => {
       }
     };
     fetchSchools();
+
+    const fetchCourses = async () => {
+      try {
+        const response = await CoursesService.getAllCourses();
+        setCourses(response.data);
+        setCountCourses(Object.keys(response.data).length);
+        setLoading(false);
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          setError(err.response.data);
+        } else {
+          setError('An error occurred while fetching schools.');
+        }
+        setLoading(false);
+      }
+    };
+    fetchCourses();
 
     const fetchStudents = async () => {
       try {
@@ -143,7 +163,7 @@ const MainDashboard = () => {
                 Courses
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                0
+                {countCourses}
               </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
