@@ -10,7 +10,7 @@ interface ColumnProps {
     list: User[];
   };
   onRemoveStudent?: (studentId: string) => void;
-  onRemoveAllStudents?: (columnId: string) => void; // Add onRemoveAllStudents prop
+  onRemoveAllStudents?: (columnId: string) => void;
 }
 
 const StyledColumn = styled('div', {

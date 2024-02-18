@@ -149,6 +149,31 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     );
   };
 
+  const handleRemoveAllUsers = () => {
+    const updatedAvailableUsersList = [
+      ...columns.AvailableStudents.list,
+      ...columns.NewClassStudents.list,
+    ];
+
+    // Clear the NewClassUsers list
+    const updatedNewClassUsersList = [];
+
+    setColumns({
+      ...columns,
+      NewClassStudents: {
+        ...columns.NewClassStudents,
+        list: updatedNewClassUsersList,
+      },
+      AvailableStudents: {
+        ...columns.AvailableStudents,
+        list: updatedAvailableUsersList,
+      },
+    });
+
+    // Since NewClassUsers list is now empty, update accordingly
+    onNewClassStudentsChange([]);
+  };
+
   if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
@@ -162,6 +187,7 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
             onRemoveStudent={
               col.id === 'NewClassStudents' ? handleRemoveStudent : undefined
             }
+            onRemoveAllStudents={handleRemoveAllUsers}
           />
         ))}
       </StyledColumns>
