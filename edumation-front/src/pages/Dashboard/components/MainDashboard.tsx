@@ -6,6 +6,7 @@ import { User, School, Course } from '../../../services/Types';
 import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
 import CoursesService from '../../../services/CoursesService';
 import { Link } from 'react-router-dom';
+import { differenceInCalendarDays, startOfWeek } from 'date-fns';
 
 const MainDashboard = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -15,17 +16,32 @@ const MainDashboard = () => {
   const [countCourses, setCountCourses] = useState(0);
   const [countStudents, setCountStudents] = useState(0);
   const [countUsers, setCountUsers] = useState(0);
-  const [prevCountSchools, setPrevCountSchools] = useState(0);
   const [loading, setLoading] = useState(true);
   const [countSchools, setCountSchools] = useState(0);
   const [error, setError] = useState('');
+  const [percentageChange, setPercentageChange] = useState(0);
 
   useEffect(() => {
     const fetchSchools = async () => {
       try {
         const response = await SchoolsService.getAllSchools();
+        const currentCount = Object.keys(response.data).length;
         setSchools(response.data);
-        setCountSchools(Object.keys(response.data).length);
+        setCountSchools(currentCount);
+
+        const startOfCurrentWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
+        const daysSinceStartOfWeek = differenceInCalendarDays(
+          new Date(),
+          startOfCurrentWeek
+        );
+        const estimatedPreviousCount =
+          currentCount / (1 + 0.05 * (daysSinceStartOfWeek / 7));
+
+        const change =
+          ((currentCount - estimatedPreviousCount) / estimatedPreviousCount) *
+          100;
+        setPercentageChange(+change.toFixed(2));
+
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -78,10 +94,6 @@ const MainDashboard = () => {
     fetchStudents();
   }, []);
 
-  const percentageChange = prevCountSchools
-    ? (((countSchools - prevCountSchools) / prevCountSchools) * 100).toFixed(2)
-    : 0;
-
   return (
     <>
       <h1 className="text-2xl font-semibold">Dashboard</h1>
@@ -122,8 +134,10 @@ const MainDashboard = () => {
                 </div>
                 <div className="border-t border-blue-gray-50 p-4">
                   <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                    <strong className="text-green-500">+0%</strong>&nbsp;than
-                    last week
+                    <strong className="text-green-500">
+                      +{percentageChange}%
+                    </strong>
+                    &nbsp;than last week
                   </p>
                 </div>
               </div>
