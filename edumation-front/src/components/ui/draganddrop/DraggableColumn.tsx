@@ -44,7 +44,7 @@ const StyledSearch = styled('input', {
 export const DraggableColumn: React.FC<ColumnProps> = ({
   col: { list, id },
   onRemoveStudent,
-  onRemoveAllStudents, // Use onRemoveAllStudents prop
+  onRemoveAllStudents,
 }) => {
   const [searchFilter, setSearchFilter] = useState('');
 

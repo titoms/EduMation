@@ -155,9 +155,7 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
       ...columns.NewClassStudents.list,
     ];
 
-    // Clear the NewClassUsers list
-    const updatedNewClassUsersList = [];
-
+    const updatedNewClassUsersList: never[] = [];
     setColumns({
       ...columns,
       NewClassStudents: {
@@ -169,29 +167,34 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
         list: updatedAvailableUsersList,
       },
     });
-
-    // Since NewClassUsers list is now empty, update accordingly
     onNewClassStudentsChange([]);
   };
 
-  if (loading) return <UserSkeleton />;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <StyledColumns>
-        {Object.values(columns).map((col) => (
-          <DraggableColumn
-            col={col}
-            key={col.id}
-            onRemoveStudent={
-              col.id === 'NewClassStudents' ? handleRemoveStudent : undefined
-            }
-            onRemoveAllStudents={handleRemoveAllUsers}
-          />
-        ))}
-      </StyledColumns>
-    </DragDropContext>
+    <>
+      {loading ? (
+        <UserSkeleton />
+      ) : error ? (
+        <div>Error: {error}</div>
+      ) : (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <StyledColumns>
+            {Object.values(columns).map((col) => (
+              <DraggableColumn
+                col={col}
+                key={col.id}
+                onRemoveStudent={
+                  col.id === 'NewClassStudents'
+                    ? handleRemoveStudent
+                    : undefined
+                }
+                onRemoveAllStudents={handleRemoveAllUsers}
+              />
+            ))}
+          </StyledColumns>
+        </DragDropContext>
+      )}
+    </>
   );
 };
 
