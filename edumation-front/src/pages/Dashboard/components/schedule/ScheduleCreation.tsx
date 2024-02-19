@@ -196,8 +196,8 @@ const ScheduleCreation = () => {
           <div className="max-w-md w-full space-y-6">
             <div className="mx-auto max-w-md space-y-6">
               <div className="space-y-2 text-center">
-                <h2 className="text-3xl font-bold">Courses Settings :</h2>
-                <p className="text-gray-500">Enter the Courses details</p>
+                <h2 className="text-3xl font-bold">Schedule Settings :</h2>
+                <p className="text-gray-500">Enter the Schedule details</p>
               </div>
               <FormControl sx={{ my: 2 }} fullWidth>
                 <InputLabel>Courses :</InputLabel>
@@ -218,6 +218,30 @@ const ScheduleCreation = () => {
                     <MenuItem key={group._id} value={group._id}>
                       <Checkbox />
                       <ListItemText primary={group.title} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ my: 2 }} fullWidth>
+                <InputLabel>Classes :</InputLabel>
+                <Select
+                  labelId="classes-selection-label"
+                  id="classes-selection"
+                  multiple
+                  value={[]}
+                  label="Classes :"
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) => selected.join(', ')}
+                  onChange={handleCoursesSelectChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {classes.map((group) => (
+                    <MenuItem key={group._id} value={group._id}>
+                      <Checkbox />
+                      <ListItemText primary={group.name} />
                     </MenuItem>
                   ))}
                 </Select>

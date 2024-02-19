@@ -6,6 +6,7 @@ import BackButton from '../../../../components/ui/BackButton';
 import StudentTransfer from './StudentTransfer';
 
 export interface Group {
+  _id?: string;
   name: string;
   studentsIds: string[];
   schoolId?: string;
