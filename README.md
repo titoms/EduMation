@@ -101,27 +101,6 @@ The User schema defines the structure of user data in the database.
 - PUT /users/:id: Update a user by ID.
 - DELETE /users/:id: Delete a user by ID.
 
-# 🏫 Schools
-
-The School schema defines the structure of school data in the database.
-
-- `name`: The name of the school.
-- `address`: The physical address of the school.
-- `contactInfo`:
-  - `phone`: Contact phone number for the school.
-  - `email`: Contact email address for the school.
-  - `website`: Website URL for the school.
-- `createdAt`: The date and time when the school record was created.
-- `updatedAt`: The date and time when the school record was last updated.
-
-### Routes
-
-- GET /schools: Retrieve a list of all schools.
-- POST /schools: Create a new school.
-- GET /schools/:id: Retrieve a school by ID.
-- PUT /schools/:id: Update a school by ID.
-- DELETE /schools/:id: Delete a school by ID.
-
 # ❔ Quizzes
 
 The Quiz schema describes the structure for storing quiz information in the database.
