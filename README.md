@@ -127,7 +127,7 @@ The Quiz schema describes the structure for storing quiz information in the data
 
 The Schedule schema outlines the structure for storing scheduling information in the database.
 
-- `groupId`: Reference to the associated Group for the schedules.
+- `groups`: Reference to the associated Groups for the schedules.
 - `courseId`: Reference to the associated Courses for the schedules.
 - `recurring`: Indicates whether the schedule is recurring.
 - `creationDate`: The date and time when the schedule was created.
