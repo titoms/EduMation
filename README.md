@@ -11,6 +11,7 @@ EduMation is an engaging educational app that offers a wide range of features to
 - Plan your courses with ease by adding, editing, or deleting courses, assignments, and exams.
 - View and manage your course schedule in a user-friendly calendar format.
 - Set reminders and notifications for upcoming classes and assignments.
+- Export calendar in iCal format and integration for Google Calendar, Outlook, iCalendar, and other scheduling apps
 
 ### Teacher Time Management
 
@@ -23,6 +24,8 @@ EduMation is an engaging educational app that offers a wide range of features to
 - Teachers can create quizzes with various question types, including multiple-choice, true/false, and short answer questions.
 - Customize quiz difficulty levels, time limits, and scoring.
 - Evaluate student performance with detailed quiz reports.
+- Get stats from the lessons and keep track of progress. Optimize your lessons and get feedback from students.
+- Create interactive marks for the students. Make an engaging experience for the students. Make them feel like they can change their marks by interacting with class.
 
 ### Gamification
 
