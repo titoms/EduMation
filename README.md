@@ -5,7 +5,6 @@
 EduMation is an engaging educational app that offers a wide range of features to enhance your learning experience, streamline course management, and facilitate time management for schools and universities.
 
 ## Features
-
 ### Course Planner
 
 - Plan your courses with ease by adding, editing, or deleting courses, assignments, and exams.
@@ -91,7 +90,6 @@ The User schema defines the structure of user data in the database.
 - `profileImage`: URL to the user's profile image.
 - `passwordHash`: Hashed password for the user.
 - `role`: The role of the user, which can be 'admin', 'teacher', 'school', or 'student'.
-- `schoolId`: A list of Schools IDs document if the user is associated with a school.
 - `groups`: A list of Groups IDs that the user is enrolled in or teaching.
 - `creationDate`: The date and time when the user was created.
 - `updateDate`: The date and time when the user was last updated.
