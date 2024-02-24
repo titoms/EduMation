@@ -98,9 +98,9 @@ The User schema defines the structure of user data in the database.
 
 - GET /users: Retrieve a list of all users.
 - POST /users: Create a new user.
-- GET /users/:id: Retrieve a user by ID.
-- PUT /users/:id: Update a user by ID.
-- DELETE /users/:id: Delete a user by ID.
+- GET /users/:id Retrieve a user by ID.
+- PUT /users/:id Update a user by ID.
+- DELETE /users/:id Delete a user by ID.
 
 # ❔ Quizzes
 
@@ -120,9 +120,9 @@ The Quiz schema describes the structure for storing quiz information in the data
 
 - GET /quizz: Retrieve a list of all quizzes.
 - POST /quizz: Create a new quiz.
-- GET /quizz/:id: Retrieve a quiz by ID.
-- PUT /quizz/:id: Update a quiz by ID.
-- DELETE /quizz/:id: Delete a quiz by ID.
+- GET /quizz/:id Retrieve a quiz by ID.
+- PUT /quizz/:id Update a quiz by ID.
+- DELETE /quizz/:id Delete a quiz by ID.
 
 # 📅 Schedules
 
@@ -138,9 +138,9 @@ The Schedule schema outlines the structure for storing scheduling information in
 
 - GET /schedules: Retrieve a list of all schedules.
 - POST /schedules: Create a new schedule.
-- GET /schedules/:id: Retrieve a schedule by ID.
-- PUT /schedules/:id: Update a schedule by ID.
-- DELETE /schedules/:id: Delete a schedule by ID.
+- GET /schedules/:id Retrieve a schedule by ID.
+- PUT /schedules/:id Update a schedule by ID.
+- DELETE /schedules/:id Delete a schedule by ID.
 
 # 👥 Groups
 
@@ -156,9 +156,9 @@ The Group schema represents the structure for storing group information in the d
 
 - GET /groups: Retrieve a list of all groups.
 - POST /groups: Create a new group.
-- GET /groups/:id: Retrieve a group by ID.
-- PUT /groups/:id: Update a group by ID.
-- DELETE /groups/:id: Delete a group by ID.
+- GET /groups/:id Retrieve a group by ID.
+- PUT /groups/:id Update a group by ID.
+- DELETE /groups/:id Delete a group by ID.
 
 # 👨‍🏫 Courses
 
@@ -182,9 +182,9 @@ The Course schema defines the structure for storing course information in the da
 
 - GET /courses: Retrieve a list of all courses.
 - POST /courses: Create a new course.
-- GET /courses/:id: Retrieve a course by ID.
-- PUT /courses/:id: Update a course by ID.
-- DELETE /courses/:id: Delete a course by ID.
+- GET /courses/:id Retrieve a course by ID.
+- PUT /courses/:id Update a course by ID.
+- DELETE /courses/:id Delete a course by ID.
 
 ## General Notes
 
