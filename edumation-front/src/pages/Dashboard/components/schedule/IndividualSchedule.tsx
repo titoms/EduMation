@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
 import EditEventModal from './EditEventModal';
+import { format } from 'date-fns';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -27,6 +28,7 @@ interface MyEvent {
   start: Date;
   end: Date;
   title: string;
+  location?: string;
 }
 
 const IndividualSchedule = () => {
@@ -54,7 +56,6 @@ const IndividualSchedule = () => {
           scheduleId
         );
         const courseResponse = await CoursesService.getCoursesById(
-          // Change this to courses
           scheduleResponse.data.courseId
         );
         setSchedule(scheduleResponse.data);
@@ -76,7 +77,6 @@ const IndividualSchedule = () => {
         setLoading(false);
       }
     };
-    console.log(events);
     fetchScheduleAndCourse();
   }, [scheduleId, courseName]);
 
@@ -93,16 +93,6 @@ const IndividualSchedule = () => {
     const title = window.prompt('New Event title');
     if (title) {
       setEvents([...events, { start, end, title }]);
-    }
-  };
-
-  const updateEventInBackend = async (updatedEvent) => {
-    try {
-      await SchedulesService.updateSchedule(scheduleId, updatedEvent);
-      console.log(schedule);
-      toast.success('Event updated successfully');
-    } catch (error) {
-      toast.error('Failed to update event');
     }
   };
 
@@ -138,6 +128,33 @@ const IndividualSchedule = () => {
     setEvents(updatedEvents);
     setIsEditModalOpen(false);
   };
+
+  const updateEventInBackend = async (updatedEvent: MyEvent) => {
+    // Convert updatedEvent to your Schedule format
+    // This part depends on how your backend expects to receive the update
+    // Example:
+    try {
+      const updatedSchedule = {
+        ...schedule,
+        classTimes: events.map((event) => ({
+          date: format(event.start, 'yyyy-MM-dd'),
+          startTime: format(event.start, 'HH:mm:ss'),
+          endTime: format(event.end, 'HH:mm:ss'),
+          location: event.location ? event.location : 'Location',
+        })),
+      };
+
+      await SchedulesService.updateSchedule(scheduleId, updatedSchedule);
+      console.log(schedule);
+      toast.success('Schedule updated successfully');
+    } catch (error) {
+      toast.error('Failed to update schedule');
+    }
+  };
+
+  useEffect(() => {
+    console.log(events);
+  }, [events]);
 
   if (loading) return <ScheduleSkeleton />;
 
