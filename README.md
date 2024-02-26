@@ -5,12 +5,12 @@
 EduMation is an engaging educational app that offers a wide range of features to enhance your learning experience, streamline course management, and facilitate time management for schools and universities.
 
 ## Features
-
 ### Course Planner
 
 - Plan your courses with ease by adding, editing, or deleting courses, assignments, and exams.
 - View and manage your course schedule in a user-friendly calendar format.
 - Set reminders and notifications for upcoming classes and assignments.
+- Export calendar in iCal format and integration for Google Calendar, Outlook, iCalendar, and other scheduling apps
 
 ### Teacher Time Management
 
@@ -23,6 +23,8 @@ EduMation is an engaging educational app that offers a wide range of features to
 - Teachers can create quizzes with various question types, including multiple-choice, true/false, and short answer questions.
 - Customize quiz difficulty levels, time limits, and scoring.
 - Evaluate student performance with detailed quiz reports.
+- Get stats from the lessons and keep track of progress. Optimize your lessons and get feedback from students.
+- Create interactive marks for the students. Make an engaging experience for the students. Make them feel like they can change their marks by interacting with class.
 
 ### Gamification
 
@@ -88,7 +90,6 @@ The User schema defines the structure of user data in the database.
 - `profileImage`: URL to the user's profile image.
 - `passwordHash`: Hashed password for the user.
 - `role`: The role of the user, which can be 'admin', 'teacher', 'school', or 'student'.
-- `schoolId`: A list of Schools IDs document if the user is associated with a school.
 - `groups`: A list of Groups IDs that the user is enrolled in or teaching.
 - `creationDate`: The date and time when the user was created.
 - `updateDate`: The date and time when the user was last updated.
@@ -97,30 +98,9 @@ The User schema defines the structure of user data in the database.
 
 - GET /users: Retrieve a list of all users.
 - POST /users: Create a new user.
-- GET /users/:id: Retrieve a user by ID.
-- PUT /users/:id: Update a user by ID.
-- DELETE /users/:id: Delete a user by ID.
-
-# 🏫 Schools
-
-The School schema defines the structure of school data in the database.
-
-- `name`: The name of the school.
-- `address`: The physical address of the school.
-- `contactInfo`:
-  - `phone`: Contact phone number for the school.
-  - `email`: Contact email address for the school.
-  - `website`: Website URL for the school.
-- `createdAt`: The date and time when the school record was created.
-- `updatedAt`: The date and time when the school record was last updated.
-
-### Routes
-
-- GET /schools: Retrieve a list of all schools.
-- POST /schools: Create a new school.
-- GET /schools/:id: Retrieve a school by ID.
-- PUT /schools/:id: Update a school by ID.
-- DELETE /schools/:id: Delete a school by ID.
+- GET /users/:id Retrieve a user by ID.
+- PUT /users/:id Update a user by ID.
+- DELETE /users/:id Delete a user by ID.
 
 # ❔ Quizzes
 
@@ -140,15 +120,15 @@ The Quiz schema describes the structure for storing quiz information in the data
 
 - GET /quizz: Retrieve a list of all quizzes.
 - POST /quizz: Create a new quiz.
-- GET /quizz/:id: Retrieve a quiz by ID.
-- PUT /quizz/:id: Update a quiz by ID.
-- DELETE /quizz/:id: Delete a quiz by ID.
+- GET /quizz/:id Retrieve a quiz by ID.
+- PUT /quizz/:id Update a quiz by ID.
+- DELETE /quizz/:id Delete a quiz by ID.
 
 # 📅 Schedules
 
 The Schedule schema outlines the structure for storing scheduling information in the database.
 
-- `groupId`: Reference to the associated Group for the schedules.
+- `groups`: Reference to the associated Groups for the schedules.
 - `courseId`: Reference to the associated Courses for the schedules.
 - `recurring`: Indicates whether the schedule is recurring.
 - `creationDate`: The date and time when the schedule was created.
@@ -158,9 +138,9 @@ The Schedule schema outlines the structure for storing scheduling information in
 
 - GET /schedules: Retrieve a list of all schedules.
 - POST /schedules: Create a new schedule.
-- GET /schedules/:id: Retrieve a schedule by ID.
-- PUT /schedules/:id: Update a schedule by ID.
-- DELETE /schedules/:id: Delete a schedule by ID.
+- GET /schedules/:id Retrieve a schedule by ID.
+- PUT /schedules/:id Update a schedule by ID.
+- DELETE /schedules/:id Delete a schedule by ID.
 
 # 👥 Groups
 
@@ -176,9 +156,9 @@ The Group schema represents the structure for storing group information in the d
 
 - GET /groups: Retrieve a list of all groups.
 - POST /groups: Create a new group.
-- GET /groups/:id: Retrieve a group by ID.
-- PUT /groups/:id: Update a group by ID.
-- DELETE /groups/:id: Delete a group by ID.
+- GET /groups/:id Retrieve a group by ID.
+- PUT /groups/:id Update a group by ID.
+- DELETE /groups/:id Delete a group by ID.
 
 # 👨‍🏫 Courses
 
@@ -202,9 +182,9 @@ The Course schema defines the structure for storing course information in the da
 
 - GET /courses: Retrieve a list of all courses.
 - POST /courses: Create a new course.
-- GET /courses/:id: Retrieve a course by ID.
-- PUT /courses/:id: Update a course by ID.
-- DELETE /courses/:id: Delete a course by ID.
+- GET /courses/:id Retrieve a course by ID.
+- PUT /courses/:id Update a course by ID.
+- DELETE /courses/:id Delete a course by ID.
 
 ## General Notes
 
