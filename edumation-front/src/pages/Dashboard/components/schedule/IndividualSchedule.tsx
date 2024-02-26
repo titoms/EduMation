@@ -54,6 +54,7 @@ const IndividualSchedule = () => {
           scheduleId
         );
         const courseResponse = await CoursesService.getCoursesById(
+          // Change this to courses
           scheduleResponse.data.courseId
         );
         setSchedule(scheduleResponse.data);
@@ -75,7 +76,7 @@ const IndividualSchedule = () => {
         setLoading(false);
       }
     };
-
+    console.log(events);
     fetchScheduleAndCourse();
   }, [scheduleId, courseName]);
 
@@ -95,24 +96,34 @@ const IndividualSchedule = () => {
     }
   };
 
-  const handleUpdateEvent = ({
+  const updateEventInBackend = async (updatedEvent) => {
+    try {
+      await SchedulesService.updateSchedule(scheduleId, updatedEvent);
+      console.log(schedule);
+      toast.success('Event updated successfully');
+    } catch (error) {
+      toast.error('Failed to update event');
+    }
+  };
+
+  const handleUpdateEvent = async ({
     event,
     start,
     end,
   }: EventInteractionArgs<MyEvent>) => {
-    setEvents(
-      events.map((evt) => (evt === event ? { ...evt, start, end } : evt))
-    );
+    const updatedEvent = { ...event, start, end };
+    await updateEventInBackend(updatedEvent);
+    setEvents(events.map((evt) => (evt === event ? updatedEvent : evt)));
   };
 
-  const handleEventResize = ({ event, start, end }) => {
-    const updatedEvents = events.map((evt) => {
-      if (evt === event) {
-        return { ...evt, start, end };
-      }
-      return evt;
-    });
-    setEvents(updatedEvents);
+  const handleEventResize = async ({
+    event,
+    start,
+    end,
+  }: EventInteractionArgs<MyEvent>) => {
+    const updatedEvent = { ...event, start, end };
+    await updateEventInBackend(updatedEvent);
+    setEvents(events.map((evt) => (evt === event ? updatedEvent : evt)));
   };
 
   const handleDoubleClickEvent = (event: MyEvent) => {
@@ -121,7 +132,6 @@ const IndividualSchedule = () => {
   };
 
   const handleSubmitEdit = (editedEvent: MyEvent) => {
-    // Update the event in your state
     const updatedEvents = events.map((evt) =>
       evt === editingEvent ? editedEvent : evt
     );
