@@ -2,17 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
-import { ClassTime, Schedule } from '../../../../services/Types';
+import { MyEvent, Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
-import CoursesService from '../../../../services/CoursesService';
 import BackButton from '../../../../components/ui/BackButton';
-import {
-  Calendar,
-  dayjsLocalizer,
-  Event as CalendarEvent,
-  SlotInfo,
-  EventInteractionArgs,
-} from 'react-big-calendar';
+import { Calendar, dayjsLocalizer, SlotInfo } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -20,23 +13,14 @@ import dayjs from 'dayjs';
 import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
 import EditEventModal from './EditEventModal';
-import { format } from 'date-fns';
 
 const DnDCalendar = withDragAndDrop(Calendar);
-
-interface MyEvent {
-  start: Date;
-  end: Date;
-  title: string;
-  location?: string;
-}
 
 const IndividualSchedule = () => {
   const params = useParams<{ id: string }>();
   const scheduleId = params.id || '';
   const { mode } = useThemeContext();
   const [schedule, setSchedule] = useState<Schedule | null>(null);
-  const [courseName, setCourseName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const localizer = dayjsLocalizer(dayjs);
   const [events, setEvents] = useState<MyEvent[]>([]);
@@ -44,7 +28,7 @@ const IndividualSchedule = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchScheduleAndCourse = async () => {
+    const fetchSchedule = async () => {
       if (!scheduleId) {
         toast.error('Schedule ID is undefined');
         setLoading(false);
@@ -57,13 +41,14 @@ const IndividualSchedule = () => {
         );
         setSchedule(scheduleResponse.data);
         const boundaryDates = getBoundaryDates(
-          scheduleResponse.data.classTimes || []
+          scheduleResponse.data.events || []
         );
         setEvents([
           {
+            date: boundaryDates.date,
             start: boundaryDates.start,
             end: boundaryDates.end,
-            title: courseName,
+            title: 'test',
           },
         ]);
       } catch (error) {
@@ -72,22 +57,26 @@ const IndividualSchedule = () => {
         setLoading(false);
       }
     };
-    fetchScheduleAndCourse();
-  }, [scheduleId, courseName]);
+    fetchSchedule();
+  }, [scheduleId]);
 
-  const getBoundaryDates = (classTimes: ClassTime[] = []) => {
-    if (classTimes.length === 0) return { start: new Date(), end: new Date() };
-
-    const sortedDates = classTimes
-      .map((ct) => new Date(ct.date))
+  const getBoundaryDates = (events: MyEvent[] = []) => {
+    if (events.length === 0)
+      return { date: new Date(), start: new Date(), end: new Date() };
+    const sortedDates = events
+      .map((ct) => new Date(ct.start))
       .sort((a, b) => a.getTime() - b.getTime());
-    return { start: sortedDates[0], end: sortedDates[sortedDates.length - 1] };
+    return {
+      date: sortedDates[0],
+      start: sortedDates[0],
+      end: sortedDates[sortedDates.length - 1],
+    };
   };
 
-  const handleSelectSlot = ({ start, end }: SlotInfo) => {
+  const handleSelectSlot = ({ date, start, end }: SlotInfo) => {
     const title = window.prompt('New Event title');
     if (title) {
-      setEvents([...events, { start, end, title }]);
+      setEvents([...events, { date, start, end, title }]);
     }
   };
 
@@ -131,10 +120,11 @@ const IndividualSchedule = () => {
     try {
       const updatedSchedule = {
         ...schedule,
-        classTimes: events.map((event) => ({
-          date: format(event.start, 'yyyy-MM-dd'),
-          startTime: format(event.start, 'HH:mm:ss'),
-          endTime: format(event.end, 'HH:mm:ss'),
+        events: events.map((event) => ({
+          date: event.start,
+          start: event.start,
+          end: event.end,
+          title: event.title ? event.title : '',
           location: event.location ? event.location : 'Location',
         })),
       };
@@ -171,7 +161,7 @@ const IndividualSchedule = () => {
       <div className="h-100">
         <BackButton />
         <h1 className="text-2xl my-4 font-semibold">
-          Schedule for {courseName} - {scheduleId}
+          Schedule for {scheduleId}
         </h1>
         <div className="h-screen">
           <CalendarActions />

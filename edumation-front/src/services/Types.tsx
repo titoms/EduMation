@@ -1,16 +1,17 @@
-export interface ClassTime {
-  date: string;
-  startTime: Date;
-  endTime: Date;
-  location: string;
+export interface MyEvent {
+  course?: Course[];
+  date: Date;
+  start: Date;
+  end: Date;
+  title: string;
+  location?: string;
 }
 
 //Schedule has multiple courses & multiple linked Users
 // Classtime has to be calculated/updated/managed from the Courses
 export interface Schedule {
   _id?: string;
-  courses?: Course[];
-  classTimes?: ClassTime[];
+  events?: MyEvent[];
   linkedUsers?: User[];
   scheduleType?: string;
 }
