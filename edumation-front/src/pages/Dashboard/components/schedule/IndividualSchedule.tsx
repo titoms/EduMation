@@ -6,7 +6,9 @@ import { MyEvent, Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import BackButton from '../../../../components/ui/BackButton';
 import { Calendar, dayjsLocalizer, SlotInfo } from 'react-big-calendar';
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import withDragAndDrop, {
+  EventInteractionArgs,
+} from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
@@ -40,19 +42,16 @@ const IndividualSchedule = () => {
           scheduleId
         );
         setSchedule(scheduleResponse.data);
-        const boundaryDates = getBoundaryDates(
-          scheduleResponse.data.events || []
-        );
-        setEvents([
-          {
-            date: boundaryDates.date,
-            start: boundaryDates.start,
-            end: boundaryDates.end,
-            title: 'test',
-          },
-        ]);
+        const fetchedEvents =
+          scheduleResponse.data.events?.map((event) => ({
+            start: new Date(event.start),
+            end: new Date(event.end),
+            title: event.title,
+            location: event.location,
+          })) || [];
+        setEvents(fetchedEvents);
       } catch (error) {
-        toast.error('Failed to fetch schedule or course details');
+        toast.error('Failed to fetch schedule details');
       } finally {
         setLoading(false);
       }
@@ -60,44 +59,25 @@ const IndividualSchedule = () => {
     fetchSchedule();
   }, [scheduleId]);
 
-  const getBoundaryDates = (events: MyEvent[] = []) => {
-    if (events.length === 0)
-      return { date: new Date(), start: new Date(), end: new Date() };
-    const sortedDates = events
-      .map((ct) => new Date(ct.start))
-      .sort((a, b) => a.getTime() - b.getTime());
-    return {
-      date: sortedDates[0],
-      start: sortedDates[0],
-      end: sortedDates[sortedDates.length - 1],
-    };
-  };
-
-  const handleSelectSlot = ({ date, start, end }: SlotInfo) => {
+  const handleSelectSlot = async ({ start, end }: MyEvent) => {
     const title = window.prompt('New Event title');
     if (title) {
-      setEvents([...events, { date, start, end, title }]);
+      setEvents((prevEvents) => [...prevEvents, { start, end, title }]);
     }
   };
 
-  const handleUpdateEvent = async ({
-    event,
-    start,
-    end,
-  }: EventInteractionArgs<MyEvent>) => {
+  const handleUpdateEvent = async ({ event, start, end }: MyEvent) => {
     const updatedEvent = { ...event, start, end };
-    await updateEventInBackend(updatedEvent);
-    setEvents(events.map((evt) => (evt === event ? updatedEvent : evt)));
+    setEvents((prevEvents) =>
+      prevEvents.map((evt) => (evt === event ? updatedEvent : evt))
+    );
   };
 
-  const handleEventResize = async ({
-    event,
-    start,
-    end,
-  }: EventInteractionArgs<MyEvent>) => {
+  const handleEventResize = async ({ event, start, end }: MyEvent) => {
     const updatedEvent = { ...event, start, end };
-    await updateEventInBackend(updatedEvent);
-    setEvents(events.map((evt) => (evt === event ? updatedEvent : evt)));
+    setEvents((prevEvents) =>
+      prevEvents.map((evt) => (evt === event ? updatedEvent : evt))
+    );
   };
 
   const handleDoubleClickEvent = (event: MyEvent) => {
@@ -106,55 +86,44 @@ const IndividualSchedule = () => {
   };
 
   const handleSubmitEdit = (editedEvent: MyEvent) => {
-    const updatedEvents = events.map((evt) =>
-      evt === editingEvent ? editedEvent : evt
+    setEvents((prevEvents) =>
+      prevEvents.map((evt) => (evt === editingEvent ? editedEvent : evt))
     );
-    setEvents(updatedEvents);
     setIsEditModalOpen(false);
+    updateEventInBackend();
   };
 
-  const updateEventInBackend = async (updatedEvent: MyEvent) => {
-    // Convert updatedEvent to your Schedule format
-    // This part depends on how your backend expects to receive the update
-    // Example:
+  const updateEventInBackend = async () => {
     try {
-      const updatedSchedule = {
-        ...schedule,
-        events: events.map((event) => ({
-          date: event.start,
-          start: event.start,
-          end: event.end,
-          title: event.title ? event.title : '',
-          location: event.location ? event.location : 'Location',
-        })),
-      };
-
-      await SchedulesService.updateSchedule(scheduleId, updatedSchedule);
-      toast.success('Schedule updated successfully');
+      await SchedulesService.updateSchedule(scheduleId, { events });
     } catch (error) {
       toast.error('Failed to update schedule');
     }
   };
 
   useEffect(() => {
-    console.log(schedule);
-  }, [schedule]);
+    const updateBackend = async () => {
+      if (events.length > 0) {
+        await updateEventInBackend();
+      }
+    };
+    updateBackend();
+  }, [events]);
 
   if (loading) return <ScheduleSkeleton />;
 
-  const styles = {
-    lightMode: {
-      color: '#000',
-      padding: '10px',
-      borderRadius: '5px',
-    },
-    darkMode: {
-      color: '#fff',
-      padding: '10px',
-      borderRadius: '5px',
-    },
-  };
-  const componentStyle = mode === 'light' ? styles.lightMode : styles.darkMode;
+  const componentStyle =
+    mode === 'light'
+      ? {
+          color: '#000',
+          padding: '10px',
+          borderRadius: '5px',
+        }
+      : {
+          color: '#fff',
+          padding: '10px',
+          borderRadius: '5px',
+        };
 
   return (
     <>
@@ -166,17 +135,17 @@ const IndividualSchedule = () => {
         <div className="h-screen">
           <CalendarActions />
           <DnDCalendar
+            className="mt-4"
             style={componentStyle}
             localizer={localizer}
-            className="my-4"
             events={events}
             resizable
             selectable
-            onDoubleClickEvent={handleDoubleClickEvent}
-            onSelectSlot={handleSelectSlot}
             onEventDrop={handleUpdateEvent}
             onEventResize={handleEventResize}
-            draggableAccessor={(event) => true}
+            onDoubleClickEvent={handleDoubleClickEvent}
+            onSelectSlot={handleSelectSlot}
+            draggableAccessor={() => true}
           />
         </div>
       </div>

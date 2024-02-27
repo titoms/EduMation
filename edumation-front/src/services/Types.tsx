@@ -1,6 +1,5 @@
 export interface MyEvent {
   course?: Course[];
-  date: Date;
   start: Date;
   end: Date;
   title: string;

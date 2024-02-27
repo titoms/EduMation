@@ -14,7 +14,6 @@ const scheduleSchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Course',
         },
-        date: { type: Date },
         start: { type: Date },
         end: { type: Date },
         title: { type: String },
