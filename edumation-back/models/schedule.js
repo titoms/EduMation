@@ -2,21 +2,22 @@ const mongoose = require('mongoose');
 
 const scheduleSchema = new mongoose.Schema(
   {
-    courses: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
-      },
-    ],
     linkedUsers: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       },
     ],
-    classTime: [
+    events: [
       {
-        type: Date,
+        course: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Course',
+        },
+        start: { type: Date },
+        end: { type: Date },
+        title: { type: String },
+        location: { type: String },
       },
     ],
     scheduleType: {

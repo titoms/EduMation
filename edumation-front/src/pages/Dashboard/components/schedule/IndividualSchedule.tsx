@@ -55,12 +55,7 @@ const IndividualSchedule = () => {
         const scheduleResponse = await SchedulesService.getScheduleById(
           scheduleId
         );
-        const courseResponse = await CoursesService.getCoursesById(
-          scheduleResponse.data.courseId
-        );
         setSchedule(scheduleResponse.data);
-        setCourseName(courseResponse.data.title);
-
         const boundaryDates = getBoundaryDates(
           scheduleResponse.data.classTimes || []
         );
@@ -145,7 +140,6 @@ const IndividualSchedule = () => {
       };
 
       await SchedulesService.updateSchedule(scheduleId, updatedSchedule);
-      console.log(schedule);
       toast.success('Schedule updated successfully');
     } catch (error) {
       toast.error('Failed to update schedule');
@@ -153,8 +147,8 @@ const IndividualSchedule = () => {
   };
 
   useEffect(() => {
-    console.log(events);
-  }, [events]);
+    console.log(schedule);
+  }, [schedule]);
 
   if (loading) return <ScheduleSkeleton />;
 
@@ -177,7 +171,7 @@ const IndividualSchedule = () => {
       <div className="h-100">
         <BackButton />
         <h1 className="text-2xl my-4 font-semibold">
-          Schedule for {courseName}
+          Schedule for {courseName} - {scheduleId}
         </h1>
         <div className="h-screen">
           <CalendarActions />

@@ -1,7 +1,7 @@
 export interface ClassTime {
   date: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   location: string;
 }
 

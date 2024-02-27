@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
 
 interface ScheduleCardProps {
-  schedule: Schedule & { courseName?: string };
+  schedule: Schedule;
   onDelete: (scheduleId: string) => void;
 }
 
@@ -16,7 +16,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ schedule, onDelete }) => {
       <div className="flex justify-between gap-4 items-center">
         <Link to={schedule._id}>
           <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
-            {schedule.courseName || 'Unknown Course'}
+            {schedule._id}
           </span>
         </Link>
         <Button

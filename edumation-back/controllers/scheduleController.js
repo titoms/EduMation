@@ -19,9 +19,8 @@ exports.createSchedule = async (req, res) => {
 
   try {
     const newSchedule = new Schedule({
-      courses: req.body.courses,
       linkedUsers: req.body.linkedUsers,
-      classTime: req.body.classTime,
+      events: req.body.events,
       scheduleType: req.body.scheduleType,
     });
     const savedSchedule = await newSchedule.save();

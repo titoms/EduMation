@@ -70,14 +70,13 @@ const updateQuizValidation = [
 ];
 
 const createScheduleValidation = [
-  body('courseId').isMongoId().withMessage('Invalid course ID'),
-  body('classTimes').isArray().withMessage('Class times must be an array'),
+  body('events').isArray().withMessage('Events must be an array'),
   body('recurring').isBoolean().optional(),
 ];
 
 const updateScheduleValidation = [
   param('id').isMongoId().withMessage('Invalid schedule ID'),
-  body('classTimes').optional().isArray(),
+  body('events').optional().isArray(),
   body('recurring').optional().isBoolean(),
 ];
 

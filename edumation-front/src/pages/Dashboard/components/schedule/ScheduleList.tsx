@@ -18,38 +18,17 @@ const ScheduleList = () => {
   );
 
   useEffect(() => {
-    const fetchSchedulesAndTheirCourses = async () => {
+    const fetchSchedules = async () => {
       try {
         const schedulesResponse = await SchedulesService.getAllSchedules();
-        const schedulesData: Schedule[] = schedulesResponse.data;
-
-        const schedulesWithCourseTitles = await Promise.all(
-          schedulesData.map(async (schedule) => {
-            try {
-              const courseResponse = await CoursesService.getCoursesById(
-                schedule.courseId
-              );
-              console.log(schedule);
-              return { ...schedule, courseName: courseResponse.data.title };
-            } catch (error) {
-              console.error(
-                `Failed to fetch course for schedule ${schedule._id}:`,
-                error
-              );
-              return { ...schedule, courseName: 'Unknown Course' }; // Fallback if course fetch fails
-            }
-          })
-        );
-
-        setSchedules(schedulesWithCourseTitles);
+        setSchedules(schedulesResponse.data);
       } catch (error) {
         toast.error('Failed to fetch schedules');
       } finally {
         setLoading(false);
       }
     };
-
-    fetchSchedulesAndTheirCourses();
+    fetchSchedules();
   }, []);
 
   const handleOpenDelete = (scheduleId: string) => {
