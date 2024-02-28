@@ -68,6 +68,11 @@ const IndividualSchedule = () => {
     }
   };
 
+  const handleDoubleClickEvent = (event: MyEvent) => {
+    setEditingEvent(event);
+    setIsEditModalOpen(true);
+  };
+
   if (loading) return <ScheduleSkeleton />;
 
   return (
@@ -96,7 +101,7 @@ const IndividualSchedule = () => {
             onEventResize={({ event, start, end }) =>
               handleEventChange({ ...event, start, end }, event)
             }
-            onDoubleClickEvent={setEditingEvent}
+            onDoubleClickEvent={handleDoubleClickEvent}
             onSelectSlot={({ start, end }) => {
               const title = window.prompt('New Event title');
               if (title) setEvents([...events, { start, end, title }]);
