@@ -1,11 +1,16 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
 import { MyEvent, Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import BackButton from '../../../../components/ui/BackButton';
-import { Calendar, dayjsLocalizer } from 'react-big-calendar';
+import {
+  Calendar,
+  dayjsLocalizer,
+  SlotInfo,
+  Event as CalendarEvent,
+} from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -14,6 +19,7 @@ import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
 import EditEventModal from './EditEventModal';
 
+// Assuming EventInteractionArgs is imported correctly if needed
 const DnDCalendar = withDragAndDrop(Calendar);
 
 const IndividualSchedule = () => {
@@ -23,23 +29,28 @@ const IndividualSchedule = () => {
   const [events, setEvents] = useState<MyEvent[]>([]);
   const [editingEvent, setEditingEvent] = useState<MyEvent | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const localizer = dayjsLocalizer(dayjs);
 
   useEffect(() => {
-    const fetchAndUpdateSchedule = async () => {
-      setLoading(true);
+    const fetchSchedule = async () => {
+      if (!scheduleId) {
+        toast.error('Schedule ID is undefined');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const { data } = await SchedulesService.getScheduleById(scheduleId);
-        setSchedule(data);
-        const mappedEvents =
-          data.events?.map((event) => ({
+        const response = await SchedulesService.getScheduleById(scheduleId);
+        setSchedule(response.data);
+        const fetchedEvents =
+          response.data.events?.map((event) => ({
             start: new Date(event.start),
             end: new Date(event.end),
             title: event.title,
             location: event.location,
           })) || [];
-        setEvents(mappedEvents);
+        setEvents(fetchedEvents);
       } catch (error) {
         toast.error('Failed to fetch schedule details');
       } finally {
@@ -47,30 +58,37 @@ const IndividualSchedule = () => {
       }
     };
 
-    if (scheduleId) fetchAndUpdateSchedule();
+    fetchSchedule();
   }, [scheduleId]);
 
-  const handleEventChange = async (
-    updatedEvent: MyEvent,
-    originalEvent: MyEvent
-  ) => {
-    const updatedEvents = events.map((event) =>
-      event === originalEvent ? { ...updatedEvent } : event
-    );
-    setEvents(updatedEvents);
-    try {
-      await SchedulesService.updateSchedule(scheduleId, {
-        events: updatedEvents,
-      });
-      toast.success('Schedule updated successfully');
-    } catch (error) {
-      toast.error('Failed to update schedule');
+  const handleSelectSlot = (slotInfo: SlotInfo) => {
+    const title = window.prompt('New Event title');
+    if (title) {
+      setEvents((prevEvents) => [
+        ...prevEvents,
+        { start: slotInfo.start, end: slotInfo.end, title },
+      ]);
     }
   };
 
-  const handleDoubleClickEvent = (event: MyEvent) => {
+  const handleEventChange = (event: CalendarEvent, start: Date, end: Date) => {
+    const updatedEvents = events.map((e) =>
+      e === event ? { ...e, start, end } : e
+    );
+    setEvents(updatedEvents);
+  };
+
+  const handleDoubleClickEvent = (event: CalendarEvent) => {
     setEditingEvent(event);
     setIsEditModalOpen(true);
+  };
+
+  const handleSubmitEdit = (editedEvent: MyEvent) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((evt) => (evt === editingEvent ? editedEvent : evt))
+    );
+    setIsEditModalOpen(false);
+    setEditingEvent(null);
   };
 
   if (loading) return <ScheduleSkeleton />;
@@ -85,39 +103,32 @@ const IndividualSchedule = () => {
         <div className="h-screen">
           <CalendarActions />
           <DnDCalendar
-            className="mt-4"
-            style={
-              mode === 'light'
-                ? { color: '#000', padding: '10px', borderRadius: '5px' }
-                : { color: '#fff', padding: '10px', borderRadius: '5px' }
-            }
+            className="my-4"
+            style={{
+              color: mode === 'light' ? '#000' : '#fff',
+              padding: '10px',
+              borderRadius: '5px',
+            }}
             localizer={localizer}
             events={events}
-            resizable
-            selectable
             onEventDrop={({ event, start, end }) =>
-              handleEventChange({ ...event, start, end }, event)
+              handleEventChange(event, start, end)
             }
             onEventResize={({ event, start, end }) =>
-              handleEventChange({ ...event, start, end }, event)
+              handleEventChange(event, start, end)
             }
             onDoubleClickEvent={handleDoubleClickEvent}
-            onSelectSlot={({ start, end }) => {
-              const title = window.prompt('New Event title');
-              if (title) setEvents([...events, { start, end, title }]);
-            }}
-            draggableAccessor={() => true}
+            onSelectSlot={handleSelectSlot}
+            resizable
+            selectable
           />
         </div>
       </div>
-      {isEditModalOpen && (
+      {isEditModalOpen && editingEvent && (
         <EditEventModal
           event={editingEvent}
           onClose={() => setIsEditModalOpen(false)}
-          onSubmit={(editedEvent) => {
-            handleEventChange(editedEvent, editingEvent);
-            setIsEditModalOpen(false);
-          }}
+          onSubmit={handleSubmitEdit}
         />
       )}
     </>

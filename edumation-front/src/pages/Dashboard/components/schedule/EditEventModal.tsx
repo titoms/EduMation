@@ -20,37 +20,35 @@ const EditEventModal: React.FC<EditEventModalProps> = ({
   onClose,
   onSubmit,
 }) => {
-  const [editedEvent, setEditedEvent] = useState<MyEvent>(
-    event || { start: new Date(), end: new Date(), title: '', location: '' }
-  );
+  const [editedEvent, setEditedEvent] = useState<MyEvent>({
+    start: event?.start ?? new Date(),
+    end: event?.end ?? new Date(),
+    title: event?.title ?? '',
+    location: event?.location ?? '',
+  });
 
   useEffect(() => {
-    if (event) setEditedEvent(event);
+    setEditedEvent({
+      start: event?.start ?? new Date(),
+      end: event?.end ?? new Date(),
+      title: event?.title ?? '',
+      location: event?.location ?? '',
+    });
   }, [event]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEditedEvent({ ...editedEvent, [name]: value });
+    setEditedEvent((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (event) {
-      onSubmit({
-        ...event,
-        title: editedEvent.title,
-        location: editedEvent.location,
-      });
-    }
+    onSubmit(editedEvent);
     onClose();
   };
 
-  if (!event) return null;
-
   return (
-    <Dialog open={Boolean(event)} onClose={onClose}>
+    <Dialog open={!!event} onClose={onClose}>
       <DialogTitle>Edit Event</DialogTitle>
       <form onSubmit={handleSubmit}>
         <DialogContent>
@@ -58,6 +56,7 @@ const EditEventModal: React.FC<EditEventModalProps> = ({
             autoFocus
             margin="dense"
             id="title"
+            name="title"
             label="Event Title"
             type="text"
             fullWidth
@@ -66,9 +65,9 @@ const EditEventModal: React.FC<EditEventModalProps> = ({
             onChange={handleInputChange}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="location"
+            name="location"
             label="Location"
             type="text"
             fullWidth
@@ -78,10 +77,10 @@ const EditEventModal: React.FC<EditEventModalProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit} type="submit" variant="contained">
+          <Button onClick={onClose}>Cancel</Button>
+          <Button type="submit" variant="contained">
             Save
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
         </DialogActions>
       </form>
     </Dialog>
