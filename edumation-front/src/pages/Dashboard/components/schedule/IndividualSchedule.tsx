@@ -19,7 +19,6 @@ import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
 import EditEventModal from './EditEventModal';
 
-// Assuming EventInteractionArgs is imported correctly if needed
 const DnDCalendar = withDragAndDrop(Calendar);
 
 const IndividualSchedule = () => {
@@ -45,10 +44,9 @@ const IndividualSchedule = () => {
         setSchedule(response.data);
         const fetchedEvents =
           response.data.events?.map((event) => ({
+            ...event,
             start: new Date(event.start),
             end: new Date(event.end),
-            title: event.title,
-            location: event.location,
           })) || [];
         setEvents(fetchedEvents);
       } catch (error) {
@@ -71,24 +69,46 @@ const IndividualSchedule = () => {
     }
   };
 
-  const handleEventChange = (event: CalendarEvent, start: Date, end: Date) => {
-    const updatedEvents = events.map((e) =>
-      e === event ? { ...e, start, end } : e
+  const handleEventChange = (updatedEvent: MyEvent, originalEvent: MyEvent) => {
+    const updatedEvents = events.map((evt) =>
+      evt === originalEvent ? updatedEvent : evt
     );
     setEvents(updatedEvents);
+    updateScheduleBackend(updatedEvents);
   };
 
-  const handleDoubleClickEvent = (event: CalendarEvent) => {
+  const handleDoubleClickEvent = (event: CalendarEvent<MyEvent>) => {
     setEditingEvent(event);
     setIsEditModalOpen(true);
   };
 
   const handleSubmitEdit = (editedEvent: MyEvent) => {
-    setEvents((prevEvents) =>
-      prevEvents.map((evt) => (evt === editingEvent ? editedEvent : evt))
+    const updatedEvents = events.map((evt) =>
+      evt === editingEvent ? editedEvent : evt
     );
+    setEvents(updatedEvents);
     setIsEditModalOpen(false);
     setEditingEvent(null);
+    updateScheduleBackend(updatedEvents);
+  };
+
+  const handleEraseEvent = async () => {
+    const updatedEvents = events.filter((evt) => evt !== editingEvent);
+    setEvents(updatedEvents);
+    setIsEditModalOpen(false);
+    setEditingEvent(null);
+    updateScheduleBackend(updatedEvents);
+  };
+
+  const updateScheduleBackend = async (updatedEvents: MyEvent[]) => {
+    try {
+      await SchedulesService.updateSchedule(scheduleId, {
+        events: updatedEvents,
+      });
+      toast.success('Schedule updated successfully');
+    } catch (error) {
+      toast.error('Failed to update schedule');
+    }
   };
 
   if (loading) return <ScheduleSkeleton />;
@@ -112,10 +132,10 @@ const IndividualSchedule = () => {
             localizer={localizer}
             events={events}
             onEventDrop={({ event, start, end }) =>
-              handleEventChange(event, start, end)
+              handleEventChange({ ...event, start, end }, event)
             }
             onEventResize={({ event, start, end }) =>
-              handleEventChange(event, start, end)
+              handleEventChange({ ...event, start, end }, event)
             }
             onDoubleClickEvent={handleDoubleClickEvent}
             onSelectSlot={handleSelectSlot}
@@ -129,6 +149,7 @@ const IndividualSchedule = () => {
           event={editingEvent}
           onClose={() => setIsEditModalOpen(false)}
           onSubmit={handleSubmitEdit}
+          onDelete={handleEraseEvent}
         />
       )}
     </>

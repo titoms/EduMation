@@ -1,4 +1,5 @@
 export interface MyEvent {
+  id?: string;
   course?: Course[];
   start: Date;
   end: Date;
