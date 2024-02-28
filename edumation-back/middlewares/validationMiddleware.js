@@ -70,7 +70,7 @@ const updateQuizValidation = [
 ];
 
 const createScheduleValidation = [
-  body('events').isArray().withMessage('Events must be an array'),
+  body('events').optional().isArray().withMessage('Events must be an array'),
   body('recurring').isBoolean().optional(),
 ];
 

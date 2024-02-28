@@ -21,6 +21,9 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DragAndDrop from '../../../../components/ui/draganddrop/DragAndDrop';
 import CoursesService from '../../../../services/CoursesService';
 import { Course } from '../../../../services/Types';
+import SchedulesService from '../../../../services/SchedulesService';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ScheduleCreation = () => {
   const [classes, setClasses] = useState<Group[]>([]);
@@ -31,6 +34,7 @@ const ScheduleCreation = () => {
   const [error, setError] = useState('');
   const [importCalendarCsv, setImportCalendarCsv] = useState<File | null>(null);
   const [calendarUploadLoading, setCalendarUploadLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClassesAndCourses = async () => {
@@ -68,6 +72,18 @@ const ScheduleCreation = () => {
   const handleFileDrop = (file: File) => {
     setImportCalendarCsv(file);
     setCalendarUploadLoading(true);
+  };
+
+  const handleScheduleCreation = async () => {
+    try {
+      const response = await SchedulesService.createSchedule({});
+      toast.success('Schedule created successfully');
+      console.log(response.data);
+      navigate('/dashboard/schedules');
+    } catch (error) {
+      console.error('Failed to create schedule:', error);
+      toast.error('Failed to create schedule');
+    }
   };
 
   if (loading) return <UserSkeleton />;
@@ -251,7 +267,11 @@ const ScheduleCreation = () => {
         </div>
       </div>
       <div className="flex gap-4 justify-end mt-8">
-        <Button type="submit" variant="contained">
+        <Button
+          type="submit"
+          variant="contained"
+          onClick={handleScheduleCreation}
+        >
           Create
         </Button>
         <BackButton title="Cancel" icon={false} />

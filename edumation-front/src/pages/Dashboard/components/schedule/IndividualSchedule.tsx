@@ -77,7 +77,7 @@ const IndividualSchedule = () => {
     updateScheduleBackend(updatedEvents);
   };
 
-  const handleDoubleClickEvent = (event: CalendarEvent<MyEvent>) => {
+  const handleDoubleClickEvent = (event: MyEvent) => {
     setEditingEvent(event);
     setIsEditModalOpen(true);
   };
