@@ -121,7 +121,20 @@ const IndividualSchedule = () => {
           Schedule for {scheduleId}
         </h1>
         <div className="h-screen">
-          <CalendarActions />
+          <div className="flex justify-around gap-8">
+            <div className="w-2/5">
+              <div className="mt-2">
+                <h3>Courses :</h3>
+              </div>
+              <div className="mt-2">
+                <h3>Schedule Type : </h3>
+              </div>
+            </div>
+            <div className="w-3/5">
+              {' '}
+              <CalendarActions />
+            </div>
+          </div>
           <DnDCalendar
             className="my-4"
             style={{
