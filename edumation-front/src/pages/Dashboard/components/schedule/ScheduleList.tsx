@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import ScheduleSkeleton from '../../../../components/ui/skeletons/ScheduleSkeleton';
 import { Schedule } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
-import CoursesService from '../../../../services/CoursesService';
 import { toast } from 'react-toastify';
 import ScheduleCard from './ScheduleCard';
 import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
+import { useScheduleContext } from '../../../../context/ScheduleContext';
 
 const ScheduleList = () => {
+  const scheduleContext = useScheduleContext();
   const [schedules, setSchedules] = useState<
     (Schedule & { courseName?: string })[]
   >([]);
@@ -18,18 +19,11 @@ const ScheduleList = () => {
   );
 
   useEffect(() => {
-    const fetchSchedules = async () => {
-      try {
-        const schedulesResponse = await SchedulesService.getAllSchedules();
-        setSchedules(schedulesResponse.data);
-      } catch (error) {
-        toast.error('Failed to fetch schedules');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSchedules();
-  }, []);
+    if (scheduleContext && scheduleContext.schedules) {
+      setSchedules(scheduleContext.schedules);
+    }
+    setLoading(false);
+  }, [scheduleContext]);
 
   const handleOpenDelete = (scheduleId: string) => {
     setSelectedScheduleId(scheduleId);

@@ -19,6 +19,8 @@ import ClassImport from './components/classes/ClassImport';
 import ConditionalHeightWrapper from '../../utils/ConditionalHeightWrapper';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
+import { ScheduleProvider } from '../../context/ScheduleContext';
+
 import IndividualSchedule from './components/schedule/IndividualSchedule';
 import IndividualCourse from './components/courses/IndividualCourse';
 
@@ -27,35 +29,37 @@ const Dashboard = () => {
     <div className="flex bg-gray-100 dark:bg-gray-700 dark:text-white text-black">
       <SideBar />
       <UserProvider>
-        <ConditionalHeightWrapper>
-          <Routes>
-            <Route index element={<MainDashboard />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="settings" element={<Settings />} />
+        <ScheduleProvider>
+          <ConditionalHeightWrapper>
+            <Routes>
+              <Route index element={<MainDashboard />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="settings" element={<Settings />} />
 
-            <Route path="users" element={<Users />} />
-            <Route path="students" element={<Students />} />
+              <Route path="users" element={<Users />} />
+              <Route path="students" element={<Students />} />
 
-            <Route path="schools" element={<Schools />} />
-            <Route path="schools/new" element={<SchoolCreation />} />
+              <Route path="schools" element={<Schools />} />
+              <Route path="schools/new" element={<SchoolCreation />} />
 
-            <Route path="classes" element={<Classes />} />
-            <Route path="classes/new" element={<ClassCreation />} />
-            <Route path="classes/import" element={<ClassImport />} />
-            <Route path="classes/:id" element={<IndividualClass />} />
+              <Route path="classes" element={<Classes />} />
+              <Route path="classes/new" element={<ClassCreation />} />
+              <Route path="classes/import" element={<ClassImport />} />
+              <Route path="classes/:id" element={<IndividualClass />} />
 
-            <Route path="courses" element={<Courses />} />
-            <Route path="courses/new" element={<CourseCreation />} />
-            <Route path="courses/:id" element={<IndividualCourse />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="courses/new" element={<CourseCreation />} />
+              <Route path="courses/:id" element={<IndividualCourse />} />
 
-            <Route path="schedules" element={<Scheduler />} />
-            <Route path="schedules/:id" element={<IndividualSchedule />} />
-            <Route path="schedules/new" element={<ScheduleCreation />} />
+              <Route path="schedules" element={<Scheduler />} />
+              <Route path="schedules/:id" element={<IndividualSchedule />} />
+              <Route path="schedules/new" element={<ScheduleCreation />} />
 
-            <Route path="quizz" element={<Quizz />} />
-            <Route path="quizz/new" element={<QuizzCreation />} />
-          </Routes>
-        </ConditionalHeightWrapper>
+              <Route path="quizz" element={<Quizz />} />
+              <Route path="quizz/new" element={<QuizzCreation />} />
+            </Routes>
+          </ConditionalHeightWrapper>
+        </ScheduleProvider>
       </UserProvider>
     </div>
   );

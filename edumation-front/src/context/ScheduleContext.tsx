@@ -11,20 +11,20 @@ import { Schedule } from '../services/Types';
 
 interface ScheduleContextType {
   schedules: Schedule[];
-  setSchedule: React.Dispatch<React.SetStateAction<Schedule[]>>;
+  setSchedules: React.Dispatch<React.SetStateAction<Schedule[]>>;
 }
 export const ScheduleContext = createContext<ScheduleContextType | null>(null);
 
 export const ScheduleProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [schedules, setSchedule] = useState<Schedule[]>([]);
+  const [schedules, setSchedules] = useState<Schedule[]>([]);
 
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
         const response = await SchedulesService.getAllSchedules();
-        setSchedule(response.data);
+        setSchedules(response.data);
       } catch (error) {
         toast.error('Failed to fetch schedules');
       }
@@ -34,7 +34,7 @@ export const ScheduleProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   return (
-    <ScheduleContext.Provider value={{ schedules, setSchedule }}>
+    <ScheduleContext.Provider value={{ schedules, setSchedules }}>
       {children}
     </ScheduleContext.Provider>
   );
