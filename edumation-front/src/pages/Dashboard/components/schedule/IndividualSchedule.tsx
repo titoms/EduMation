@@ -25,6 +25,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Button } from '@mui/material';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -138,6 +140,7 @@ const IndividualSchedule = () => {
               <TabList onChange={handleTabChange} aria-label="Schedule tabs">
                 <Tab label="Schedule" icon={<CalendarMonthIcon />} value="1" />
                 <Tab label="Options" icon={<PersonPinIcon />} value="2" />
+                <Tab label="Settings" icon={<SettingsIcon />} value="3" />
               </TabList>
             </Box>
 
@@ -170,6 +173,7 @@ const IndividualSchedule = () => {
               {' '}
               <CalendarActions />
             </TabPanel>
+            <TabPanel value="3"></TabPanel>
           </TabContext>
         </Box>
 
@@ -181,6 +185,12 @@ const IndividualSchedule = () => {
             onDelete={handleEraseEvent}
           />
         )}
+
+        <div className="flex justify-end gap-4 mt-2">
+          {' '}
+          <Button variant="contained">Update</Button>
+          <Button>Cancel</Button>
+        </div>
       </div>
     </>
   );

@@ -83,11 +83,6 @@ const CalendarActions = () => {
 
       <h3 className="text-lg">Add Users to this schedule :</h3>
       <UserTransfer onNewClassUserChange={handleFormData} />
-      <div className="flex justify-end gap-4 mt-8">
-        {' '}
-        <Button variant="contained">Update</Button>
-        <Button>Cancel</Button>
-      </div>
     </>
   );
 };
