@@ -23,6 +23,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -134,8 +136,8 @@ const IndividualSchedule = () => {
           <TabContext value={tabValue}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleTabChange} aria-label="Schedule tabs">
-                <Tab label="Schedule" value="1" />
-                <Tab label="Options" value="2" />
+                <Tab label="Schedule" icon={<CalendarMonthIcon />} value="1" />
+                <Tab label="Options" icon={<PersonPinIcon />} value="2" />
               </TabList>
             </Box>
 

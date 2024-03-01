@@ -1,8 +1,4 @@
 import {
-  Accordion,
-  AccordionActions,
-  AccordionDetails,
-  AccordionSummary,
   Button,
   Checkbox,
   FormControl,
@@ -13,7 +9,6 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserTransfer from './UserTransfer';
 import { useEffect, useState } from 'react';
 import { Course } from '../../../../services/Types';
