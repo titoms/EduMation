@@ -18,6 +18,11 @@ import dayjs from 'dayjs';
 import { useThemeContext } from '../../../../context/ThemeContext';
 import CalendarActions from './CalendarActions';
 import EditEventModal from './EditEventModal';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -30,6 +35,11 @@ const IndividualSchedule = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const localizer = dayjsLocalizer(dayjs);
+  const [tabValue, setTabValue] = React.useState('1');
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    setTabValue(newValue);
+  };
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -120,38 +130,56 @@ const IndividualSchedule = () => {
         <h1 className="text-2xl my-4 font-semibold">
           Schedule for {scheduleId}
         </h1>
-        <div className="h-screen">
-          <CalendarActions />
-          <DnDCalendar
-            className="my-4"
-            style={{
-              color: mode === 'light' ? '#000' : '#fff',
-              padding: '10px',
-              borderRadius: '5px',
-            }}
-            localizer={localizer}
-            events={events}
-            onEventDrop={({ event, start, end }) =>
-              handleEventChange({ ...event, start, end }, event)
-            }
-            onEventResize={({ event, start, end }) =>
-              handleEventChange({ ...event, start, end }, event)
-            }
-            onDoubleClickEvent={handleDoubleClickEvent}
-            onSelectSlot={handleSelectSlot}
-            resizable
-            selectable
+        <Box sx={{ width: '100%', typography: 'body1' }}>
+          <TabContext value={tabValue}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleTabChange} aria-label="Schedule tabs">
+                <Tab label="Schedule" value="1" />
+                <Tab label="Options" value="2" />
+              </TabList>
+            </Box>
+
+            <TabPanel value="1">
+              {' '}
+              <div className="h-screen">
+                <DnDCalendar
+                  className="my-4"
+                  style={{
+                    color: mode === 'light' ? '#000' : '#fff',
+                    padding: '10px',
+                    borderRadius: '5px',
+                  }}
+                  localizer={localizer}
+                  events={events}
+                  onEventDrop={({ event, start, end }) =>
+                    handleEventChange({ ...event, start, end }, event)
+                  }
+                  onEventResize={({ event, start, end }) =>
+                    handleEventChange({ ...event, start, end }, event)
+                  }
+                  onDoubleClickEvent={handleDoubleClickEvent}
+                  onSelectSlot={handleSelectSlot}
+                  resizable
+                  selectable
+                />
+              </div>
+            </TabPanel>
+            <TabPanel value="2">
+              {' '}
+              <CalendarActions />
+            </TabPanel>
+          </TabContext>
+        </Box>
+
+        {isEditModalOpen && editingEvent && (
+          <EditEventModal
+            event={editingEvent}
+            onClose={() => setIsEditModalOpen(false)}
+            onSubmit={handleSubmitEdit}
+            onDelete={handleEraseEvent}
           />
-        </div>
+        )}
       </div>
-      {isEditModalOpen && editingEvent && (
-        <EditEventModal
-          event={editingEvent}
-          onClose={() => setIsEditModalOpen(false)}
-          onSubmit={handleSubmitEdit}
-          onDelete={handleEraseEvent}
-        />
-      )}
     </>
   );
 };

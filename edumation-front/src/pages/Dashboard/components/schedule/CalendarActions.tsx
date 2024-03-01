@@ -61,55 +61,38 @@ const CalendarActions = () => {
 
   return (
     <>
-      <Accordion className="p-2">
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3-content"
-          id="panel3-header"
+      <h3 className="text-lg">Add Courses to this schedule :</h3>
+      <FormControl sx={{ my: 2 }} fullWidth>
+        <InputLabel>Courses :</InputLabel>
+        <Select
+          labelId="course-selection-label"
+          id="course-selection"
+          multiple
+          value={[]}
+          label="Courses :"
+          input={<OutlinedInput label="Tag" />}
+          renderValue={(selected) => selected.join(', ')}
+          onChange={handleCoursesSelectChange}
         >
-          Edit Schedule information
-        </AccordionSummary>
-        <AccordionDetails>
-          {/* Add a form with possibility to import courses with the corresponding classTimes and add them to the calendar */}
-          {/* Add a field to assign this schedule to users */}
-          <div className="flex justify-around gap-4">
-            <div className="">
-              <h3 className="text-2xl">Add Courses to this schedule :</h3>
-              <FormControl sx={{ my: 2 }} fullWidth>
-                <InputLabel>Courses :</InputLabel>
-                <Select
-                  labelId="course-selection-label"
-                  id="course-selection"
-                  multiple
-                  value={[]}
-                  label="Courses :"
-                  input={<OutlinedInput label="Tag" />}
-                  renderValue={(selected) => selected.join(', ')}
-                  onChange={handleCoursesSelectChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {courses.map((group) => (
-                    <MenuItem key={group._id} value={group._id}>
-                      <Checkbox />
-                      <ListItemText primary={group.title} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="">
-              <h3 className="text-2xl">Add Users to this schedule :</h3>
-              <UserTransfer onNewClassUserChange={handleFormData} />
-            </div>
-          </div>
-        </AccordionDetails>
-        <AccordionActions>
-          <Button variant="contained">Update</Button>
-          <Button>Cancel</Button>
-        </AccordionActions>
-      </Accordion>
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {courses.map((group) => (
+            <MenuItem key={group._id} value={group._id}>
+              <Checkbox />
+              <ListItemText primary={group.title} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <h3 className="text-lg">Add Users to this schedule :</h3>
+      <UserTransfer onNewClassUserChange={handleFormData} />
+      <div className="flex justify-end gap-4 mt-8">
+        {' '}
+        <Button variant="contained">Update</Button>
+        <Button>Cancel</Button>
+      </div>
     </>
   );
 };
