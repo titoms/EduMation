@@ -27,6 +27,7 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Button } from '@mui/material';
+import CreateEventModal from './CreateEventModal';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -36,7 +37,10 @@ const IndividualSchedule = () => {
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
   const [editingEvent, setEditingEvent] = useState<MyEvent | null>(null);
+  const [creatingEvent, setCreatingEvent] = useState<MyEvent | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const localizer = dayjsLocalizer(dayjs);
   const [tabValue, setTabValue] = React.useState('1');
@@ -75,12 +79,15 @@ const IndividualSchedule = () => {
 
   const handleSelectSlot = (slotInfo: SlotInfo) => {
     const title = window.prompt('New Event title');
+
     if (title) {
       setEvents((prevEvents) => [
         ...prevEvents,
         { start: slotInfo.start, end: slotInfo.end, title },
       ]);
     }
+    updateScheduleBackend(events);
+    // setIsCreateModalOpen(true);
   };
 
   const handleEventChange = (updatedEvent: MyEvent, originalEvent: MyEvent) => {
@@ -185,11 +192,18 @@ const IndividualSchedule = () => {
             onDelete={handleEraseEvent}
           />
         )}
+        {isCreateModalOpen && creatingEvent && (
+          <CreateEventModal
+            event={creatingEvent}
+            onClose={() => setIsCreateModalOpen(false)}
+            onSubmit={handleSubmitEdit}
+          />
+        )}
 
         <div className="flex justify-end gap-4 mt-2">
           {' '}
-          <Button variant="contained">Update</Button>
           <Button>Cancel</Button>
+          <Button variant="contained">Update</Button>
         </div>
       </div>
     </>

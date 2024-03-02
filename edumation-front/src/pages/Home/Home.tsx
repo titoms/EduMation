@@ -6,8 +6,11 @@ function Home() {
   return (
     <>
       <Header />
-      <Prices />
-      <Info />
+      <div className="px-16">
+        {' '}
+        <Prices />
+        <Info />
+      </div>
     </>
   );
 }
