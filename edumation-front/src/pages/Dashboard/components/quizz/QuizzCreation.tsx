@@ -52,6 +52,7 @@ const QuizzCreation: React.FC = () => {
           ))}
         </main>
         <div className="flex justify-end mt-4 gap-4">
+          <BackButton title="Cancel" icon={false} />{' '}
           <Button
             variant="contained"
             color="primary"
@@ -59,7 +60,6 @@ const QuizzCreation: React.FC = () => {
           >
             Finish Quizz
           </Button>
-          <BackButton title="Cancel" icon={false} />
         </div>
       </div>
     </>

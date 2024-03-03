@@ -57,10 +57,10 @@ const ClassCreation = () => {
           onNewClassStudentsChange={handleNewClassStudentsChange}
         />
         <div className="flex gap-4 justify-end mt-8">
+          <BackButton title="Cancel" icon={false} />
           <Button type="submit" variant="contained">
             Create
           </Button>
-          <BackButton title="Cancel" icon={false} />
         </div>
       </form>
     </>

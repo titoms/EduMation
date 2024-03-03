@@ -4,7 +4,7 @@ import { User } from '../services/Types';
 import UsersService from '../services/UsersService';
 import { toast } from 'react-toastify';
 import DragAndDrop from './ui/draganddrop/DragAndDrop';
-import { Modal } from '@mui/material';
+import { Button, Modal } from '@mui/material';
 
 interface UpdateUserModalProps {
   user: User;
@@ -128,20 +128,12 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
 
             <p className="font-semibold mt-2">New Profile Picture</p>
             <DragAndDrop fileType="image" onFileDrop={handleFileDrop} />
-
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
-            >
-              Update
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 mt-4 ml-2"
-            >
-              Cancel
-            </button>
+            <div className="flex gap-4 justify-end mt-8">
+              <Button onClick={onClose}>Cancel</Button>
+              <Button type="submit" variant="contained">
+                Update
+              </Button>
+            </div>
           </form>
         </div>
       </div>

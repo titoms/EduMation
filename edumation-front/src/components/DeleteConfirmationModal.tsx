@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Box } from '@mui/material';
+import { Modal, Box, Button } from '@mui/material';
 
 interface DeleteConfirmationModalProps {
   open: boolean;
@@ -43,18 +43,15 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
       >
         <h3 className="text-center">{confirmationMessage}</h3>
         <div className="mt-4 flex justify-center gap-4">
-          <button
+          <Button onClick={onClose}>Cancel</Button>
+          <Button
             onClick={handleDelete}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 mr-2"
+            type="submit"
+            color="error"
+            variant="contained"
           >
             Delete
-          </button>
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-          >
-            Cancel
-          </button>
+          </Button>
         </div>
       </Box>
     </Modal>

@@ -200,9 +200,8 @@ const IndividualSchedule = () => {
           />
         )}
 
-        <div className="flex justify-end gap-4 mt-2">
+        <div className="flex justify-end gap-4 mt-2 mr-8">
           {' '}
-          <Button>Cancel</Button>
           <Button variant="contained">Update</Button>
         </div>
       </div>

@@ -134,10 +134,10 @@ const IndividualClass: React.FC = () => {
             </div>
           </div>
           <div className="flex gap-4 justify-end">
+            <BackButton title="Cancel" icon={false} />
             <Button type="submit" variant="contained" startIcon={<Edit />}>
               Update
             </Button>
-            <BackButton title="Cancel" icon={false} />
           </div>
         </form>
       </div>
