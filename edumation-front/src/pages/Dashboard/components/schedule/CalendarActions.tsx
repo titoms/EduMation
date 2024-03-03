@@ -12,43 +12,42 @@ import {
 import UserTransfer from './UserTransfer';
 import { useEffect, useState } from 'react';
 import { Course } from '../../../../services/Types';
-import axios from 'axios';
 import CoursesService from '../../../../services/CoursesService';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 
 const CalendarActions = () => {
   const [courses, setCourses] = useState<Course[]>([]);
-  const [groupsList, setGroupsList] = useState<string[]>([]);
+  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
+  const [linkedUsers, setLinkedUsers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const responseCourses = await CoursesService.getAllCourses();
-        setCourses(responseCourses.data);
-        setLoading(false);
-      } catch (err) {
-        if (axios.isAxiosError(err) && err.response) {
-          setError(err.response.data);
-        } else {
-          setError('An error occurred while fetching classes.');
-        }
+        const response = await CoursesService.getAllCourses();
+        setCourses(response.data);
+      } catch (error) {
+        setError('An error occurred while fetching courses.');
+      } finally {
         setLoading(false);
       }
     };
     fetchCourses();
   }, []);
 
-  const handleFormData = () => {};
+  const handleCoursesSelectChange = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value;
+    setSelectedCourses(typeof value === 'string' ? value.split(',') : value);
+  };
 
-  const handleCoursesSelectChange = (
-    event: SelectChangeEvent<typeof groupsList>
-  ) => {
-    const {
-      target: { value },
-    } = event;
-    setGroupsList(typeof value === 'string' ? value.split(',') : value);
+  const handleNewClassUsersChange = (newLinkedUsers: string[]) => {
+    setLinkedUsers(newLinkedUsers);
+  };
+
+  const updateSchedule = async () => {
+    console.log('Updating schedule with:', selectedCourses, linkedUsers);
+    // Example: await updateScheduleOnBackend({ linkedUsers, selectedCourses });
   };
 
   if (loading) return <UserSkeleton />;
@@ -58,8 +57,18 @@ const CalendarActions = () => {
     <>
       <h3 className="text-lg">Add Courses to this schedule :</h3>
       <FormControl sx={{ my: 2 }} fullWidth>
-        <InputLabel>Courses :</InputLabel>
-        <Select
+        <div className="flex justify-around gap-4">
+          {courses.map((group) => (
+            <MenuItem key={group._id} value={group._id}>
+              <Checkbox />
+              <ListItemText primary={group.title} />
+            </MenuItem>
+          ))}
+        </div>
+
+        {/* 
+          <InputLabel>Courses :</InputLabel>
+          <Select
           labelId="course-selection-label"
           id="course-selection"
           multiple
@@ -78,11 +87,15 @@ const CalendarActions = () => {
               <ListItemText primary={group.title} />
             </MenuItem>
           ))}
-        </Select>
+        </Select> */}
       </FormControl>
-
       <h3 className="text-lg">Add Users to this schedule :</h3>
-      <UserTransfer onNewClassUserChange={handleFormData} />
+      <UserTransfer onNewClassUserChange={handleNewClassUsersChange} />
+      <div className="my-4">
+        <Button type="submit" onClick={updateSchedule} variant="outlined">
+          Import
+        </Button>
+      </div>
     </>
   );
 };

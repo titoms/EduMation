@@ -12,7 +12,7 @@ export interface MyEvent {
 export interface Schedule {
   _id?: string;
   events?: MyEvent[];
-  linkedUsers?: User[];
+  linkedUsers?: string[];
   scheduleType?: string;
 }
 
