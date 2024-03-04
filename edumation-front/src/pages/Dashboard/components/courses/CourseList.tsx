@@ -14,7 +14,6 @@ interface CoursesListProps {
 const CoursesList: React.FC<CoursesListProps> = ({ filter }) => {
   const courseContext = useCoursesContext();
   const [courses, setCourses] = useState<Course[]>([]);
-
   const [selectedCourseId, setSelectedCourseId] = useState<string | undefined>(
     undefined
   );
@@ -27,12 +26,13 @@ const CoursesList: React.FC<CoursesListProps> = ({ filter }) => {
     setOpenDeleteModal(true);
   };
   const handleCloseDelete = () => setOpenDeleteModal(false);
+
   const handleCourseDelete = async () => {
     if (!selectedCourseId) return;
+
     try {
       await CoursesService.deleteCourses(selectedCourseId);
       toast.success('Course deleted successfully');
-      setRefreshKey((prevKey) => prevKey + 1);
       setCourses(courses.filter((course) => course._id !== selectedCourseId));
     } catch (error) {
       toast.error('Failed to delete course');
