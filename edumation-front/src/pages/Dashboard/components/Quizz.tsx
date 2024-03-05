@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 const Quizz: React.FC = () => {
   return (
     <>
-      <h1 className="text-2xl font-semibold ">Quizz</h1>
       <div className="mt-4 flex justify-end">
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">

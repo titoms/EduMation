@@ -63,6 +63,7 @@ const ClassesList = () => {
   return (
     <>
       <ClassActions setFilter={setFilter} />
+      <h2 className="text-xl my-2">Available Classes :</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-8">
         {filteredClasses.map((group) => (
           <ClassCard

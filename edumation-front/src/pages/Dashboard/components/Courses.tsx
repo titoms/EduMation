@@ -12,7 +12,6 @@ const Courses: React.FC = () => {
   return (
     <>
       <CoursesProvider>
-        <h1 className="text-2xl font-semibold">Courses</h1>
         <div className="mt-4 flex justify-end gap-4">
           <SearchBar onFilterChange={setFilter} />
           <Link to="new">

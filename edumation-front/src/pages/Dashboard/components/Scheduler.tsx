@@ -6,7 +6,6 @@ import ScheduleList from './schedule/ScheduleList';
 const Schedules = () => {
   return (
     <>
-      <h1 className="text-2xl font-semibold">Schedules</h1>
       <div className="my-4 flex justify-end">
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">
@@ -14,6 +13,7 @@ const Schedules = () => {
           </Button>
         </Link>
       </div>
+      <h2 className="text-xl my-2">My Schedules :</h2>
       <ScheduleList />
     </>
   );

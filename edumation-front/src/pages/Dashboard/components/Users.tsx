@@ -60,11 +60,10 @@ const Users = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold">Users</h1>
       <div className="mt-4">
         {admins.length > 0 && (
           <>
-            <h3 className="my-4 font-semibold text-xl">Admin Users</h3>
+            <h2 className="my-4 font-semibold text-xl">Admin Users</h2>
             <UserTable
               users={admins}
               onShowUpdateModal={onShowUpdateModal}
@@ -75,7 +74,7 @@ const Users = () => {
 
         {schools.length > 0 && (
           <>
-            <h3 className="my-4 font-semibold text-xl">Schools</h3>
+            <h2 className="my-4 font-semibold text-xl">Schools</h2>
             <UserTable
               users={schools}
               onShowUpdateModal={onShowUpdateModal}
@@ -86,7 +85,7 @@ const Users = () => {
 
         {teachers.length > 0 && (
           <>
-            <h3 className="my-4 font-semibold text-xl">Teachers</h3>
+            <h2 className="my-4 font-semibold text-xl">Teachers</h2>
             <UserTable
               users={teachers}
               onShowUpdateModal={onShowUpdateModal}
@@ -97,7 +96,7 @@ const Users = () => {
 
         {students.length > 0 && (
           <>
-            <h3 className="my-4 font-semibold text-xl">Students</h3>
+            <h2 className="my-4 font-semibold text-xl">Students</h2>
             <UserTable
               users={students}
               onShowUpdateModal={onShowUpdateModal}
