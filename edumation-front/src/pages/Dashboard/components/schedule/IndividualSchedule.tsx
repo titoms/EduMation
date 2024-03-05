@@ -103,7 +103,7 @@ const IndividualSchedule = () => {
     setIsEditModalOpen(true);
   };
 
-  const handleSubmitEdit = (editedEvent: MyEvent) => {
+  const handleSubmitEvent = (editedEvent: MyEvent) => {
     const updatedEvents = events.map((evt) =>
       evt === editingEvent ? editedEvent : evt
     );
@@ -188,7 +188,7 @@ const IndividualSchedule = () => {
           <EditEventModal
             event={editingEvent}
             onClose={() => setIsEditModalOpen(false)}
-            onSubmit={handleSubmitEdit}
+            onSubmit={handleSubmitEvent}
             onDelete={handleEraseEvent}
           />
         )}
@@ -196,7 +196,7 @@ const IndividualSchedule = () => {
           <CreateEventModal
             event={creatingEvent}
             onClose={() => setIsCreateModalOpen(false)}
-            onSubmit={handleSubmitEdit}
+            onSubmit={handleSubmitEvent}
           />
         )}
 
