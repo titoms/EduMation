@@ -39,8 +39,8 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
     <>
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4">
         <Link to={`${course._id}`}>
-          <h3 className="text-lg text-center font-semibold">{course.title}</h3>
-          <div className="my-4">
+          <h3 className="text-xl text-center font-semibold">{course.title}</h3>
+          <div className="my-2">
             {course.teacherId && (
               <>
                 <div className="flex justify-around items-center">
