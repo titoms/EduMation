@@ -14,16 +14,22 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ schedule, onDelete }) => {
   return (
     <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4">
       <div className="flex justify-between gap-4 items-center">
-        <Link to={schedule._id}>
-          <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
-            {schedule._id}
+        {schedule._id ? (
+          <Link to={`/schedules/${schedule._id}`}>
+            <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
+              {schedule._id}
+            </span>
+          </Link>
+        ) : (
+          <span className="text-xl font-bold overflow-hidden">
+            Undefined ID
           </span>
-        </Link>
+        )}
         <Button
           variant="outlined"
           color="error"
           startIcon={<DeleteIcon />}
-          onClick={() => onDelete(schedule._id)}
+          onClick={() => schedule._id && onDelete(schedule._id)} // Ensure schedule._id is defined before invoking onDelete
         >
           Delete
         </Button>

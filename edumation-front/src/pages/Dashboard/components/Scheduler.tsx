@@ -13,7 +13,7 @@ const Schedules = () => {
           </Button>
         </Link>
       </div>
-      <h2 className="text-xl my-2">My Schedules :</h2>
+      <h2 className="text-xl my-4">My Schedules :</h2>
       <ScheduleList />
     </>
   );
