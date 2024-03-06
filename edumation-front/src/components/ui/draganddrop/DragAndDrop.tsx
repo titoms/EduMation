@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 interface DragAndDropProps {
   onFileDrop: (file: File) => void;
-  fileType: 'csv' | 'image'; // Define accepted file types
+  fileType: 'csv' | 'image' | 'ics';
 }
 
 const DragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop, fileType }) => {
@@ -57,6 +57,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ onFileDrop, fileType }) => {
   const acceptTypes = {
     csv: '.xlsx,.xls,.csv',
     image: 'image/*',
+    ics: '.ics',
   };
 
   return (

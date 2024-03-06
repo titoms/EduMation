@@ -8,7 +8,7 @@ const CalendarImport = ({ onEventsImported }) => {
 
   return (
     <>
-      <DragAndDrop onFileDrop={handleImportCalendar} fileType="csv" />
+      <DragAndDrop onFileDrop={handleImportCalendar} fileType="ics" />
     </>
   );
 };

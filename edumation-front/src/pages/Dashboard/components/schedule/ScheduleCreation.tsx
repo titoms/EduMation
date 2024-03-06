@@ -32,7 +32,7 @@ const ScheduleCreation = () => {
   const [classSchedule, setClassSchedule] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [importCalendarCsv, setImportCalendarCsv] = useState<File | null>(null);
+  const [importCalendarCsv, setImportCalendarIcs] = useState<File | null>(null);
   const [calendarUploadLoading, setCalendarUploadLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ const ScheduleCreation = () => {
   };
 
   const handleFileDrop = (file: File) => {
-    setImportCalendarCsv(file);
+    setImportCalendarIcs(file);
     setCalendarUploadLoading(true);
   };
 
@@ -130,8 +130,8 @@ const ScheduleCreation = () => {
             <div className="mt-8 space-y-6">
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
-                  <InputLabel>Upload CSV</InputLabel>
-                  <DragAndDrop fileType="csv" onFileDrop={handleFileDrop} />
+                  <InputLabel>Upload Calendar</InputLabel>
+                  <DragAndDrop fileType="ics" onFileDrop={handleFileDrop} />
                 </div>
               </div>
               <div>
