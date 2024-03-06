@@ -18,7 +18,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CoursesService from '../../../../services/CoursesService';
-import { Course } from '../../../../services/Types';
+import { Course, MyEvent } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -31,6 +31,7 @@ const ScheduleCreation = () => {
   const [classSchedule, setClassSchedule] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [events, setEvents] = useState<MyEvent[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,7 +69,11 @@ const ScheduleCreation = () => {
 
   const handleScheduleCreation = async () => {
     try {
-      const response = await SchedulesService.createSchedule({});
+      const scheduleData = {
+        classSchedule,
+        events,
+      };
+      const response = await SchedulesService.createSchedule(scheduleData);
       toast.success('Schedule created successfully');
       console.log(response.data);
       navigate('/dashboard/schedules');
@@ -76,6 +81,11 @@ const ScheduleCreation = () => {
       console.error('Failed to create schedule:', error);
       toast.error('Failed to create schedule');
     }
+  };
+
+  const handleEventsImported = (importedEvents: MyEvent[]) => {
+    setEvents((events) => [...events, ...importedEvents]);
+    console.log(events);
   };
 
   if (loading) return <UserSkeleton />;
@@ -89,7 +99,7 @@ const ScheduleCreation = () => {
       <h1 className="text-2xl font-semibold">Create new Schedule :</h1>{' '}
       <div className="flex justify-around flex-col lg:flex-row gap-4 mt-4">
         {/* FIRST COLUMN */}
-        <CalendarImport />
+        <CalendarImport onEventsImported={handleEventsImported} />
         {/* SECOND COLUMN  */}
         <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center  rounded-lg p-8">
           <div className="max-w-md w-full space-y-6">
