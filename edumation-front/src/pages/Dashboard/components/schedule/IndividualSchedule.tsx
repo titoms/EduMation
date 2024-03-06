@@ -125,6 +125,7 @@ const IndividualSchedule = () => {
 
   const handleEventsImported = (importedEvents: MyEvent[]) => {
     setEvents((currentEvents) => [...currentEvents, ...importedEvents]);
+    console.log(events);
     updateScheduleBackend([...events, ...importedEvents]);
   };
 
