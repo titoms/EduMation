@@ -28,6 +28,8 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Button } from '@mui/material';
 import CreateEventModal from './CreateEventModal';
+import PublishIcon from '@mui/icons-material/Publish';
+import CalendarImport from './CalendarImport';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -121,6 +123,11 @@ const IndividualSchedule = () => {
     updateScheduleBackend(updatedEvents);
   };
 
+  const handleEventsImported = (importedEvents: MyEvent[]) => {
+    setEvents((currentEvents) => [...currentEvents, ...importedEvents]);
+    updateScheduleBackend([...events, ...importedEvents]);
+  };
+
   const updateScheduleBackend = async (updatedEvents: MyEvent[]) => {
     try {
       await SchedulesService.updateSchedule(scheduleId, {
@@ -147,7 +154,8 @@ const IndividualSchedule = () => {
               <TabList onChange={handleTabChange} aria-label="Schedule tabs">
                 <Tab label="Schedule" icon={<CalendarMonthIcon />} value="1" />
                 <Tab label="Options" icon={<PersonPinIcon />} value="2" />
-                <Tab label="Settings" icon={<SettingsIcon />} value="3" />
+                <Tab label="Import" icon={<PublishIcon />} value="3" />
+                <Tab label="Settings" icon={<SettingsIcon />} value="4" />
               </TabList>
             </Box>
 
@@ -180,7 +188,10 @@ const IndividualSchedule = () => {
               {' '}
               <CalendarActions />
             </TabPanel>
-            <TabPanel value="3"></TabPanel>
+            <TabPanel value="3">
+              <CalendarImport onEventsImported={handleEventsImported} />
+            </TabPanel>
+            <TabPanel value="4"></TabPanel>
           </TabContext>
         </Box>
 
