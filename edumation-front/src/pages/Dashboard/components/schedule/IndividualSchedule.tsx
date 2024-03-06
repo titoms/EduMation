@@ -135,7 +135,6 @@ const IndividualSchedule = () => {
 
   const handleEventsImported = (importedEvents: MyEvent[]) => {
     setEvents((currentEvents) => [...currentEvents, ...importedEvents]);
-    console.log(events);
     updateScheduleBackend([...events, ...importedEvents]);
   };
 
@@ -239,7 +238,7 @@ const IndividualSchedule = () => {
             open={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}
             onDelete={handleDeleteAllEvents}
-            confirmationMessage={`Are you sure you want to delete all events ?`}
+            confirmationMessage={`Are you sure you want to delete all events ? THIS OPERATION WILL BE IRREVERSIBLE`}
           />
         )}
 

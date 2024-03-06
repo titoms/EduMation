@@ -3,7 +3,7 @@ import { Button, InputLabel } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DragAndDrop from '../../../../components/ui/draganddrop/DragAndDrop';
 import { MyEvent } from '../../../../services/Types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ICAL from 'ical.js';
 
 interface CalendarImportProps {
@@ -14,6 +14,36 @@ const CalendarImport = ({ onEventsImported }: CalendarImportProps) => {
   const [importedEvents, setImportedEvents] = useState<MyEvent[]>([]);
   const [calendarUploadLoading, setCalendarUploadLoading] = useState(false);
   const [importCalendarIcs, setImportCalendarIcs] = useState<File | null>(null);
+  const [showImportStatus, setShowImportStatus] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  const fadeOutStyle = {
+    transition: 'opacity 0.5s',
+    opacity: 0,
+  };
+  const normalStyle = {
+    transition: 'opacity 0.5s',
+    opacity: 1,
+  };
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    if (calendarUploadLoading) {
+      setShowImportStatus(true);
+      setFadeOut(false);
+      timer = setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          setShowImportStatus(false);
+        }, 500);
+      }, 3000);
+    }
+    return () => {
+      if (timer !== null) {
+        clearTimeout(timer);
+      }
+    };
+  }, [calendarUploadLoading]);
 
   const handleFileDrop = (file: File) => {
     setImportCalendarIcs(file);
@@ -96,17 +126,20 @@ const CalendarImport = ({ onEventsImported }: CalendarImportProps) => {
               </Button>
             </div>
           </div>
-          {calendarUploadLoading && (
-            <div className="rounded-md bg-green-50 p-4  mt-4">
+          {showImportStatus && (
+            <div
+              className="rounded-md bg-green-50 p-4 mt-4"
+              style={fadeOut ? fadeOutStyle : normalStyle}
+            >
               <div className="flex">
                 <div className="flex-shrink-0">
                   <CheckCircleOutlineIcon className="h-5 w-5 text-green-400" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-green-800 ">
+                  <h3 className="text-sm font-medium text-green-800">
                     Import Status
                   </h3>
-                  <div className="mt-2 text-sm text-green-700 ">
+                  <div className="mt-2 text-sm text-green-700">
                     <p>Your file is being processed. Please wait...</p>
                   </div>
                 </div>
