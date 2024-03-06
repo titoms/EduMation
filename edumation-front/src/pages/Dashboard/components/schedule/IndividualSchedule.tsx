@@ -30,6 +30,7 @@ import { Button } from '@mui/material';
 import CreateEventModal from './CreateEventModal';
 import PublishIcon from '@mui/icons-material/Publish';
 import CalendarImport from './CalendarImport';
+import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -42,6 +43,7 @@ const IndividualSchedule = () => {
   const [creatingEvent, setCreatingEvent] = useState<MyEvent | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const localizer = dayjsLocalizer(dayjs);
@@ -123,6 +125,14 @@ const IndividualSchedule = () => {
     updateScheduleBackend(updatedEvents);
   };
 
+  const openDeleteAllEvents = async () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteAllEvents = async () => {
+    updateScheduleBackend([]);
+  };
+
   const handleEventsImported = (importedEvents: MyEvent[]) => {
     setEvents((currentEvents) => [...currentEvents, ...importedEvents]);
     console.log(events);
@@ -163,6 +173,18 @@ const IndividualSchedule = () => {
             <TabPanel value="1">
               {' '}
               <div className="h-screen">
+                <div className="flex justify-end">
+                  {' '}
+                  <Button
+                    onClick={openDeleteAllEvents}
+                    type="submit"
+                    color="error"
+                    variant="outlined"
+                  >
+                    Erase All Events
+                  </Button>{' '}
+                </div>
+
                 <DnDCalendar
                   className="my-4"
                   style={{
@@ -209,6 +231,15 @@ const IndividualSchedule = () => {
             event={creatingEvent}
             onClose={() => setIsCreateModalOpen(false)}
             onSubmit={handleSubmitEvent}
+          />
+        )}
+        {isDeleteModalOpen && events && (
+          <DeleteConfirmationModal
+            itemId={''}
+            open={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onDelete={handleDeleteAllEvents}
+            confirmationMessage={`Are you sure you want to delete all events ?`}
           />
         )}
 
