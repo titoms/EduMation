@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -9,7 +11,6 @@ import {
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import BackButton from '../../../../components/ui/BackButton';
-import { useEffect, useState } from 'react';
 import ClassesService from '../../../../services/ClassesService';
 import axios from 'axios';
 import { Group } from '../classes/ClassCreation';
@@ -21,14 +22,14 @@ import CoursesService from '../../../../services/CoursesService';
 import { Course, MyEvent } from '../../../../services/Types';
 import SchedulesService from '../../../../services/SchedulesService';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import CalendarImport from './CalendarImport';
+import UserTransfer from './UserTransfer';
 
 const ScheduleCreation = () => {
   const [classes, setClasses] = useState<Group[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
-  const [groupsList, setGroupsList] = useState<string[]>([]);
-  const [classSchedule, setClassSchedule] = useState('');
+  const [coursesList, setCoursesList] = useState<string[]>([]);
+  const [classesList, setClassesList] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [events, setEvents] = useState<MyEvent[]>([]);
@@ -54,24 +55,26 @@ const ScheduleCreation = () => {
     fetchClassesAndCourses();
   }, []);
 
-  const handleClassSelectionChange = (event: SelectChangeEvent) => {
-    setClassSchedule(event.target.value);
-  };
-
-  const handleCoursesSelectChange = (
-    event: SelectChangeEvent<typeof groupsList>
-  ) => {
+  const handleCoursesSelectChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event;
-    setGroupsList(typeof value === 'string' ? value.split(',') : value);
+    setCoursesList(typeof value === 'string' ? value.split(',') : value);
+  };
+
+  const handleClassesSelectChange = (event: SelectChangeEvent<string[]>) => {
+    const {
+      target: { value },
+    } = event;
+    setClassesList(typeof value === 'string' ? value.split(',') : value);
   };
 
   const handleScheduleCreation = async () => {
     try {
       const scheduleData = {
-        classSchedule,
         events,
+        courses: coursesList,
+        classes: classesList,
       };
       const response = await SchedulesService.createSchedule(scheduleData);
       toast.success('Schedule created successfully');
@@ -88,6 +91,8 @@ const ScheduleCreation = () => {
     console.log(events);
   };
 
+  const onScheduleUsersListChange = () => {};
+
   if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
@@ -96,105 +101,82 @@ const ScheduleCreation = () => {
       <div className="mb-4">
         <BackButton />
       </div>
-      <h1 className="text-2xl font-semibold">Create new Schedule :</h1>{' '}
+      <h1 className="text-2xl font-semibold">Create new Schedule :</h1>
       <div className="flex justify-around flex-col lg:flex-row gap-4 mt-4">
-        {/* FIRST COLUMN */}
         <CalendarImport onEventsImported={handleEventsImported} />
-        {/* THIRD COLUMN  */}
-        <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center  rounded-lg p-8">
+        <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center rounded-lg p-8">
           <div className="max-w-md w-full space-y-6">
-            <div className="mx-auto max-w-md space-y-6">
-              <div className="space-y-2 text-center">
-                <h2 className="text-3xl font-bold">Schedule Settings :</h2>
-                <p className="text-gray-500">Enter the Schedule details</p>
-              </div>
-              <FormControl sx={{ my: 2 }} fullWidth>
-                <InputLabel>Courses :</InputLabel>
-                <Select
-                  labelId="course-selection-label"
-                  id="course-selection"
-                  multiple
-                  value={[]}
-                  label="Courses :"
-                  input={<OutlinedInput label="Tag" />}
-                  renderValue={(selected) => selected.join(', ')}
-                  onChange={handleCoursesSelectChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {courses.map((group) => (
-                    <MenuItem key={group._id} value={group._id}>
-                      <Checkbox />
-                      <ListItemText primary={group.title} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl sx={{ my: 2 }} fullWidth>
-                <InputLabel>Classes :</InputLabel>
-                <Select
-                  labelId="classes-selection-label"
-                  id="classes-selection"
-                  multiple
-                  value={[]}
-                  label="Classes :"
-                  input={<OutlinedInput label="Tag" />}
-                  renderValue={(selected) => selected.join(', ')}
-                  onChange={handleCoursesSelectChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {classes.map((group) => (
-                    <MenuItem key={group._id} value={group._id}>
-                      <Checkbox />
-                      <ListItemText primary={group.name} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <div className="space-y-2 text-center">
+              <h2 className="text-3xl font-bold">Schedule Settings :</h2>
+              <p className="text-gray-500">Enter the Schedule details</p>
             </div>
-            <div className="space-y-4">
+            <InputLabel>Add courses to this schedule :</InputLabel>
+            <FormControl fullWidth>
+              <Select
+                labelId="course-selection-label"
+                id="course-selection"
+                multiple
+                value={coursesList}
+                label="Courses :"
+                input={<OutlinedInput label="Tag" />}
+                onChange={handleCoursesSelectChange}
+              >
+                {courses.map((course) => (
+                  <MenuItem key={course._id} value={course._id}>
+                    <Checkbox checked={coursesList.indexOf(course._id) > -1} />
+                    <ListItemText primary={course.title} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <InputLabel>Add classes to this schedule :</InputLabel>
+            <FormControl fullWidth>
+              <Select
+                labelId="classes-selection-label"
+                id="classes-selection"
+                multiple
+                value={classesList}
+                label="Classes :"
+                input={<OutlinedInput label="Tag" />}
+                onChange={handleClassesSelectChange}
+              >
+                {classes.map((group) => (
+                  <MenuItem key={group._id} value={group._id}>
+                    <Checkbox checked={classesList.indexOf(group._id) > -1} />
+                    <ListItemText primary={group.name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <div className="grid grid-cols-2 gap-4">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <div className="space-y-2">
-                    <InputLabel>Start date :</InputLabel>
+                <div className="flex flex-col gap-4">
+                  <InputLabel>Start date :</InputLabel>
+                  <FormControl fullWidth>
                     <DatePicker />
-                  </div>
-                  <div className="space-y-2">
-                    <InputLabel>End date :</InputLabel>
+                  </FormControl>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <InputLabel>End date :</InputLabel>
+                  <FormControl fullWidth>
                     <DatePicker />
-                  </div>
-                </LocalizationProvider>
+                  </FormControl>
+                </div>
               </div>
-              <div className="grid gap-4">
-                <FormControl sx={{ my: 2 }} fullWidth>
-                  <InputLabel>Class name :</InputLabel>
-                  <Select
-                    labelId="class-selection-label"
-                    id="class-selection"
-                    value={classSchedule}
-                    label="Class name :"
-                    onChange={handleClassSelectionChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {classes.map((group) => (
-                      <MenuItem key={group._id} value={group._id}>
-                        {group.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-                <Checkbox id="recurring" name="recurring" />
-                <InputLabel>Recurring Event</InputLabel>
-              </div>
+            </LocalizationProvider>
+            <div className="flex flex-row items-center gap-2">
+              <Checkbox id="recurring" name="recurring" />
+              <InputLabel htmlFor="recurring">Recurring Event</InputLabel>
             </div>
+          </div>
+        </div>
+        <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center rounded-lg p-8">
+          <div className="max-w-md w-full space-y-6">
+            <div className="space-y-2 text-center">
+              <h2 className="text-3xl font-bold">Users Settings :</h2>
+              <p className="text-gray-500">Link Schedule to Users</p>
+            </div>
+            <UserTransfer onNewClassUserChange={onScheduleUsersListChange} />
           </div>
         </div>
       </div>
