@@ -100,54 +100,6 @@ const ScheduleCreation = () => {
       <div className="flex justify-around flex-col lg:flex-row gap-4 mt-4">
         {/* FIRST COLUMN */}
         <CalendarImport onEventsImported={handleEventsImported} />
-        {/* SECOND COLUMN  */}
-        <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center  rounded-lg p-8">
-          <div className="max-w-md w-full space-y-6">
-            <div className="space-y-2 text-center">
-              <h2 className="text-3xl font-bold">Schedule Settings :</h2>
-              <p className="text-gray-500">Enter the Schedule details</p>
-            </div>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <div className="space-y-2">
-                    <InputLabel>Start date :</InputLabel>
-                    <DatePicker />
-                  </div>
-                  <div className="space-y-2">
-                    <InputLabel>End date :</InputLabel>
-                    <DatePicker />
-                  </div>
-                </LocalizationProvider>
-              </div>
-              <div className="grid gap-4">
-                <FormControl sx={{ my: 2 }} fullWidth>
-                  <InputLabel>Class name :</InputLabel>
-                  <Select
-                    labelId="class-selection-label"
-                    id="class-selection"
-                    value={classSchedule}
-                    label="Class name :"
-                    onChange={handleClassSelectionChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {classes.map((group) => (
-                      <MenuItem key={group._id} value={group._id}>
-                        {group.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-                <Checkbox id="recurring" name="recurring" />
-                <InputLabel>Recurring Event</InputLabel>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* THIRD COLUMN  */}
         <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full flex justify-center  rounded-lg p-8">
           <div className="max-w-md w-full space-y-6">
@@ -203,6 +155,45 @@ const ScheduleCreation = () => {
                   ))}
                 </Select>
               </FormControl>
+            </div>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <div className="space-y-2">
+                    <InputLabel>Start date :</InputLabel>
+                    <DatePicker />
+                  </div>
+                  <div className="space-y-2">
+                    <InputLabel>End date :</InputLabel>
+                    <DatePicker />
+                  </div>
+                </LocalizationProvider>
+              </div>
+              <div className="grid gap-4">
+                <FormControl sx={{ my: 2 }} fullWidth>
+                  <InputLabel>Class name :</InputLabel>
+                  <Select
+                    labelId="class-selection-label"
+                    id="class-selection"
+                    value={classSchedule}
+                    label="Class name :"
+                    onChange={handleClassSelectionChange}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {classes.map((group) => (
+                      <MenuItem key={group._id} value={group._id}>
+                        {group.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="flex flex-row items-center gap-2">
+                <Checkbox id="recurring" name="recurring" />
+                <InputLabel>Recurring Event</InputLabel>
+              </div>
             </div>
           </div>
         </div>
