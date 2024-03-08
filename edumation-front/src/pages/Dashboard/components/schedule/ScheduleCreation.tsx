@@ -30,6 +30,7 @@ const ScheduleCreation = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [coursesList, setCoursesList] = useState<string[]>([]);
   const [classesList, setClassesList] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [events, setEvents] = useState<MyEvent[]>([]);
@@ -69,16 +70,21 @@ const ScheduleCreation = () => {
     setClassesList(typeof value === 'string' ? value.split(',') : value);
   };
 
+  const onScheduleUsersListChange = (newSelectedUsers: string[]) => {
+    setSelectedUsers(newSelectedUsers);
+  };
+
   const handleScheduleCreation = async () => {
     try {
       const scheduleData = {
         events,
         courses: coursesList,
         classes: classesList,
+        linkedUsers: selectedUsers,
       };
       const response = await SchedulesService.createSchedule(scheduleData);
+      console.log(scheduleData);
       toast.success('Schedule created successfully');
-      console.log(response.data);
       navigate('/dashboard/schedules');
     } catch (error) {
       console.error('Failed to create schedule:', error);
@@ -87,11 +93,8 @@ const ScheduleCreation = () => {
   };
 
   const handleEventsImported = (importedEvents: MyEvent[]) => {
-    setEvents((events) => [...events, ...importedEvents]);
-    console.log(events);
+    setEvents(importedEvents);
   };
-
-  const onScheduleUsersListChange = () => {};
 
   if (loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
