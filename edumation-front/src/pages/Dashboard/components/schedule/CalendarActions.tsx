@@ -15,7 +15,7 @@ import { Course } from '../../../../services/Types';
 import CoursesService from '../../../../services/CoursesService';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 
-const CalendarActions = () => {
+const CalendarActions = ({ onCalendarActionsUpdate }) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [linkedUsers, setLinkedUsers] = useState<string[]>([]);
@@ -47,6 +47,7 @@ const CalendarActions = () => {
 
   const updateSchedule = async () => {
     console.log('Updating schedule with:', selectedCourses, linkedUsers);
+    onCalendarActionsUpdate(selectedCourses, linkedUsers);
     // Example: await updateScheduleOnBackend({ linkedUsers, selectedCourses });
   };
 

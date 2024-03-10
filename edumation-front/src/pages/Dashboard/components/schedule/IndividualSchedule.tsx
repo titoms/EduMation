@@ -138,6 +138,10 @@ const IndividualSchedule = () => {
     updateScheduleBackend([...events, ...importedEvents]);
   };
 
+  const handleCalendarActionsUpdate = (courses, users) => {
+    console.log('Received from CalendarActions:', courses, users);
+  };
+
   const updateScheduleBackend = async (updatedEvents: MyEvent[]) => {
     try {
       await SchedulesService.updateSchedule(scheduleId, {
@@ -208,7 +212,9 @@ const IndividualSchedule = () => {
             </TabPanel>
             <TabPanel value="2">
               {' '}
-              <CalendarActions />
+              <CalendarActions
+                onCalendarActionsUpdate={handleCalendarActionsUpdate}
+              />
             </TabPanel>
             <TabPanel value="3">
               <CalendarImport onEventsImported={handleEventsImported} />
