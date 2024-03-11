@@ -41,7 +41,6 @@ const IndividualSchedule = () => {
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
   const [editingEvent, setEditingEvent] = useState<MyEvent | null>(null);
-  const [creatingEvent, setCreatingEvent] = useState<MyEvent | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -84,14 +83,15 @@ const IndividualSchedule = () => {
 
   const handleSelectSlot = (slotInfo: SlotInfo) => {
     setIsCreateModalOpen(true);
+    setTitle('Title');
     // const title = window.prompt('New Event title');
 
-    // if (title) {
-    //   setEvents((prevEvents) => [
-    //     ...prevEvents,
-    //     { start: slotInfo.start, end: slotInfo.end, title },
-    //   ]);
-    // }
+    if (title) {
+      setEvents((prevEvents) => [
+        ...prevEvents,
+        { start: slotInfo.start, end: slotInfo.end, title },
+      ]);
+    }
     // updateScheduleBackend(events);
   };
 
@@ -232,10 +232,8 @@ const IndividualSchedule = () => {
             onDelete={handleEraseEvent}
           />
         )}
-        {isCreateModalOpen && creatingEvent && (
+        {isCreateModalOpen && (
           <CreateEventModal
-            event={creatingEvent}
-            open={isCreateModalOpen}
             onClose={() => setIsCreateModalOpen(false)}
             onSubmit={handleSubmitEvent}
           />
