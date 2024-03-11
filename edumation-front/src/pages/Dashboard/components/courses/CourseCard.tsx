@@ -37,9 +37,11 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
 
   return (
     <>
-      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4">
+      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-8">
         <Link to={`${course._id}`}>
-          <h3 className="text-xl text-center font-semibold">{course.title}</h3>
+          <h3 className="text-xl text-center font-semibold">
+            {course.title.toUpperCase()}
+          </h3>
           <div className="my-2">
             {course.teacherId && (
               <>

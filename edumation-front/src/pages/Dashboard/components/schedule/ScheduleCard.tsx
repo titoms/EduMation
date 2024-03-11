@@ -17,7 +17,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ schedule, onDelete }) => {
         {schedule._id ? (
           <Link to={schedule._id}>
             <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
-              {schedule._id}
+              Schedule : {schedule._id}
             </span>
           </Link>
         ) : (
