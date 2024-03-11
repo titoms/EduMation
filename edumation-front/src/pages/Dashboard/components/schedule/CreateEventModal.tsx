@@ -6,22 +6,24 @@ import {
   TextField,
   DialogActions,
   Button,
+  Modal,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { MyEvent } from '../../../../services/Types';
 
 interface CreateEventModalProps {
+  open: boolean;
   event: MyEvent | null;
   onClose: () => void;
-  onSubmit: (editedEvent: MyEvent) => void;
+  onSubmit: (createdEvent: MyEvent) => void;
 }
 
 const CreateEventModal: React.FC<CreateEventModalProps> = ({
+  open,
   event,
   onClose,
   onSubmit,
 }) => {
-  const [editedEvent, setEditedEvent] = useState<MyEvent>({
+  const [createdEvent, setCreatedEvent] = useState<MyEvent>({
     id: event?.id ?? '',
     start: event?.start ?? new Date(),
     end: event?.end ?? new Date(),
@@ -31,70 +33,59 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
 
   useEffect(() => {
     if (event) {
-      setEditedEvent(event);
+      setCreatedEvent(event);
     }
   }, [event]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEditedEvent({ ...editedEvent, [name]: value });
+    setCreatedEvent({ ...createdEvent, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(editedEvent);
+    onSubmit(createdEvent);
     onClose();
   };
 
   return (
     <>
-      <Dialog open={!!event} onClose={onClose}>
-        <DialogTitle>Edit Event</DialogTitle>
-        <form onSubmit={handleSubmit}>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="title"
-              name="title"
-              label="Event Title"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={editedEvent.title}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              id="location"
-              name="location"
-              label="Location"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={editedEvent.location}
-              onChange={handleInputChange}
-            />
-            <div className="mt-4">
-              {' '}
-              <Button
+      <Modal open={open} onClose={onClose}>
+        <Dialog open={!!event} onClose={onClose}>
+          <DialogTitle>Create Event</DialogTitle>
+          <form onSubmit={handleSubmit}>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="title"
+                name="title"
+                label="Event Title"
+                type="text"
+                fullWidth
                 variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={() => setShowDeleteConfirmation(true)}
-              >
-                Erase Event
+                onChange={handleInputChange}
+              />
+              <TextField
+                margin="dense"
+                id="location"
+                name="location"
+                label="Location"
+                type="text"
+                fullWidth
+                variant="outlined"
+                onChange={handleInputChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button type="submit" variant="contained">
+                Save
               </Button>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button type="submit" variant="contained">
-              Save
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+            </DialogActions>
+          </form>
+        </Dialog>
+      </Modal>
     </>
   );
 };

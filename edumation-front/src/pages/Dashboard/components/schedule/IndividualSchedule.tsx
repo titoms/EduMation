@@ -37,6 +37,7 @@ const DnDCalendar = withDragAndDrop(Calendar);
 const IndividualSchedule = () => {
   const { id: scheduleId } = useParams<{ id: string }>();
   const { mode } = useThemeContext();
+  const [title, setTitle] = useState<string | null>(null);
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
   const [editingEvent, setEditingEvent] = useState<MyEvent | null>(null);
@@ -82,16 +83,16 @@ const IndividualSchedule = () => {
   }, [scheduleId]);
 
   const handleSelectSlot = (slotInfo: SlotInfo) => {
-    const title = window.prompt('New Event title');
+    setIsCreateModalOpen(true);
+    // const title = window.prompt('New Event title');
 
-    if (title) {
-      setEvents((prevEvents) => [
-        ...prevEvents,
-        { start: slotInfo.start, end: slotInfo.end, title },
-      ]);
-    }
-    updateScheduleBackend(events);
-    // setIsCreateModalOpen(true);
+    // if (title) {
+    //   setEvents((prevEvents) => [
+    //     ...prevEvents,
+    //     { start: slotInfo.start, end: slotInfo.end, title },
+    //   ]);
+    // }
+    // updateScheduleBackend(events);
   };
 
   const handleEventChange = (updatedEvent: MyEvent, originalEvent: MyEvent) => {
@@ -234,6 +235,7 @@ const IndividualSchedule = () => {
         {isCreateModalOpen && creatingEvent && (
           <CreateEventModal
             event={creatingEvent}
+            open={isCreateModalOpen}
             onClose={() => setIsCreateModalOpen(false)}
             onSubmit={handleSubmitEvent}
           />
