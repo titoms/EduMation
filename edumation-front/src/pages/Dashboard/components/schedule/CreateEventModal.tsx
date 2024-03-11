@@ -8,33 +8,43 @@ import {
   Button,
 } from '@mui/material';
 import { MyEvent } from '../../../../services/Types';
+import { SlotInfo } from 'react-big-calendar';
 
 interface CreateEventModalProps {
   onClose: () => void;
   onSubmit: (createdEvent: MyEvent) => void;
+  slotInfo: SlotInfo;
 }
 
 const CreateEventModal: React.FC<CreateEventModalProps> = ({
   onClose,
   onSubmit,
+  slotInfo,
 }) => {
-  const [createdEvent, setCreatedEvent] = useState<MyEvent>({
-    start: new Date(),
-    end: new Date(),
-    title: '',
-    location: '',
-  });
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCreatedEvent({ ...createdEvent, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(createdEvent);
+  const handleSubmit = () => {
+    const newEvent: MyEvent = {
+      start: slotInfo.start,
+      end: slotInfo.end,
+      title,
+      location,
+    };
+    onSubmit(newEvent);
     onClose();
   };
+
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setCreatedEvent({ ...createdEvent, [name]: value });
+  // };
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   onSubmit(createdEvent);
+  //   onClose();
+  // };
 
   return (
     <>
@@ -51,7 +61,8 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
               type="text"
               fullWidth
               variant="outlined"
-              onChange={handleInputChange}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <TextField
               margin="dense"
@@ -61,7 +72,8 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
               type="text"
               fullWidth
               variant="outlined"
-              onChange={handleInputChange}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </DialogContent>
           <DialogActions>
