@@ -44,7 +44,8 @@ const UserTransfer: React.FC<UserTransferProps> = ({
         let availableUsers;
         if (initialUser) {
           availableUsers = userData.filter(
-            (student) => !initialUser.some((user) => user._id === student._id)
+            (user) =>
+              !initialUser.some((initialUser) => initialUser._id === user._id)
           );
         }
 

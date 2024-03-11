@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import UserTransfer from './UserTransfer';
 import { useEffect, useState } from 'react';
-import { Course } from '../../../../services/Types';
+import { Course, MyEvent } from '../../../../services/Types';
 import CoursesService from '../../../../services/CoursesService';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 
@@ -58,18 +58,17 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
     <>
       <h3 className="text-lg">Add Courses to this schedule :</h3>
       <FormControl sx={{ my: 2 }} fullWidth>
-        <div className="flex justify-around gap-4">
+        {/* <div className="flex justify-around gap-4">
           {courses.map((group) => (
             <MenuItem key={group._id} value={group._id}>
               <Checkbox />
               <ListItemText primary={group.title} />
             </MenuItem>
           ))}
-        </div>
+        </div> */}
 
-        {/* 
-          <InputLabel>Courses :</InputLabel>
-          <Select
+        <InputLabel>Courses :</InputLabel>
+        <Select
           labelId="course-selection-label"
           id="course-selection"
           multiple
@@ -88,7 +87,7 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
               <ListItemText primary={group.title} />
             </MenuItem>
           ))}
-        </Select> */}
+        </Select>
       </FormControl>
       <h3 className="text-lg">Add Users to this schedule :</h3>
       <UserTransfer onNewClassUserChange={handleNewClassUsersChange} />
