@@ -37,7 +37,7 @@ const DnDCalendar = withDragAndDrop(Calendar);
 const IndividualSchedule = () => {
   const { id: scheduleId } = useParams<{ id: string }>();
   const { mode } = useThemeContext();
-  const [slotInfo, setSlotInfo] = useState<SlotInfo | null>(null);
+  const [slotInfo, setSlotInfo] = useState<SlotInfo>();
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
   const [editingEvent, setEditingEvent] = useState<MyEvent | null>(null);
@@ -134,6 +134,7 @@ const IndividualSchedule = () => {
   const handleEventsImported = (importedEvents: MyEvent[]) => {
     setEvents((currentEvents) => [...currentEvents, ...importedEvents]);
     updateScheduleBackend([...events, ...importedEvents]);
+    setTabValue('1');
   };
 
   const handleCalendarActionsUpdate = (courses, users) => {

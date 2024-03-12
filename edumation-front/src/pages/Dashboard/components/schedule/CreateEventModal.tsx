@@ -35,17 +35,6 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({
     onClose();
   };
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setCreatedEvent({ ...createdEvent, [name]: value });
-  // };
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   onSubmit(createdEvent);
-  //   onClose();
-  // };
-
   return (
     <>
       <Dialog open={true} onClose={onClose}>
