@@ -37,7 +37,7 @@ const UserTransfer: React.FC<UserTransferProps> = ({
   });
 
   useEffect(() => {
-    const fetchStudents = async () => {
+    const fetchUsers = async () => {
       try {
         const response = await UsersService.getAllUsers();
         const userData = response.data;
@@ -71,7 +71,7 @@ const UserTransfer: React.FC<UserTransferProps> = ({
       }
     };
 
-    fetchStudents();
+    fetchUsers();
   }, [initialUser]);
 
   const onDragEnd = ({ source, destination }: DropResult) => {

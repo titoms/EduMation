@@ -137,8 +137,19 @@ const IndividualSchedule = () => {
     setTabValue('1');
   };
 
-  const handleCalendarActionsUpdate = (courses, users) => {
+  const handleCalendarActionsUpdate = async (
+    courses: string[],
+    users: string[]
+  ) => {
     console.log('Received from CalendarActions:', courses, users);
+    try {
+      await SchedulesService.updateSchedule(scheduleId, {
+        linkedUsers: users,
+      });
+      toast.success('Schedule updated successfully');
+    } catch (error) {
+      toast.error('Failed to update schedule');
+    }
   };
 
   const updateScheduleBackend = async (updatedEvents: MyEvent[]) => {

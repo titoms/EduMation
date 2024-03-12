@@ -90,8 +90,44 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
             ))}
           </Select>
         </FormControl>
+        {/* <h3 className="text-lg">Current Users on this schedule :</h3>
+        {linkedUsers.length > 0 ? (
+          linkedUsers.map((user) => (
+            <div
+              key={user._id}
+              className="my-8 border-b border-b-gray-400 pb-2"
+            >
+              <img
+                className="w-12 h-12 rounded-full mr-2 inline"
+                src={
+                  user.profileImage
+                    ? user.profileImage
+                    : 'https://via.placeholder.com/150'
+                }
+                alt={user.name}
+              />
+              <div className="inline-block">
+                <div className="ml-4 flex justify-around gap-8">
+                  <p>
+                    <strong>Name:</strong> {user.name}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {user.email}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <h3 className="text-center text-2xl text-slate-600 bg-gray-300 dark:text-slate-200 dark:bg-slate-600 my-4 rounded-lg p-4">
+            No students in this class...
+          </h3>
+        )} */}
         <h3 className="text-lg">Add Users to this schedule :</h3>
-        <UserTransfer onNewClassUserChange={handleNewClassUsersChange} />
+        <UserTransfer
+          // initialUser={linkedUsers}
+          onNewClassUserChange={handleNewClassUsersChange}
+        />
         <div className="my-4">
           <Button type="submit" onClick={updateSchedule} variant="outlined">
             Import
