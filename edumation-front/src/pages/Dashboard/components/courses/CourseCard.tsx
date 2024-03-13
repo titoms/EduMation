@@ -65,7 +65,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
             {course.quizIds && course.quizIds.length > 0 && (
               <p>Quiz IDs: {course.quizIds.join(', ')}</p>
             )}
-            <p>
+            <p className="text-center">
               Duration:{' '}
               {course.courseDuration
                 ? `${course.courseDuration} days`
@@ -73,7 +73,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
             </p>
           </div>
           <hr />
-          <p className="mt-4">{course.description}</p>
+          <p className="mt-4 text-center">{course.description}</p>
         </Link>
 
         <div className="flex justify-end gap-2 mt-4">
