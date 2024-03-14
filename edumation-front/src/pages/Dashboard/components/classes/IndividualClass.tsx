@@ -99,7 +99,7 @@ const IndividualClass: React.FC = () => {
                     className="my-8 border-b border-b-gray-400 pb-2"
                   >
                     <img
-                      className="w-12 h-12 rounded-full mr-2 inline"
+                      className="w-8 h-8 rounded-full mr-2 inline"
                       src={
                         student.profileImage
                           ? student.profileImage

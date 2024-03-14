@@ -53,7 +53,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({
             </p>
           </div>
         </div>
-        <div className="flex justify-end  m-4 gap-4">
+        <div className="flex justify-end m-4 gap-4 pb-4 pr-4">
           <Button
             size="small"
             variant="outlined"
