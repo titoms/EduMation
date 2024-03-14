@@ -181,7 +181,6 @@ const IndividualSchedule = () => {
                 <Tab label="Settings" icon={<SettingsIcon />} value="3" />
               </TabList>
             </Box>
-
             <TabPanel value="1">
               {' '}
               <div className="h-screen">

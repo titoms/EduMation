@@ -57,9 +57,10 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
   return (
     <>
       <div className="bg-gray-200 dark:bg-slate-800 shadow-md w-full rounded-lg p-8">
-        <h3 className="text-lg">Add Courses to this schedule :</h3>
-        <FormControl sx={{ my: 2 }} fullWidth>
-          {/* <div className="flex justify-around gap-4">
+        <div className="p-2">
+          <h3 className="text-lg">Add Courses to this schedule :</h3>
+          <FormControl sx={{ my: 2 }} fullWidth>
+            {/* <div className="flex justify-around gap-4">
           {courses.map((group) => (
             <MenuItem key={group._id} value={group._id}>
               <Checkbox />
@@ -68,29 +69,29 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
           ))}
         </div> */}
 
-          <InputLabel>Courses :</InputLabel>
-          <Select
-            labelId="course-selection-label"
-            id="course-selection"
-            multiple
-            value={[]}
-            label="Courses :"
-            input={<OutlinedInput label="Tag" />}
-            renderValue={(selected) => selected.join(', ')}
-            onChange={handleCoursesSelectChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {courses.map((group) => (
-              <MenuItem key={group._id} value={group._id}>
-                <Checkbox />
-                <ListItemText primary={group.title} />
+            <InputLabel>Courses :</InputLabel>
+            <Select
+              labelId="course-selection-label"
+              id="course-selection"
+              multiple
+              value={[]}
+              label="Courses :"
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(', ')}
+              onChange={handleCoursesSelectChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {/* <h3 className="text-lg">Current Users on this schedule :</h3>
+              {courses.map((group) => (
+                <MenuItem key={group._id} value={group._id}>
+                  <Checkbox />
+                  <ListItemText primary={group.title} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {/* <h3 className="text-lg">Current Users on this schedule :</h3>
         {linkedUsers.length > 0 ? (
           linkedUsers.map((user) => (
             <div
@@ -123,15 +124,16 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
             No students in this class...
           </h3>
         )} */}
-        <h3 className="text-lg">Add Users to this schedule :</h3>
-        <UserTransfer
-          // initialUser={linkedUsers}
-          onNewClassUserChange={handleNewClassUsersChange}
-        />
-        <div className="my-4">
-          <Button type="submit" onClick={updateSchedule} variant="outlined">
-            Import
-          </Button>
+          <h3 className="text-lg">Add Users to this schedule :</h3>
+          <UserTransfer
+            // initialUser={linkedUsers}
+            onNewClassUserChange={handleNewClassUsersChange}
+          />
+          <div className="my-4">
+            <Button type="submit" onClick={updateSchedule} variant="outlined">
+              Import Users to this schedule
+            </Button>
+          </div>
         </div>
       </div>
     </>
