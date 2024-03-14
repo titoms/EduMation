@@ -178,8 +178,7 @@ const IndividualSchedule = () => {
               <TabList onChange={handleTabChange} aria-label="Schedule tabs">
                 <Tab label="Schedule" icon={<CalendarMonthIcon />} value="1" />
                 <Tab label="Options" icon={<PersonPinIcon />} value="2" />
-                <Tab label="Import" icon={<PublishIcon />} value="3" />
-                <Tab label="Settings" icon={<SettingsIcon />} value="4" />
+                <Tab label="Settings" icon={<SettingsIcon />} value="3" />
               </TabList>
             </Box>
 
@@ -222,14 +221,14 @@ const IndividualSchedule = () => {
             </TabPanel>
             <TabPanel value="2">
               {' '}
-              <CalendarActions
-                onCalendarActionsUpdate={handleCalendarActionsUpdate}
-              />
+              <div className="flex justify-around gap-8">
+                <CalendarActions
+                  onCalendarActionsUpdate={handleCalendarActionsUpdate}
+                />
+                <CalendarImport onEventsImported={handleEventsImported} />
+              </div>
             </TabPanel>
-            <TabPanel value="3">
-              <CalendarImport onEventsImported={handleEventsImported} />
-            </TabPanel>
-            <TabPanel value="4"></TabPanel>
+            <TabPanel value="3"></TabPanel>
           </TabContext>
         </Box>
 
