@@ -8,6 +8,7 @@ import Edit from '@mui/icons-material/Edit';
 import SearchBar from '../../../components/ui/SearchBar';
 import SchoolsList from './school/SchoolsList';
 import UserSkeleton from '../../../components/ui/skeletons/UserSkeleton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Schools: React.FC = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -48,6 +49,11 @@ const Schools: React.FC = () => {
         <Link to="new">
           <Button startIcon={<Edit />} variant="contained">
             Create new School
+          </Button>
+        </Link>
+        <Link to="">
+          <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
+            <span className="hidden md:inline">Delete Bulk</span>
           </Button>
         </Link>
       </div>
