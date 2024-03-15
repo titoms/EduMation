@@ -21,6 +21,7 @@ exports.createQuizz = async (req, res) => {
     const newQuiz = new Quiz({
       courseId: req.body.courseId,
       title: req.body.title,
+      description: req.body.description,
       questions: req.body.questions,
       timeLimit: req.body.timeLimit,
     });

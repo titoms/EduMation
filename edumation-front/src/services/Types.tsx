@@ -48,7 +48,12 @@ export interface Quiz {
   _id?: string;
   title: string;
   description: string;
-  questions: { questionText: string; options: string[]; answer: string }[];
+  questions: {
+    questionText: string;
+    options: string[];
+    correctAnswer: number;
+  }[];
+  timeLimit?: number;
 }
 
 export interface School {

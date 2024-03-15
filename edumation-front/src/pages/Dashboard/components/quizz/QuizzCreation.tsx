@@ -1,26 +1,40 @@
+import React, { useState } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
-import Question from './Question';
 import BackButton from '../../../../components/ui/BackButton';
+import Question from './Question';
+import QuizzService from '../../../../services/QuizzService';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-interface QuestionType {
-  id: number;
+interface Option {
   text: string;
-  choices: string[];
 }
 
-interface QuizType {
-  title: string;
-  description: string;
-  questions: QuestionType[];
+interface QuizQuestion {
+  id: number;
+  questionText: string;
+  options: Option[];
+  correctAnswer: number;
 }
 
 const QuizzCreation: React.FC = () => {
-  const [quiz, setQuiz] = useState<QuizType>({
+  const [quiz, setQuiz] = useState<{
+    title: string;
+    description: string;
+    questions: QuizQuestion[];
+  }>({
     title: '',
     description: '',
-    questions: [],
+    questions: [
+      {
+        id: 1,
+        questionText: '',
+        options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+        correctAnswer: 0,
+      },
+    ],
   });
+  const navigate = useNavigate();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuiz({ ...quiz, title: event.target.value });
@@ -32,23 +46,51 @@ const QuizzCreation: React.FC = () => {
     setQuiz({ ...quiz, description: event.target.value });
   };
 
-  const updateQuestion = (index: number, updatedQuestion: QuestionType) => {
-    const newQuestions = [...quiz.questions];
-    newQuestions[index] = updatedQuestion;
-    setQuiz({ ...quiz, questions: newQuestions });
-  };
-
   const addQuestion = () => {
-    const newQuestion: QuestionType = {
+    const newQuestion = {
       id: quiz.questions.length + 1,
-      text: `Question ${quiz.questions.length + 1}`,
-      choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+      questionText: ``,
+      options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+      correctAnswer: 0,
     };
     setQuiz({ ...quiz, questions: [...quiz.questions, newQuestion] });
   };
 
-  const finishQuizz = () => {
-    console.log(quiz);
+  const updateQuestion = (index: number, updatedQuestion: QuizQuestion) => {
+    const updatedQuestions = [...quiz.questions];
+    updatedQuestions[index] = updatedQuestion;
+    setQuiz({ ...quiz, questions: updatedQuestions });
+  };
+
+  const eraseQuestion = (id: number) => {
+    const updatedQuestions = quiz.questions.filter(
+      (question) => question.id !== id
+    );
+    setQuiz({ ...quiz, questions: updatedQuestions });
+  };
+
+  const finishQuizz = async () => {
+    try {
+      // Ensure correctAnswer is passed as an index
+      const formattedQuiz = {
+        title: quiz.title,
+        description: quiz.description,
+        questions: quiz.questions.map(
+          ({ questionText, options, correctAnswer }) => ({
+            questionText,
+            options: options.map((option) => option.text),
+            correctAnswer,
+          })
+        ),
+      };
+      console.log(formattedQuiz);
+      await QuizzService.createQuizz(formattedQuiz);
+      toast.success('Quiz created successfully');
+      navigate('/dashboard/quizz');
+    } catch (error) {
+      toast.error('Failed to create quiz');
+      console.error(error);
+    }
   };
 
   return (
@@ -102,15 +144,17 @@ const QuizzCreation: React.FC = () => {
               Add Question
             </Button>
           </div>
-
-          {quiz.questions.map((question, index) => (
-            <Question
-              key={question.id}
-              question={question}
-              index={index}
-              updateQuestion={updateQuestion}
-            />
-          ))}
+          <div className="flex justify-left flex-wrap gap-8">
+            {quiz.questions.map((question, index) => (
+              <Question
+                key={question.id}
+                question={question}
+                index={index}
+                eraseQuestion={() => eraseQuestion(question.id)}
+                updateQuestion={updateQuestion}
+              />
+            ))}
+          </div>
         </main>
         <div className="flex justify-end mt-4 gap-4">
           <BackButton title="Cancel" icon={false} />{' '}
