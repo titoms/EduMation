@@ -56,10 +56,13 @@ const updateGroupValidation = [
 ];
 
 const createQuizValidation = [
-  body('courseId').isMongoId().withMessage('Invalid course ID'),
   body('title').trim().not().isEmpty().withMessage('Title is required'),
+  body('description')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('Description is required'),
   body('questions').isArray().withMessage('Questions must be an array'),
-  body('timeLimit').isNumeric().withMessage('Time limit must be a number'),
 ];
 
 const updateQuizValidation = [

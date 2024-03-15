@@ -1,26 +1,96 @@
-import { Button, Typography } from '@mui/material';
-import { useState } from 'react';
-import Question from './Question';
+import React, { useState } from 'react';
+import { Button, TextField, Typography } from '@mui/material';
 import BackButton from '../../../../components/ui/BackButton';
+import Question from './Question';
+import QuizzService from '../../../../services/QuizzService';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+interface Option {
+  text: string;
+}
+
+interface QuizQuestion {
+  id: number;
+  questionText: string;
+  options: Option[];
+  correctAnswer: number;
+}
 
 const QuizzCreation: React.FC = () => {
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      text: 'Question 1',
-      choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
-    },
-    // Add more questions as needed
-  ]);
+  const [quiz, setQuiz] = useState<{
+    title: string;
+    description: string;
+    questions: QuizQuestion[];
+  }>({
+    title: '',
+    description: '',
+    questions: [
+      {
+        id: 1,
+        questionText: '',
+        options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+        correctAnswer: 0,
+      },
+    ],
+  });
+  const navigate = useNavigate();
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuiz({ ...quiz, title: event.target.value });
+  };
+
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQuiz({ ...quiz, description: event.target.value });
+  };
 
   const addQuestion = () => {
     const newQuestion = {
-      id: questions.length + 1,
-      text: `Question ${questions.length + 1}`,
-      choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'], // Default choices, adjust as needed
+      id: quiz.questions.length + 1,
+      questionText: ``,
+      options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+      correctAnswer: 0,
     };
-    setQuestions([...questions, newQuestion]);
-    console.log(questions);
+    setQuiz({ ...quiz, questions: [...quiz.questions, newQuestion] });
+  };
+
+  const updateQuestion = (index: number, updatedQuestion: QuizQuestion) => {
+    const updatedQuestions = [...quiz.questions];
+    updatedQuestions[index] = updatedQuestion;
+    setQuiz({ ...quiz, questions: updatedQuestions });
+  };
+
+  const eraseQuestion = (id: number) => {
+    const updatedQuestions = quiz.questions.filter(
+      (question) => question.id !== id
+    );
+    setQuiz({ ...quiz, questions: updatedQuestions });
+  };
+
+  const finishQuizz = async () => {
+    try {
+      // Ensure correctAnswer is passed as an index
+      const formattedQuiz = {
+        title: quiz.title,
+        description: quiz.description,
+        questions: quiz.questions.map(
+          ({ questionText, options, correctAnswer }) => ({
+            questionText,
+            options: options.map((option) => option.text),
+            correctAnswer,
+          })
+        ),
+      };
+      console.log(formattedQuiz);
+      await QuizzService.createQuizz(formattedQuiz);
+      toast.success('Quiz created successfully');
+      navigate('/dashboard/quizz');
+    } catch (error) {
+      toast.error('Failed to create quiz');
+      console.error(error);
+    }
   };
 
   return (
@@ -31,25 +101,60 @@ const QuizzCreation: React.FC = () => {
       <div className="flex flex-col">
         <header className="flex items-center justify-between p-4 text-black">
           <Typography
-            variant="h6"
+            variant="h5"
             component="h1"
             className="text-lg font-semibold text-black dark:text-white"
           >
             Create new Quizz
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            className="bg-black text-yellow-500 text-sm"
-            onClick={addQuestion}
-          >
-            Add Question
-          </Button>
         </header>
         <main className="flex-grow overflow-auto ">
-          {questions.map((question, index) => (
-            <Question key={question.id} question={question} index={index} />
-          ))}
+          <TextField
+            label="Quizz Title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={quiz.title}
+            onChange={handleTitleChange}
+          />
+          <TextField
+            label="Quizz Description"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
+            value={quiz.description}
+            onChange={handleDescriptionChange}
+          />
+          <div className="my-4 flex justify-between">
+            <Typography
+              variant="h6"
+              component="h2"
+              className="text-lg font-semibold text-black dark:text-white"
+            >
+              Create new Question
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              className="bg-black text-yellow-500 text-sm"
+              onClick={addQuestion}
+            >
+              Add Question
+            </Button>
+          </div>
+          <div className="flex justify-left flex-wrap gap-8">
+            {quiz.questions.map((question, index) => (
+              <Question
+                key={question.id}
+                question={question}
+                index={index}
+                eraseQuestion={() => eraseQuestion(question.id)}
+                updateQuestion={updateQuestion}
+              />
+            ))}
+          </div>
         </main>
         <div className="flex justify-end mt-4 gap-4">
           <BackButton title="Cancel" icon={false} />{' '}
@@ -57,6 +162,7 @@ const QuizzCreation: React.FC = () => {
             variant="contained"
             color="primary"
             className="bg-black text-yellow-500 text-sm"
+            onClick={finishQuizz}
           >
             Finish Quizz
           </Button>
