@@ -71,7 +71,6 @@ const QuizzCreation: React.FC = () => {
 
   const finishQuizz = async () => {
     try {
-      // Ensure correctAnswer is passed as an index
       const formattedQuiz = {
         title: quiz.title,
         description: quiz.description,
