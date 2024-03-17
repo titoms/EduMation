@@ -23,6 +23,7 @@ import { ScheduleProvider } from '../../context/ScheduleContext';
 
 import IndividualSchedule from './components/schedule/IndividualSchedule';
 import IndividualCourse from './components/courses/IndividualCourse';
+import IndividualQuizz from './components/quizz/IndividualQuizz';
 
 const Dashboard = () => {
   return (
@@ -56,6 +57,7 @@ const Dashboard = () => {
               <Route path="schedules/new" element={<ScheduleCreation />} />
 
               <Route path="quizz" element={<Quizz />} />
+              <Route path="quizz/:id" element={<IndividualQuizz />} />
               <Route path="quizz/new" element={<QuizzCreation />} />
             </Routes>
           </ConditionalHeightWrapper>

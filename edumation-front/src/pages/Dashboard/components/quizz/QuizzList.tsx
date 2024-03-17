@@ -5,7 +5,9 @@ import axios from 'axios';
 import { Grid, IconButton, Skeleton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-
+import { Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 const QuizzList = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,10 @@ const QuizzList = () => {
 
     fetchQuizzes();
   }, []);
+
+  const openDeleteModal = (quizzId: string) => {
+    console.log(quizzId);
+  };
 
   if (loading) {
     return (
@@ -56,7 +62,11 @@ const QuizzList = () => {
               key={quiz._id}
               className="bg-white dark:bg-slate-800 shadow rounded-lg p-4"
             >
-              <h3 className="text-lg font-semibold">{quiz.title}</h3>
+              <Link to={quiz._id}>
+                <h3 className="text-lg font-semibold hover:text-gray-400">
+                  {quiz.title}
+                </h3>
+              </Link>
               <p>{quiz.description}</p>
               <ul>
                 {quiz.questions.map((question, index) => (
@@ -71,7 +81,7 @@ const QuizzList = () => {
                 ))}
               </ul>
 
-              <div className="mt-4">
+              <div className="mt-4 flex justify-end items-end">
                 <IconButton
                   className="text-black dark:text-gray-200"
                   aria-label="add to favorites"
@@ -83,6 +93,23 @@ const QuizzList = () => {
                   aria-label="share"
                 >
                   <ShareIcon />
+                </IconButton>
+                <Link to={quiz._id}>
+                  <IconButton
+                    className="text-black dark:text-gray-200"
+                    aria-label="share"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </Link>
+                <IconButton
+                  className="text-black dark:text-gray-200"
+                  aria-label="share"
+                  onClick={() => {
+                    openDeleteModal(quiz._id);
+                  }}
+                >
+                  <DeleteIcon />
                 </IconButton>
               </div>
             </div>
