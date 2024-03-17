@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button, Checkbox } from '@mui/material';
+import { Button, Checkbox, IconButton } from '@mui/material';
 import { Group } from '../../../../services/Types';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
 interface ClassCardProps {
   group: Group;
@@ -11,25 +14,47 @@ interface ClassCardProps {
 
 const ClassCard: React.FC<ClassCardProps> = ({ group, onDelete }) => {
   return (
-    <div className="bg-white dark:bg-slate-800 h-24 gap-4 flex justify-around align-middle items-center shadow rounded-lg p-6">
-      <Checkbox />
-      <Link to={group._id}>
-        <span className="text-xl font-bold hover:text-slate-300 overflow-hidden">
-          {group.name}
-        </span>
-      </Link>
-      <div className="flex justify-start gap-2 md:mt-0">
-        <Button
-          size="small"
-          variant="outlined"
-          color="error"
-          startIcon={<DeleteIcon fontSize="inherit" />}
-          onClick={() => onDelete(group._id, group.name)}
-        >
-          <span className="">Delete</span>
-        </Button>
+    <>
+      <div className="bg-white dark:bg-slate-800  gap-4 shadow rounded-lg p-6">
+        <div className="flex justify-start gap-8 align-middle items-center my-2">
+          <Checkbox />
+          <Link to={group._id}>
+            <span className="text-xl font-bold hover:text-slate-300 overflow-hidden">
+              {group.name}
+            </span>
+          </Link>
+        </div>
+        <div className="flex justify-end gap-2 md:mt-0">
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="add to favorites"
+          >
+            <FavoriteIcon sx={{ color: '#3c70c9' }} />
+          </IconButton>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
+          >
+            <ShareIcon sx={{ color: '#3c96c9' }} />
+          </IconButton>
+          <Link to={group._id}>
+            <IconButton
+              className="text-black dark:text-gray-200"
+              aria-label="share"
+            >
+              <EditIcon sx={{ color: '#3dc8eb' }} />
+            </IconButton>
+          </Link>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
+            onClick={() => onDelete(group._id, group.name)}
+          >
+            <DeleteIcon sx={{ color: '#e63535' }} />
+          </IconButton>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

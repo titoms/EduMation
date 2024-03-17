@@ -1,7 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { School } from '../../../../services/Types';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
 interface SchoolCardProps {
   school: School;
@@ -54,15 +57,33 @@ const SchoolCard: React.FC<SchoolCardProps> = ({
           </div>
         </div>
         <div className="flex justify-end m-4 gap-4 pb-4 pr-4">
-          <Button
-            size="small"
-            variant="outlined"
-            color="error"
-            startIcon={<DeleteIcon />}
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="add to favorites"
+          >
+            <FavoriteIcon sx={{ color: '#3c70c9' }} />
+          </IconButton>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
+          >
+            <ShareIcon sx={{ color: '#3c96c9' }} />
+          </IconButton>
+          <Link to={school._id}>
+            <IconButton
+              className="text-black dark:text-gray-200"
+              aria-label="share"
+            >
+              <EditIcon sx={{ color: '#3dc8eb' }} />
+            </IconButton>
+          </Link>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
             onClick={() => onShowDeleteModal(school)}
           >
-            <span className="hidden md:inline">Delete</span>
-          </Button>
+            <DeleteIcon sx={{ color: '#e63535' }} />
+          </IconButton>
         </div>
       </div>
     </div>

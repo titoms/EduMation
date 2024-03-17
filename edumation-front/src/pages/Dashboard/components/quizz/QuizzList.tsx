@@ -106,20 +106,20 @@ const QuizzList = () => {
                   className="text-black dark:text-gray-200"
                   aria-label="add to favorites"
                 >
-                  <FavoriteIcon />
+                  <FavoriteIcon sx={{ color: '#3c70c9' }} />
                 </IconButton>
                 <IconButton
                   className="text-black dark:text-gray-200"
                   aria-label="share"
                 >
-                  <ShareIcon />
+                  <ShareIcon sx={{ color: '#3c96c9' }} />
                 </IconButton>
                 <Link to={quiz._id}>
                   <IconButton
                     className="text-black dark:text-gray-200"
                     aria-label="share"
                   >
-                    <EditIcon />
+                    <EditIcon sx={{ color: '#3dc8eb' }} />
                   </IconButton>
                 </Link>
                 <IconButton
@@ -127,7 +127,7 @@ const QuizzList = () => {
                   aria-label="share"
                   onClick={() => quiz._id && handleOpenDelete(quiz._id)}
                 >
-                  <DeleteIcon />
+                  <DeleteIcon sx={{ color: '#e63535' }} />
                 </IconButton>
               </div>
             </div>
