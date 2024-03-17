@@ -1,9 +1,10 @@
 // UserRow.tsx
 import React from 'react';
 import { User } from '../../../../services/Types';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface UserRowProps {
   user: User;
@@ -46,23 +47,20 @@ const UserRow: React.FC<UserRowProps> = ({
       </td>
       <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-600 text-sm">
         <div className="flex gap-4">
-          <Button
-            size="small"
-            variant="contained"
-            startIcon={<Edit />}
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
             onClick={() => onShowUpdateModal(user)}
           >
-            <span className="hidden md:inline">Update</span>
-          </Button>
-          <Button
-            size="small"
-            variant="contained"
-            color="error"
-            startIcon={<DeleteIcon />}
+            <EditIcon sx={{ color: '#3dc8eb' }} />
+          </IconButton>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
             onClick={() => onShowDeleteModal(user)}
           >
-            <span className="hidden md:inline">Delete</span>
-          </Button>
+            <DeleteIcon sx={{ color: '#e63535' }} />
+          </IconButton>
         </div>
       </td>
     </tr>
