@@ -8,10 +8,15 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
+import { toast } from 'react-toastify';
+
 const QuizzList = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedQuizzId, setSelectedQuizzId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -32,8 +37,23 @@ const QuizzList = () => {
     fetchQuizzes();
   }, []);
 
-  const openDeleteModal = (quizzId: string) => {
-    console.log(quizzId);
+  const handleOpenDelete = (quizzId: string) => {
+    setSelectedQuizzId(quizzId);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => setOpenDelete(false);
+
+  const handleDeleteQuizz = async () => {
+    if (!selectedQuizzId) return;
+    try {
+      await QuizzService.deleteQuizz(selectedQuizzId);
+      toast.success('Quizz deleted successfully');
+    } catch (error) {
+      toast.error('Failed to delete quizz');
+    } finally {
+      handleCloseDelete();
+    }
   };
 
   if (loading) {
@@ -105,9 +125,7 @@ const QuizzList = () => {
                 <IconButton
                   className="text-black dark:text-gray-200"
                   aria-label="share"
-                  onClick={() => {
-                    openDeleteModal(quiz._id);
-                  }}
+                  onClick={() => quiz._id && handleOpenDelete(quiz._id)}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -116,6 +134,16 @@ const QuizzList = () => {
           ))}
         </div>
       </div>
+
+      {selectedQuizzId && (
+        <DeleteConfirmationModal
+          open={openDelete}
+          onClose={handleCloseDelete}
+          onDelete={handleDeleteQuizz}
+          itemId={selectedQuizzId}
+          confirmationMessage={`Are you sure you want to delete this quizz?`}
+        />
+      )}
     </>
   );
 };
