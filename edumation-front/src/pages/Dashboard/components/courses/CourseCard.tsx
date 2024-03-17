@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Course, User } from '../../../../services/Types';
-import { Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, IconButton } from '@mui/material';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import UsersService from '../../../../services/UsersService';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
 interface CourseCardProps {
   course: Course;
@@ -37,7 +40,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
 
   return (
     <>
-      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4">
         <Link to={`${course._id}`}>
           <h3 className="text-xl text-center font-semibold">
             {course.title.toUpperCase()}
@@ -76,16 +79,34 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
           <p className="mt-4 text-center">{course.description}</p>
         </Link>
 
-        <div className="flex justify-end gap-2 mt-4">
-          <Button
-            size="small"
-            variant="outlined"
-            color="error"
-            startIcon={<DeleteIcon />}
+        <div className="mt-4 flex justify-end items-end">
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="add to favorites"
+          >
+            <FavoriteIcon sx={{ color: '#3c70c9' }} />
+          </IconButton>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
+          >
+            <ShareIcon sx={{ color: '#3c96c9' }} />
+          </IconButton>
+          <Link to={course._id}>
+            <IconButton
+              className="text-black dark:text-gray-200"
+              aria-label="share"
+            >
+              <EditIcon sx={{ color: '#3dc8eb' }} />
+            </IconButton>
+          </Link>
+          <IconButton
+            className="text-black dark:text-gray-200"
+            aria-label="share"
             onClick={handleDelete}
           >
-            <span className="hidden md:inline">Delete</span>
-          </Button>
+            <DeleteIcon sx={{ color: '#e63535' }} />
+          </IconButton>
         </div>
       </div>
     </>
