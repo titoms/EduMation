@@ -49,9 +49,9 @@ const Question: React.FC<QuestionProps> = ({
   };
 
   return (
-    <Card className="w-1/3 bg-white dark:bg-slate-800 text-black dark:text-white p-2 mt-4">
+    <Card className="bg-white dark:bg-slate-800 text-black dark:text-white mt-4">
       <CardContent>
-        <div className="flex justify-between align-center items-center gap-2">
+        <div className="flex justify-between align-center items-center">
           <TextField
             label={`Question title `}
             variant="outlined"

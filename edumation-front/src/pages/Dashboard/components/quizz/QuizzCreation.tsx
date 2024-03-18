@@ -5,6 +5,7 @@ import Question from './Question';
 import QuizzService from '../../../../services/QuizzService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Option {
   text: string;
@@ -67,6 +68,20 @@ const QuizzCreation: React.FC = () => {
       (question) => question.id !== id
     );
     setQuiz({ ...quiz, questions: updatedQuestions });
+  };
+
+  const eraseAllQuestions = () => {
+    setQuiz({
+      ...quiz,
+      questions: [
+        {
+          id: 1,
+          questionText: '',
+          options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+          correctAnswer: 0,
+        },
+      ],
+    });
   };
 
   const finishQuizz = async () => {
@@ -134,16 +149,26 @@ const QuizzCreation: React.FC = () => {
             >
               Create new Question
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              className="bg-black text-yellow-500 text-sm"
-              onClick={addQuestion}
-            >
-              Add Question
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                variant="contained"
+                color="primary"
+                className="bg-black text-yellow-500 text-sm"
+                onClick={addQuestion}
+              >
+                Add Question
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={eraseAllQuestions}
+                startIcon={<DeleteIcon />}
+              >
+                <span className="hidden md:inline">Delete All Questions</span>
+              </Button>
+            </div>
           </div>
-          <div className="flex justify-left flex-wrap gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {quiz.questions.map((question, index) => (
               <Question
                 key={question.id}
