@@ -21,14 +21,18 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
       <RouterLink
         to={`${quiz._id}`}
         style={{ textDecoration: 'none', color: 'inherit' }}
+        className="text-center"
       >
-        <h3 className="text-lg font-semibold hover:text-gray-400">
-          {quiz.title}
+        <h3 className="text-xl font-semibold hover:text-gray-400">
+          {quiz.title ? quiz.title : 'Quizz Title'}
         </h3>{' '}
+        <p className="my-4 hover:text-gray-400">
+          {quiz.description ? quiz.description : 'Quizz Description'}
+        </p>
       </RouterLink>
-      <p>{quiz.description}</p>
+      <p className="my-4">{quiz.questions.length} Questions :</p>
       <ul>
-        {quiz.questions.map((question, index) => (
+        {quiz.questions.slice(0, 1).map((question, index) => (
           <li key={index} className="mt-2">
             <p className="font-semibold">{question.questionText}</p>
             <ul className="list-disc ml-4">
@@ -39,6 +43,13 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
           </li>
         ))}
       </ul>
+      <RouterLink
+        to={`${quiz._id}`}
+        style={{ textDecoration: 'none', color: 'inherit' }}
+        className="text-center"
+      >
+        <p className="text-center text-sm hover:text-gray-400"> See more...</p>
+      </RouterLink>
 
       <div className="mt-4 flex justify-end items-end">
         <IconButton
