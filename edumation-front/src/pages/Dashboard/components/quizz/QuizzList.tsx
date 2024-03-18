@@ -6,7 +6,11 @@ import DeleteConfirmationModal from '../../../../components/DeleteConfirmationMo
 import { toast } from 'react-toastify';
 import QuizzCard from './QuizzCard';
 
-const QuizzList = () => {
+interface QuizzListProps {
+  filter: string;
+}
+
+const QuizzList: React.FC<QuizzListProps> = ({ filter }) => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [openDelete, setOpenDelete] = useState(false);
@@ -16,7 +20,10 @@ const QuizzList = () => {
     const fetchQuizzes = async () => {
       try {
         const response = await QuizzService.getAllQuizz();
-        setQuizzes(response.data);
+        const filteredQuizz = response.data.filter((quizz) =>
+          quizz.title.toLowerCase().includes(filter.toLowerCase())
+        );
+        setQuizzes(filteredQuizz);
         setLoading(false);
       } catch (error) {
         console.error('Failed to fetch quizzes:', error);
@@ -25,7 +32,7 @@ const QuizzList = () => {
     };
 
     fetchQuizzes();
-  }, []);
+  }, [filter]);
 
   const handleOpenDelete = (quizzId: string) => {
     setSelectedQuizzId(quizzId);
