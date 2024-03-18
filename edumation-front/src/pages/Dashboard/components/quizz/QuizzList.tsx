@@ -55,7 +55,9 @@ const QuizzList: React.FC<QuizzListProps> = ({ filter }) => {
     }
   };
 
-  if (!quizzes) return 'No quizzes here...';
+  if (quizzes.length === 0) {
+    return <div>No quizzes here...</div>;
+  }
 
   if (loading) {
     return (

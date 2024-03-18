@@ -50,26 +50,31 @@ const IndividualQuizz = () => {
               ? quizzData.description
               : 'Quizz Description'}
           </p>
-          {quizzData.questions.map((question, index) => (
-            <div key={index} className="mt-4">
-              <p className="font-semibold">{question.questionText}</p>
-              <ul className="list-disc ml-4">
-                {question.options.map((option, optionIndex) => (
-                  <li
-                    key={optionIndex}
-                    style={{
-                      color:
-                        optionIndex === question.correctAnswer
-                          ? '#2fcc70'
-                          : 'inherit',
-                    }}
-                  >
-                    {option}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
+            {quizzData.questions.map((question, index) => (
+              <div
+                key={index}
+                className="mt-4 p-4 bg-slate-600 rounded-md flex flex-col justify-center"
+              >
+                <p className="font-semibold">{question.questionText}</p>
+                <ul className="list-disc ml-4 my-8">
+                  {question.options.map((option, optionIndex) => (
+                    <li
+                      key={optionIndex}
+                      style={{
+                        color:
+                          optionIndex === question.correctAnswer
+                            ? '#2fcc70'
+                            : 'inherit',
+                      }}
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

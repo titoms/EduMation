@@ -48,7 +48,10 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
         style={{ textDecoration: 'none', color: 'inherit' }}
         className="text-center"
       >
-        <p className="text-center text-sm hover:text-gray-400"> See more...</p>
+        <p className="text-center text-sm hover:text-gray-400 my-4">
+          {' '}
+          See more...
+        </p>
       </RouterLink>
 
       <div className="mt-4 flex justify-end items-end">
