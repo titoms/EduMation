@@ -5,11 +5,19 @@ import QuizzService from '../../../../services/QuizzService';
 import { Quiz } from '../../../../services/Types';
 import axios from 'axios';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { toast } from 'react-toastify';
 
 const IndividualQuizz = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const [quizzData, setQuizzData] = useState<Quiz | null>(null);
+  const [editedQuizz, setEditedQuizz] = useState<Quiz | null>(null);
 
   const params = useParams();
   const quizzId = params.id!;
@@ -19,7 +27,7 @@ const IndividualQuizz = () => {
       try {
         const response = await QuizzService.getQuizzById(quizzId);
         setQuizzData(response.data);
-        console.log(response.data);
+        setEditedQuizz(response.data);
         setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
@@ -33,18 +41,87 @@ const IndividualQuizz = () => {
     fetchQuizz();
   }, [quizzId]);
 
+  const handleEditToggle = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleCancelEdit = () => {
+    setEditMode(false);
+    setEditedQuizz(quizzData); // Reset edits
+  };
+
+  const handleChange = (e, index, type) => {
+    if (!editedQuizz) return;
+
+    let newQuizz = { ...editedQuizz };
+
+    if (type === 'title') {
+      newQuizz.title = e.target.value;
+    } else if (type === 'description') {
+      newQuizz.description = e.target.value;
+    } else if (type === 'questionText') {
+      newQuizz.questions[index].questionText = e.target.value;
+    } else if (type === 'option') {
+      const { optionIndex, value } = e.target;
+      newQuizz.questions[index].options[optionIndex] = value;
+    }
+
+    setEditedQuizz(newQuizz);
+  };
+
+  const handleSaveQuizz = async () => {
+    if (!editedQuizz) return;
+    try {
+      await QuizzService.updateQuizz(quizzId, editedQuizz);
+      toast.success('Quiz updated successfully');
+      setQuizzData(editedQuizz);
+      setEditMode(false);
+    } catch (error) {
+      toast.error('Failed to update quiz');
+      console.error(error);
+    }
+  };
+
   if (!quizzData || loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <>
       <BackButton />
-      <h1 className="text-2xl my-4 font-semibold">Quizz</h1>
+      <h1 className="text-2xl my-4 font-semibold">
+        {editMode ? 'Edit Quizz' : 'Quizz'}
+      </h1>
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
         <div key={quizzData._id} className="pb-2">
-          <h2 className="text-3xl font-bold">
-            {quizzData.title ? quizzData.title : 'Quizz Title'}
-          </h2>
+          <div className="flex justify-between">
+            <h2 className="text-3xl font-bold">
+              {quizzData.title ? quizzData.title : 'Quizz Title'} -{' '}
+              {quizzData.questions.length} Questions
+            </h2>
+            <div className="mt-4 flex justify-end items-end">
+              {editMode ? (
+                <div>
+                  <IconButton onClick={handleSaveQuizz} aria-label="save">
+                    <SaveIcon sx={{ color: '#2fcc70' }} />
+                  </IconButton>
+                  <IconButton onClick={handleCancelEdit} aria-label="cancel">
+                    <CancelIcon sx={{ color: '#eeeeee' }} />
+                  </IconButton>
+                </div>
+              ) : (
+                <IconButton onClick={handleEditToggle} aria-label="edit">
+                  <EditIcon sx={{ color: '#2fcc70' }} />
+                </IconButton>
+              )}
+              <IconButton
+                className="text-black dark:text-gray-200"
+                aria-label="share"
+              >
+                <DeleteIcon sx={{ color: '#e63535' }} />
+              </IconButton>
+            </div>
+          </div>
+
           <p className="text-sm my-4 italic">
             {quizzData.description
               ? quizzData.description
