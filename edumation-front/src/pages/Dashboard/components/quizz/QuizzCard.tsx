@@ -54,12 +54,12 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
         </p>
       </RouterLink>
 
-      <div className="mt-4 flex justify-end items-end">
+      <div className="mt-4 flex justify-center items-end">
         <IconButton
           className="text-black dark:text-gray-200"
           aria-label="add to favorites"
         >
-          <FavoriteIcon sx={{ color: '#3c70c9' }} />
+          <FavoriteIcon sx={{ color: '#e678f0' }} />
         </IconButton>
         <IconButton
           className="text-black dark:text-gray-200"

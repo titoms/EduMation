@@ -56,12 +56,12 @@ const SchoolCard: React.FC<SchoolCardProps> = ({
             </p>
           </div>
         </div>
-        <div className="flex justify-end m-4 gap-4 pb-4 pr-4">
+        <div className="flex justify-center m-4 gap-4 pb-4 pr-4">
           <IconButton
             className="text-black dark:text-gray-200"
             aria-label="add to favorites"
           >
-            <FavoriteIcon sx={{ color: '#3c70c9' }} />
+            <FavoriteIcon sx={{ color: '#e678f0' }} />
           </IconButton>
           <IconButton
             className="text-black dark:text-gray-200"

@@ -29,12 +29,12 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({ schedule, onDelete }) => {
           </span>
         )}
       </div>
-      <div className="mt-4 flex justify-end align-bottom">
+      <div className="mt-4 flex justify-center align-bottom">
         <IconButton
           className="text-black dark:text-gray-200"
           aria-label="add to favorites"
         >
-          <FavoriteIcon sx={{ color: '#3c70c9' }} />
+          <FavoriteIcon sx={{ color: '#e678f0' }} />
         </IconButton>
         <IconButton
           className="text-black dark:text-gray-200"

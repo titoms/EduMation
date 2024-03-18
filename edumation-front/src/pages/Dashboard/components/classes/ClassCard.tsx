@@ -24,12 +24,12 @@ const ClassCard: React.FC<ClassCardProps> = ({ group, onDelete }) => {
             </span>
           </Link>
         </div>
-        <div className="flex justify-end gap-2 md:mt-0">
+        <div className="flex justify-center gap-2 md:mt-0">
           <IconButton
             className="text-black dark:text-gray-200"
             aria-label="add to favorites"
           >
-            <FavoriteIcon sx={{ color: '#3c70c9' }} />
+            <FavoriteIcon sx={{ color: '#e678f0' }} />
           </IconButton>
           <IconButton
             className="text-black dark:text-gray-200"

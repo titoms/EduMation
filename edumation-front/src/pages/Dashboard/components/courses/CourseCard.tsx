@@ -79,12 +79,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
           <p className="mt-4 text-center">{course.description}</p>
         </Link>
 
-        <div className="mt-4 flex justify-end gap-4 items-end">
+        <div className="mt-4 flex justify-center gap-4 items-end">
           <IconButton
             className="text-black dark:text-gray-200"
             aria-label="add to favorites"
           >
-            <FavoriteIcon sx={{ color: '#3c70c9' }} />
+            <FavoriteIcon sx={{ color: '#e678f0' }} />
           </IconButton>
           <IconButton
             className="text-black dark:text-gray-200"
