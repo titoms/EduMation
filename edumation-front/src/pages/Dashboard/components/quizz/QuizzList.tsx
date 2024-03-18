@@ -55,6 +55,8 @@ const QuizzList: React.FC<QuizzListProps> = ({ filter }) => {
     }
   };
 
+  if (!quizzes) return 'No quizzes here...';
+
   if (loading) {
     return (
       <>
@@ -72,6 +74,7 @@ const QuizzList: React.FC<QuizzListProps> = ({ filter }) => {
 
   return (
     <>
+      <h3 className="text-2xl">Quizzes :</h3>
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {quizzes.map((quiz) => (
           <QuizzCard

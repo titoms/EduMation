@@ -109,15 +109,13 @@ const QuizzCreation: React.FC = () => {
 
   return (
     <>
-      <div className="mb-4">
-        <BackButton />
-      </div>
-      <div className="flex flex-col">
-        <header className="flex items-center justify-between p-4 text-black">
+      <BackButton />
+      <div className="flex flex-col bg-white dark:bg-slate-800 shadow rounded-lg p-6 mt-4">
+        <header className="flex items-center justify-between text-black">
           <Typography
             variant="h5"
             component="h1"
-            className="text-lg font-semibold text-black dark:text-white"
+            className="text-lg font-semibold m-2 text-black dark:text-white"
           >
             Create new Quizz
           </Typography>

@@ -28,7 +28,6 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Button } from '@mui/material';
 import CreateEventModal from './CreateEventModal';
-import PublishIcon from '@mui/icons-material/Publish';
 import CalendarImport from './CalendarImport';
 import DeleteConfirmationModal from '../../../../components/DeleteConfirmationModal';
 

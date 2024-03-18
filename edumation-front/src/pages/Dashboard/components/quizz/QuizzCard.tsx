@@ -26,7 +26,7 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
         <h3 className="text-xl font-semibold hover:text-gray-400">
           {quiz.title ? quiz.title : 'Quizz Title'}
         </h3>{' '}
-        <p className="my-4 hover:text-gray-400">
+        <p className="my-4 hover:text-gray-400 italic">
           {quiz.description ? quiz.description : 'Quizz Description'}
         </p>
       </RouterLink>
