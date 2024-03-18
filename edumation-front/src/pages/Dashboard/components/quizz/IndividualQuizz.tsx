@@ -5,7 +5,7 @@ import QuizzService from '../../../../services/QuizzService';
 import { Quiz } from '../../../../services/Types';
 import axios from 'axios';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
-import { IconButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
@@ -88,14 +88,27 @@ const IndividualQuizz = () => {
   return (
     <>
       <BackButton />
-      <h1 className="text-2xl my-4 font-semibold">
-        {editMode ? 'Edit Quizz' : 'Quizz'}
+      <h1 className="text-3xl my-8 font-semibold">
+        {editMode ? (
+          <TextField
+            label="Quizz Title"
+            variant="outlined"
+            fullWidth
+            multiline
+            value={editedQuizz?.title || ''}
+            onChange={(e) => handleChange(e, null, 'title')}
+          />
+        ) : quizzData.title ? (
+          quizzData.title
+        ) : (
+          'Quizz Title'
+        )}
       </h1>
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
         <div key={quizzData._id} className="pb-2">
-          <div className="flex justify-between">
-            <h2 className="text-3xl font-bold">
-              {quizzData.title ? quizzData.title : 'Quizz Title'} -{' '}
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold">
+              {' '}
               {quizzData.questions.length} Questions
             </h2>
             <div className="mt-4 flex justify-end items-end">
@@ -122,11 +135,24 @@ const IndividualQuizz = () => {
             </div>
           </div>
 
-          <p className="text-sm my-4 italic">
-            {quizzData.description
-              ? quizzData.description
-              : 'Quizz Description'}
-          </p>
+          {editMode ? (
+            <TextField
+              label="Quizz Description"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
+              value={editedQuizz?.description || ''}
+              onChange={(e) => handleChange(e, null, 'description')}
+            />
+          ) : (
+            <p className="text-sm my-4 italic">
+              {quizzData.description
+                ? quizzData.description
+                : 'Quizz Description'}
+            </p>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
             {quizzData.questions.map((question, index) => (
               <div

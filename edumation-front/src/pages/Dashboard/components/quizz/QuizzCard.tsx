@@ -30,11 +30,11 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
           {quiz.description ? quiz.description : 'Quizz Description'}
         </p>
       </RouterLink>
-      <p className="my-4">{quiz.questions.length} Questions :</p>
+      <p className="my-4 font-semibold">{quiz.questions.length} Questions :</p>
       <ul>
         {quiz.questions.slice(0, 1).map((question, index) => (
           <li key={index} className="mt-2">
-            <p className="font-semibold">{question.questionText}</p>
+            <p className="font-bold my-2">{question.questionText}</p>
             <ul className="list-disc ml-4">
               {question.options.map((option, optionIndex) => (
                 <li key={optionIndex}>{option}</li>
