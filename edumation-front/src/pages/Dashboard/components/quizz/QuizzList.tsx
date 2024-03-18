@@ -38,8 +38,8 @@ const QuizzList = () => {
     if (!selectedQuizzId) return;
     try {
       await QuizzService.deleteQuizz(selectedQuizzId);
-      toast.success('Quizz deleted successfully');
       setQuizzes(quizzes.filter((quiz) => quiz._id !== selectedQuizzId));
+      toast.success('Quizz deleted successfully');
     } catch (error) {
       toast.error('Failed to delete quizz');
       console.error(error);

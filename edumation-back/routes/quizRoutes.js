@@ -28,6 +28,6 @@ router.put(
 );
 
 // Delete a quiz
-router.delete('/:id', verifyToken, verifyToken, quizController.updateQuizz);
+router.delete('/:id', verifyToken, quizController.deleteQuizz);
 
 module.exports = router;
