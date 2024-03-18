@@ -97,7 +97,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
               className="text-black dark:text-gray-200"
               aria-label="share"
             >
-              <EditIcon sx={{ color: '#3dc8eb' }} />
+              <EditIcon sx={{ color: '#2fcc70' }} />
             </IconButton>
           </Link>
           <IconButton

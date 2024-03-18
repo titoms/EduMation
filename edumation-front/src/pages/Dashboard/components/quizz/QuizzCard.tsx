@@ -69,7 +69,7 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
         </IconButton>
         <RouterLink to={`${quiz._id}`}>
           <IconButton aria-label="edit">
-            <EditIcon sx={{ color: '#3dc8eb' }} />
+            <EditIcon sx={{ color: '#2fcc70' }} />
           </IconButton>
         </RouterLink>
         <IconButton

@@ -52,7 +52,7 @@ const UserRow: React.FC<UserRowProps> = ({
             aria-label="share"
             onClick={() => onShowUpdateModal(user)}
           >
-            <EditIcon sx={{ color: '#3dc8eb' }} />
+            <EditIcon sx={{ color: '#2fcc70' }} />
           </IconButton>
           <IconButton
             className="text-black dark:text-gray-200"

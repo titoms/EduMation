@@ -131,7 +131,7 @@ const IndividualQuizz = () => {
             {quizzData.questions.map((question, index) => (
               <div
                 key={index}
-                className="mt-4 p-4 bg-slate-600 rounded-md flex flex-col justify-center"
+                className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
               >
                 <p className="font-semibold">{question.questionText}</p>
                 <ul className="list-disc ml-4 my-8">
