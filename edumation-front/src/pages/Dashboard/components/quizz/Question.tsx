@@ -2,11 +2,16 @@ import {
   Card,
   CardContent,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   TextField,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Option {
   text: string;
@@ -49,50 +54,53 @@ const Question: React.FC<QuestionProps> = ({
   };
 
   return (
-    <Card className="bg-white dark:bg-slate-800 text-black dark:text-white mt-4">
-      <CardContent>
-        <div className="flex justify-between align-center items-center">
-          <TextField
-            label={`Question title `}
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={question.questionText}
-            onChange={(e) =>
-              updateQuestion(index, {
-                ...question,
-                questionText: e.target.value,
-              })
+    <Card className="bg-white dark:bg-slate-800 text-black dark:text-white mt-4 p-4">
+      <div className="flex justify-between align-center items-center">
+        <TextField
+          label={`Question title `}
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={question.questionText}
+          onChange={(e) =>
+            updateQuestion(index, {
+              ...question,
+              questionText: e.target.value,
+            })
+          }
+        />
+      </div>
+      <RadioGroup
+        value={question.correctAnswer}
+        onChange={handleCorrectAnswerChange}
+        className="mt-2"
+      >
+        {question.options.map((choice, idx) => (
+          <FormControlLabel
+            key={idx}
+            value={idx}
+            control={<Radio />}
+            label={
+              <TextField
+                fullWidth
+                variant="outlined"
+                label={`Choice `}
+                value={choice.text}
+                onChange={(e) => handleChange(e, idx)}
+              />
             }
           />
-          <CloseIcon
-            onClick={() => eraseQuestion(question.id)}
-            className="cursor-pointer m-2 text-slate-500 dark:text-white hover:text-slate-500 dark:hover:text-slate-400"
-          />
-        </div>
-        <RadioGroup
-          value={question.correctAnswer}
-          onChange={handleCorrectAnswerChange}
-          className="mt-2"
+        ))}
+      </RadioGroup>
+      <div className="mt-4 flex justify-end items-end">
+        <IconButton
+          className="text-black dark:text-gray-200"
+          aria-label="share"
+          onClick={() => eraseQuestion(question.id)}
         >
-          {question.options.map((choice, idx) => (
-            <FormControlLabel
-              key={idx}
-              value={idx}
-              control={<Radio />}
-              label={
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  label={`Choice `}
-                  value={choice.text}
-                  onChange={(e) => handleChange(e, idx)}
-                />
-              }
-            />
-          ))}
-        </RadioGroup>
-      </CardContent>
+          <DeleteIcon sx={{ color: '#e63535' }} />
+        </IconButton>
+      </div>
     </Card>
   );
 };
