@@ -85,135 +85,157 @@ const IndividualQuizz = () => {
   return (
     <>
       <BackButton />
-      <h1 className="text-3xl my-8 font-semibold">
-        {editMode ? (
-          <TextField
-            label="Quizz Title"
-            variant="outlined"
-            fullWidth
-            multiline
-            value={editedQuizz?.title || ''}
-            onChange={(e) => handleChange(e, null, 'title')}
-          />
-        ) : quizzData.title ? (
-          quizzData.title
-        ) : (
-          'Quizz Title'
-        )}
-      </h1>
-      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
-        <div key={quizzData._id} className="pb-2">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold">
-              {' '}
-              {quizzData.questions.length} Questions
-            </h2>
-            <div className="mt-4 flex justify-end items-end">
-              {editMode ? (
-                <div>
+      {editMode ? (
+        <>
+          <h1 className="text-3xl my-8 font-semibold">
+            <TextField
+              label="Quizz Title"
+              variant="outlined"
+              fullWidth
+              multiline
+              value={editedQuizz?.title || ''}
+              onChange={(e) => handleChange(e, null, 'title')}
+            />
+          </h1>
+          <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
+            <div key={quizzData._id} className="pb-2">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-bold">
+                  {' '}
+                  {quizzData.questions.length} Questions
+                </h2>
+                <div className="mt-4 flex justify-end items-end">
                   <IconButton onClick={handleSaveQuizz} aria-label="save">
                     <SaveIcon sx={{ color: '#2fcc70' }} />
                   </IconButton>
                   <IconButton onClick={handleCancelEdit} aria-label="cancel">
                     <CancelIcon sx={{ color: '#eeeeee' }} />
                   </IconButton>
+                  <IconButton
+                    className="text-black dark:text-gray-200"
+                    aria-label="share"
+                  >
+                    <DeleteIcon sx={{ color: '#e63535' }} />
+                  </IconButton>
                 </div>
-              ) : (
-                <IconButton onClick={handleEditToggle} aria-label="edit">
-                  <EditIcon sx={{ color: '#2fcc70' }} />
-                </IconButton>
-              )}
-              <IconButton
-                className="text-black dark:text-gray-200"
-                aria-label="share"
-              >
-                <DeleteIcon sx={{ color: '#e63535' }} />
-              </IconButton>
+              </div>
+
+              <TextField
+                label="Quizz Description"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                multiline
+                value={editedQuizz?.description || ''}
+                onChange={(e) => handleChange(e, null, 'description')}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
+                {quizzData.questions.map((question, index) => (
+                  <div
+                    key={index}
+                    className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
+                  >
+                    <TextField
+                      label="Question Title"
+                      variant="outlined"
+                      fullWidth
+                      multiline
+                      value={editedQuizz?.questions[index].questionText || ''}
+                      onChange={(e) => handleChange(e, null, 'questionText')}
+                    />
+                    <ul className="list-disc ml-4 my-8">
+                      {question.options.map((option, optionIndex) => (
+                        <>
+                          <TextField
+                            label="Option ..."
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            style={{
+                              borderRadius: '',
+                              border:
+                                optionIndex === question.correctAnswer
+                                  ? '1px solid #2fcc70'
+                                  : 'inherit',
+                            }}
+                            multiline
+                            value={
+                              editedQuizz?.questions[index].options[
+                                optionIndex
+                              ] || ''
+                            }
+                            onChange={(e) => handleChange(e, null, 'option')}
+                          />
+                        </>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-
-          {editMode ? (
-            <TextField
-              label="Quizz Description"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              multiline
-              value={editedQuizz?.description || ''}
-              onChange={(e) => handleChange(e, null, 'description')}
-            />
-          ) : (
-            <p className="text-sm my-4 italic">
-              {quizzData.description
-                ? quizzData.description
-                : 'Quizz Description'}
-            </p>
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
-            {quizzData.questions.map((question, index) => (
-              <div
-                key={index}
-                className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
-              >
-                {editMode ? (
-                  <TextField
-                    label="Question Title"
-                    variant="outlined"
-                    fullWidth
-                    multiline
-                    value={editedQuizz?.questions[index].questionText || ''}
-                    onChange={(e) => handleChange(e, null, 'questionText')}
-                  />
-                ) : quizzData.title ? (
-                  <p className="font-semibold">{question.questionText}</p>
-                ) : (
-                  'Question title'
-                )}
-                <ul className="list-disc ml-4 my-8">
-                  {question.options.map((option, optionIndex) => (
-                    <>
-                      {editMode ? (
-                        <TextField
-                          label="Option ..."
-                          variant="outlined"
-                          fullWidth
-                          margin="normal"
-                          style={{
-                            borderRadius: '',
-                            border:
-                              optionIndex === question.correctAnswer
-                                ? '1px solid #2fcc70'
-                                : 'inherit',
-                          }}
-                          multiline
-                          value={
-                            editedQuizz?.questions[index].options[
-                              optionIndex
-                            ] || ''
-                          }
-                          onChange={(e) => handleChange(e, null, 'option')}
-                        />
-                      ) : (
-                        <li
-                          key={optionIndex}
-                          style={{
-                            color:
-                              optionIndex === question.correctAnswer
-                                ? '#2fcc70'
-                                : 'inherit',
-                          }}
-                        >
-                          {option}
-                        </li>
-                      )}
-                    </>
-                  ))}
-                </ul>
+        </>
+      ) : (
+        <>
+          <h1 className="text-3xl my-8 font-semibold">{quizzData.title}</h1>
+          <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
+            <div key={quizzData._id} className="pb-2">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-bold">
+                  {' '}
+                  {quizzData.questions.length} Questions
+                </h2>
+                <div className="mt-4 flex justify-end items-end">
+                  <IconButton onClick={handleEditToggle} aria-label="edit">
+                    <EditIcon sx={{ color: '#2fcc70' }} />
+                  </IconButton>
+                  <IconButton
+                    className="text-black dark:text-gray-200"
+                    aria-label="share"
+                  >
+                    <DeleteIcon sx={{ color: '#e63535' }} />
+                  </IconButton>
+                </div>
               </div>
-            ))}
+
+              <p className="text-sm my-4 italic">
+                {quizzData.description
+                  ? quizzData.description
+                  : 'Quizz Description'}
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
+                {quizzData.questions.map((question, index) => (
+                  <div
+                    key={index}
+                    className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
+                  >
+                    <p className="font-semibold">{question.questionText}</p>
+                    <ul className="list-disc ml-4 my-8">
+                      {question.options.map((option, optionIndex) => (
+                        <>
+                          <li
+                            key={optionIndex}
+                            style={{
+                              color:
+                                optionIndex === question.correctAnswer
+                                  ? '#2fcc70'
+                                  : 'inherit',
+                            }}
+                          >
+                            {option}
+                          </li>
+                        </>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };
