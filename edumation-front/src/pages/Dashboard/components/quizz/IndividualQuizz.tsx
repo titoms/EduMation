@@ -148,12 +148,11 @@ const IndividualQuizz = () => {
                       {question.options.map((option, optionIndex) => (
                         <>
                           <TextField
-                            label="Option ..."
                             variant="outlined"
                             fullWidth
                             margin="normal"
                             style={{
-                              borderRadius: '',
+                              borderRadius: '5px',
                               border:
                                 optionIndex === question.correctAnswer
                                   ? '1px solid #2fcc70'
