@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Checkbox, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { Group } from '../../../../services/Types';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,15 +9,31 @@ import ShareIcon from '@mui/icons-material/Share';
 
 interface ClassCardProps {
   group: Group;
-  onDelete: (groupId: string, groupName: string) => void; // Function to handle delete
+  onDelete: (groupId: string, groupName: string) => void;
+  onToggleSelection: (groupId: string) => void; // Function to toggle selection
+  isSelected: boolean; // Is this card selected
 }
 
-const ClassCard: React.FC<ClassCardProps> = ({ group, onDelete }) => {
+const ClassCard: React.FC<ClassCardProps> = ({
+  group,
+  onDelete,
+  onToggleSelection,
+  isSelected,
+}) => {
+  const cardClasses = `bg-white dark:bg-slate-800 gap-4 shadow rounded-lg p-2 ${
+    isSelected ? 'bg-blue-900 dark:bg-blue-900' : ''
+  }`;
+
   return (
     <>
-      <div className="bg-white dark:bg-slate-800 gap-4 shadow rounded-lg p-2">
+      <div className={cardClasses} onClick={() => onToggleSelection(group._id)}>
         <div className="flex justify-center gap-8 align-middle items-center my-4">
-          {/* <Checkbox /> */}
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => {}}
+            className="sr-only"
+          />
           <Link to={group._id}>
             <span className="text-xl font-bold hover:text-blue-600 overflow-hidden">
               {group.name}

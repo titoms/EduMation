@@ -19,6 +19,29 @@ const ClassesList = () => {
   const { refetchGroups } = useContext(ClassContext);
   const [filter, setFilter] = useState('');
 
+  const [selectedClasses, setSelectedClasses] = useState<Set<string>>(
+    new Set()
+  );
+
+  const toggleClassSelection = (classId: string) => {
+    setSelectedClasses((prevSelectedClasses) => {
+      const newSelection = new Set(prevSelectedClasses);
+      if (newSelection.has(classId)) {
+        newSelection.delete(classId);
+      } else {
+        newSelection.add(classId);
+      }
+      return newSelection;
+    });
+  };
+
+  const deleteSelectedClasses = async () => {
+    // Loop over selectedClasses and call API to delete
+    // Reset selectedClasses state after deletion
+    setSelectedClasses(new Set());
+    // Refetch class list or remove deleted classes from state
+  };
+
   const handleOpenDelete = (groupId: string, groupName: string) => {
     setSelectedClassId(groupId);
     setSelectedClassName(groupName);
@@ -70,6 +93,8 @@ const ClassesList = () => {
             onDelete={handleOpenDelete}
             key={group._id}
             group={group}
+            onToggleSelection={toggleClassSelection}
+            isSelected={selectedClasses.has(group._id)}
           />
         ))}
       </div>
