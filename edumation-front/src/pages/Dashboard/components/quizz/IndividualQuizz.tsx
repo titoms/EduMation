@@ -1,85 +1,85 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import BackButton from '../../../../components/ui/BackButton';
+import { useEffect, useState } from 'react';
+import QuizzService from '../../../../services/QuizzService';
+import { Quiz } from '../../../../services/Types';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
 import { IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
-import BackButton from '../../../../components/ui/BackButton';
-import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
-import QuizzService from '../../../../services/QuizzService';
-import { Quiz } from '../../../../services/Types';
+import { toast } from 'react-toastify';
 
 const IndividualQuizz = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [quizzData, setQuizzData] = useState<Quiz | null>(null);
+  const [editedQuizz, setEditedQuizz] = useState<Quiz | null>(null);
 
-  const { id: quizzId } = useParams<{ id: string }>();
+  const params = useParams();
+  const quizzId = params.id!;
 
   useEffect(() => {
-    setLoading(true);
     const fetchQuizz = async () => {
       try {
         const response = await QuizzService.getQuizzById(quizzId);
         setQuizzData(response.data);
+        setEditedQuizz(response.data);
+        setLoading(false);
       } catch (err) {
-        const errorMessage =
-          axios.isAxiosError(err) && err.response
-            ? err.response.data
-            : 'An error occurred while fetching the quiz.';
-        setError(errorMessage);
-      } finally {
+        if (axios.isAxiosError(err) && err.response) {
+          setError(err.response.data);
+        } else {
+          setError('An error occurred while fetching the quiz.');
+        }
         setLoading(false);
       }
     };
     fetchQuizz();
   }, [quizzId]);
 
-  const toggleEditMode = () => setEditMode(!editMode);
-
-  const handleChange = (event, index = null, type) => {
-    if (!quizzData) return;
-    const updatedQuizz = { ...quizzData };
-    switch (type) {
-      case 'title':
-        updatedQuizz.title = event.target.value;
-        break;
-      case 'description':
-        updatedQuizz.description = event.target.value;
-        break;
-      default:
-        if (index !== null) {
-          const { questionIndex, optionIndex, value } = event.target;
-          if (type === 'questionText') {
-            updatedQuizz.questions[questionIndex].questionText = value;
-          } else if (type === 'option') {
-            updatedQuizz.questions[questionIndex].options[optionIndex] = value;
-          }
-        }
-        break;
-    }
-    setQuizzData(updatedQuizz);
+  const handleEditToggle = () => {
+    setEditMode(!editMode);
   };
 
-  const saveQuizz = async () => {
-    if (!quizzData) return;
-    setLoading(true);
+  const handleCancelEdit = () => {
+    setEditMode(false);
+    setEditedQuizz(quizzData); // Reset edits
+  };
+
+  const handleChange = (e, index, type) => {
+    if (!editedQuizz) return;
+    let newQuizz = { ...editedQuizz };
+    if (type === 'title') {
+      newQuizz.title = e.target.value;
+    } else if (type === 'description') {
+      newQuizz.description = e.target.value;
+    } else if (type === 'questionText') {
+      newQuizz.questions[index].questionText = e.target.value;
+    } else if (type === 'option') {
+      const { optionIndex, value } = e.target;
+      newQuizz.questions[index].options[optionIndex] = value;
+    }
+    setEditedQuizz(newQuizz);
+  };
+
+  const handleSaveQuizz = async () => {
+    if (!editedQuizz) return;
     try {
-      await QuizzService.updateQuizz(quizzId, quizzData);
+      await QuizzService.updateQuizz(quizzId, editedQuizz);
       toast.success('Quiz updated successfully');
+      setQuizzData(editedQuizz);
       setEditMode(false);
     } catch (error) {
       toast.error('Failed to update quiz');
-    } finally {
-      setLoading(false);
+      console.error(error);
     }
   };
 
-  if (loading) return <UserSkeleton />;
+  if (!quizzData || loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -92,42 +92,46 @@ const IndividualQuizz = () => {
             variant="outlined"
             fullWidth
             multiline
-            value={quizzData?.title || ''}
+            value={editedQuizz?.title || ''}
             onChange={(e) => handleChange(e, null, 'title')}
           />
+        ) : quizzData.title ? (
+          quizzData.title
         ) : (
-          quizzData?.title || 'Quizz Title'
+          'Quizz Title'
         )}
       </h1>
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
-        <div key={quizzData?._id} className="pb-2">
+        <div key={quizzData._id} className="pb-2">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">
-              {quizzData?.questions.length} Questions
+              {' '}
+              {quizzData.questions.length} Questions
             </h2>
             <div className="mt-4 flex justify-end items-end">
               {editMode ? (
-                <>
-                  <IconButton onClick={saveQuizz} aria-label="save">
+                <div>
+                  <IconButton onClick={handleSaveQuizz} aria-label="save">
                     <SaveIcon sx={{ color: '#2fcc70' }} />
                   </IconButton>
-                  <IconButton
-                    onClick={() => setEditMode(false)}
-                    aria-label="cancel"
-                  >
+                  <IconButton onClick={handleCancelEdit} aria-label="cancel">
                     <CancelIcon sx={{ color: '#eeeeee' }} />
                   </IconButton>
-                </>
+                </div>
               ) : (
-                <IconButton onClick={toggleEditMode} aria-label="edit">
+                <IconButton onClick={handleEditToggle} aria-label="edit">
                   <EditIcon sx={{ color: '#2fcc70' }} />
                 </IconButton>
               )}
-              <IconButton aria-label="delete">
+              <IconButton
+                className="text-black dark:text-gray-200"
+                aria-label="share"
+              >
                 <DeleteIcon sx={{ color: '#e63535' }} />
               </IconButton>
             </div>
           </div>
+
           {editMode ? (
             <TextField
               label="Quizz Description"
@@ -135,19 +139,21 @@ const IndividualQuizz = () => {
               fullWidth
               margin="normal"
               multiline
-              value={quizzData?.description || ''}
+              value={editedQuizz?.description || ''}
               onChange={(e) => handleChange(e, null, 'description')}
             />
           ) : (
             <p className="text-sm my-4 italic">
-              {quizzData?.description || 'Quizz Description'}
+              {quizzData.description
+                ? quizzData.description
+                : 'Quizz Description'}
             </p>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-            {quizzData?.questions.map((question, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
+            {quizzData.questions.map((question, index) => (
               <div
                 key={index}
-                className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md"
+                className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
               >
                 {editMode ? (
                   <TextField
@@ -155,25 +161,52 @@ const IndividualQuizz = () => {
                     variant="outlined"
                     fullWidth
                     multiline
-                    value={question.questionText || ''}
-                    onChange={(e) => handleChange(e, index, 'questionText')}
+                    value={editedQuizz?.questions[index].questionText || ''}
+                    onChange={(e) => handleChange(e, null, 'questionText')}
                   />
-                ) : (
+                ) : quizzData.title ? (
                   <p className="font-semibold">{question.questionText}</p>
+                ) : (
+                  'Question title'
                 )}
                 <ul className="list-disc ml-4 my-8">
                   {question.options.map((option, optionIndex) => (
-                    <li
-                      key={optionIndex}
-                      style={{
-                        color:
-                          optionIndex === question.correctAnswer
-                            ? '#2fcc70'
-                            : 'inherit',
-                      }}
-                    >
-                      {option}
-                    </li>
+                    <>
+                      {editMode ? (
+                        <TextField
+                          label="Option ..."
+                          variant="outlined"
+                          fullWidth
+                          margin="normal"
+                          style={{
+                            borderRadius: '',
+                            border:
+                              optionIndex === question.correctAnswer
+                                ? '1px solid #2fcc70'
+                                : 'inherit',
+                          }}
+                          multiline
+                          value={
+                            editedQuizz?.questions[index].options[
+                              optionIndex
+                            ] || ''
+                          }
+                          onChange={(e) => handleChange(e, null, 'option')}
+                        />
+                      ) : (
+                        <li
+                          key={optionIndex}
+                          style={{
+                            color:
+                              optionIndex === question.correctAnswer
+                                ? '#2fcc70'
+                                : 'inherit',
+                          }}
+                        >
+                          {option}
+                        </li>
+                      )}
+                    </>
                   ))}
                 </ul>
               </div>
