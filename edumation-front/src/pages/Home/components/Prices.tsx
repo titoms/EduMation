@@ -4,12 +4,16 @@ const Prices = () => {
   return (
     <>
       <div className="p-10 flex flex-wrap items-center justify-center">
-        <div className="flex flex-col sm:flex-col lg:flex-row xl:flex-row md:flex-row justify-center items center  container   ">
-          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-blue-50 z-30">
-            <h1 className="text-gray-500 font-semibold text-xl ">Basic</h1>
+        <div className="flex flex-col sm:flex-col lg:flex-row xl:flex-row md:flex-row justify-center items center container">
+          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-blue-50 dark:bg-blue-950 z-30">
+            <h1 className="text-gray-500 dark:text-white font-semibold text-xl ">
+              Basic
+            </h1>
             <div className="text-center py-4 px-7">
-              <h1 className="text-gray-700 text-4xl font-black">$199.00</h1>
-              <p className="text-gray-500  mt-2">Monthely</p>
+              <h1 className="text-gray-700 dark:text-white text-4xl font-black">
+                $199.00
+              </h1>
+              <p className="text-gray-500 dark:text-gray-200 mt-2">Monthely</p>
             </div>
             <div className="h-px bg-gray-200"></div>
             <div className="text-center mt-3">
@@ -41,10 +45,14 @@ const Prices = () => {
               Buy Now
             </button>
           </div>
-          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-blue-50 z-30">
-            <h1 className="text-gray-500 font-semibold text-xl ">Enterprise</h1>
+          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-blue-50 dark:bg-blue-950 z-30">
+            <h1 className="text-gray-500 dark:text-white font-semibold text-xl ">
+              Enterprise
+            </h1>
             <div className="text-center py-4 px-7">
-              <h1 className="text-gray-700 text-4xl font-black">$899.00</h1>
+              <h1 className="text-gray-700 dark:text-white text-4xl font-black">
+                $899.00
+              </h1>
               <p className="text-gray-500  mt-2">Monthely</p>
             </div>
             <div className="h-px bg-gray-200"></div>
