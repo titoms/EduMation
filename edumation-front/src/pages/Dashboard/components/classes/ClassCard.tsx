@@ -10,8 +10,8 @@ import ShareIcon from '@mui/icons-material/Share';
 interface ClassCardProps {
   group: Group;
   onDelete: (groupId: string, groupName: string) => void;
-  onToggleSelection: (groupId: string) => void; // Function to toggle selection
-  isSelected: boolean; // Is this card selected
+  onToggleSelection: (groupId: string) => void;
+  isSelected: boolean;
 }
 
 const ClassCard: React.FC<ClassCardProps> = ({
@@ -23,6 +23,13 @@ const ClassCard: React.FC<ClassCardProps> = ({
   const cardClasses = `bg-white dark:bg-slate-800 gap-4 shadow rounded-lg p-2 ${
     isSelected ? 'bg-blue-900 dark:bg-blue-900' : ''
   }`;
+  const handleButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    action: () => void
+  ) => {
+    event.stopPropagation();
+    action();
+  };
 
   return (
     <>
@@ -44,12 +51,14 @@ const ClassCard: React.FC<ClassCardProps> = ({
           <IconButton
             className="text-black dark:text-gray-200"
             aria-label="add to favorites"
+            onClick={(e) => e.stopPropagation()}
           >
             <FavoriteIcon sx={{ color: '#e678f0' }} />
           </IconButton>
           <IconButton
             className="text-black dark:text-gray-200"
             aria-label="share"
+            onClick={(e) => e.stopPropagation()}
           >
             <ShareIcon sx={{ color: '#3c96c9' }} />
           </IconButton>
@@ -57,6 +66,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
             <IconButton
               className="text-black dark:text-gray-200"
               aria-label="share"
+              onClick={(e) => e.stopPropagation()}
             >
               <EditIcon sx={{ color: '#2fcc70' }} />
             </IconButton>
@@ -64,7 +74,9 @@ const ClassCard: React.FC<ClassCardProps> = ({
           <IconButton
             className="text-black dark:text-gray-200"
             aria-label="share"
-            onClick={() => onDelete(group._id, group.name)}
+            onClick={(e) =>
+              handleButtonClick(e, () => onDelete(group._id, group.name))
+            }
           >
             <DeleteIcon sx={{ color: '#e63535' }} />
           </IconButton>
