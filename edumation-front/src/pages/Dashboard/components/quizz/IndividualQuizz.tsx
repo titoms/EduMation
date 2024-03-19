@@ -97,7 +97,7 @@ const IndividualQuizz = () => {
               onChange={(e) => handleChange(e, null, 'title')}
             />
           </h1>
-          <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
+          <div className="bg-white dark:bg-slate-800 shadow rounded-lg pt-2 p-6">
             <div key={quizzData._id} className="pb-2">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">
@@ -144,7 +144,7 @@ const IndividualQuizz = () => {
                       value={editedQuizz?.questions[index].questionText || ''}
                       onChange={(e) => handleChange(e, null, 'questionText')}
                     />
-                    <ul className="list-disc ml-4 my-8">
+                    <ul className="ml-2 my-4">
                       {question.options.map((option, optionIndex) => (
                         <>
                           <TextField
@@ -179,7 +179,7 @@ const IndividualQuizz = () => {
       ) : (
         <>
           <h1 className="text-3xl my-8 font-semibold">{quizzData.title}</h1>
-          <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-6">
+          <div className="bg-white dark:bg-slate-800 shadow rounded-lg pt-2 p-6">
             <div key={quizzData._id} className="pb-2">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">
@@ -212,10 +212,11 @@ const IndividualQuizz = () => {
                     className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
                   >
                     <p className="font-semibold">{question.questionText}</p>
-                    <ul className="list-disc ml-4 my-8">
+                    <ul className="list-none ml-2 my-4 mb-0">
                       {question.options.map((option, optionIndex) => (
                         <>
                           <li
+                            className="my-4"
                             key={optionIndex}
                             style={{
                               color:
