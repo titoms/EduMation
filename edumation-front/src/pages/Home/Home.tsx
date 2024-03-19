@@ -6,7 +6,7 @@ function Home() {
   return (
     <>
       <Header />
-      <div className="px-16 bg-white dark:bg-slate-800 h-screen">
+      <div className="px-16 bg-gray-100 dark:bg-slate-800 h-screen">
         <Prices />
         <Info />
       </div>

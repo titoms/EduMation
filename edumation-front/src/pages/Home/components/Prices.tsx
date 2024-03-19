@@ -5,7 +5,7 @@ const Prices = () => {
     <>
       <div className="p-10 flex flex-wrap items-center justify-center">
         <div className="flex flex-col sm:flex-col lg:flex-row xl:flex-row md:flex-row justify-center items center container">
-          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-blue-50 dark:bg-blue-950 z-30">
+          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-gray-200 dark:bg-blue-950 z-30">
             <h1 className="text-gray-500 dark:text-white font-semibold text-xl ">
               Basic
             </h1>
@@ -15,7 +15,7 @@ const Prices = () => {
               </h1>
               <p className="text-gray-500 dark:text-gray-200 mt-2">Monthely</p>
             </div>
-            <div className="h-px bg-gray-200"></div>
+            <div className="h-px bg-gray-400"></div>
             <div className="text-center mt-3">
               <p className="text-sm text-gray-400">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -45,7 +45,7 @@ const Prices = () => {
               Buy Now
             </button>
           </div>
-          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-blue-50 dark:bg-blue-950 z-30">
+          <div className="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-gray-200 dark:bg-blue-950 z-30">
             <h1 className="text-gray-500 dark:text-white font-semibold text-xl ">
               Enterprise
             </h1>
@@ -55,7 +55,7 @@ const Prices = () => {
               </h1>
               <p className="text-gray-500  mt-2">Monthely</p>
             </div>
-            <div className="h-px bg-gray-200"></div>
+            <div className="h-px bg-gray-400"></div>
             <div className="text-center mt-3">
               <p className="text-sm text-gray-400">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
