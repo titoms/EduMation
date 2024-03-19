@@ -16,7 +16,7 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
   return (
     <div
       key={quiz._id}
-      className="bg-white dark:bg-slate-800 shadow rounded-lg p-4"
+      className="bg-white dark:bg-slate-800 shadow rounded-lg p-6"
     >
       <RouterLink
         to={`${quiz._id}`}

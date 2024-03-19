@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Course, School, User } from '../../../../services/Types';
+import { Course, User } from '../../../../services/Types';
 import { toast } from 'react-toastify';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
-import SchoolsService from '../../../../services/SchoolsService';
 import UsersService from '../../../../services/UsersService';
 
 interface CourseInformationProps {
@@ -10,21 +9,10 @@ interface CourseInformationProps {
 }
 
 const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
-  const [school, setSchool] = useState<School | undefined>();
   const [teacher, setTeacher] = useState<User>();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchSchool = async () => {
-      try {
-        const response = await SchoolsService.getSchoolsById(course.schoolId);
-        setSchool(response.data);
-      } catch (error) {
-        toast.error('Failed to fetch School details');
-      } finally {
-        setLoading(false);
-      }
-    };
     const fetchTeacher = async () => {
       if (course.teacherId) {
         try {
@@ -40,9 +28,9 @@ const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
       } else {
         toast.error('Teacher ID is not defined');
       }
+      setLoading(false);
     };
     fetchTeacher();
-    fetchSchool();
   }, [course]);
 
   if (loading) return <UserSkeleton />;
@@ -60,15 +48,7 @@ const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
           </h2>
         </div>
         <div className="flex justify-evenly items-center text-center">
-          <div className="space-y-4">
-            <img
-              className="w-32 h-32 m-auto rounded-full"
-              src="https://via.placeholder.com/150"
-              alt="School Pic"
-            />
-            <h3 className="mt-2">{school?.name || 'School not assigned'}</h3>
-          </div>
-          <div className="space-y-4">
+          <div className="my-4">
             <img
               className="w-32 h-32 m-auto rounded-full"
               src={teacher?.profileImage || 'https://via.placeholder.com/150'}
