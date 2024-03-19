@@ -40,7 +40,7 @@ const CourseInformation: React.FC<CourseInformationProps> = ({ course }) => {
       <div className="max-w-md w-full space-y-8">
         <div className="space-y-4 text-center">
           <h2 className="text-3xl font-bold">Course information :</h2>
-          <p className="text-gray-500">{course?.description}</p>
+          <p className="text-gray-500 italic">{course?.description}</p>
         </div>
         <div className="space-y-4 text-center">
           <h2 className="text-3xl font-bold">

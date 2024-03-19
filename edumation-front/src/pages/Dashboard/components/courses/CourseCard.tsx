@@ -76,7 +76,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
             </p>
           </div>
           <hr />
-          <p className="mt-4 text-center">{course.description}</p>
+          <p className="my-8 text-center italic">{course.description}</p>
         </Link>
 
         <div className="mt-4 flex justify-center gap-4 items-end">
