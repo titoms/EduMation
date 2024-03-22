@@ -21,7 +21,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
   isSelected,
 }) => {
   const cardClasses = `bg-white dark:bg-slate-800 gap-4 shadow rounded-lg p-2 ${
-    isSelected ? 'bg-blue-900 dark:bg-blue-900' : ''
+    isSelected ? 'bg-slate-900 dark:bg-slate-900' : ''
   }`;
   const handleButtonClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -33,7 +33,10 @@ const ClassCard: React.FC<ClassCardProps> = ({
 
   return (
     <>
-      <div className={cardClasses} onClick={() => onToggleSelection(group._id)}>
+      <div
+        className={cardClasses}
+        onClick={() => group._id && onToggleSelection(group._id.toString())}
+      >
         <div className="flex justify-center gap-8 align-middle items-center my-4">
           <input
             type="checkbox"

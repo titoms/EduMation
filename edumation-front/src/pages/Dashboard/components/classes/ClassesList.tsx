@@ -26,6 +26,7 @@ const ClassesList = () => {
   const toggleClassSelection = (classId: string) => {
     setSelectedClasses((prevSelectedClasses) => {
       const newSelection = new Set(prevSelectedClasses);
+      console.log(newSelection);
       if (newSelection.has(classId)) {
         newSelection.delete(classId);
       } else {
