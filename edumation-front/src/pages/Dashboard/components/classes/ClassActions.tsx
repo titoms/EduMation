@@ -2,7 +2,6 @@ import SearchBar from '../../../../components/ui/SearchBar';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Edit from '@mui/icons-material/Edit';
 
 export interface ClassActionsProps {
@@ -11,7 +10,7 @@ export interface ClassActionsProps {
 
 const ClassActions: React.FC<ClassActionsProps> = ({ setFilter }) => {
   return (
-    <div className="flex justify-end mt-4 gap-2">
+    <div className="flex justify-end gap-2">
       {' '}
       <SearchBar onFilterChange={setFilter} />
       <Link to="new">
@@ -22,11 +21,6 @@ const ClassActions: React.FC<ClassActionsProps> = ({ setFilter }) => {
       <Link to="import">
         <Button startIcon={<ArrowUpwardIcon />} variant="outlined">
           Import
-        </Button>
-      </Link>
-      <Link to="">
-        <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
-          <span className="hidden md:inline">Delete Bulk</span>
         </Button>
       </Link>
     </div>
