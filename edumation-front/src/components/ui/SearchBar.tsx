@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { InputBase, Paper, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -6,6 +7,20 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onFilterChange }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    onFilterChange(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setInputValue('');
+      onFilterChange('');
+    }
+  };
+
   return (
     <Paper
       component="form"
@@ -22,7 +37,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFilterChange }) => {
         className="text-black dark:text-gray-300"
         placeholder="Search..."
         inputProps={{ 'aria-label': 'Search bar' }}
-        onChange={(e) => onFilterChange(e.target.value)}
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <IconButton
         type="submit"

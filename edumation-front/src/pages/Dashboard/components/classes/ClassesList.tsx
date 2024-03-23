@@ -107,7 +107,7 @@ const ClassesList = () => {
       <div className="flex justify-end mt-4 gap-2">
         <ClassActions setFilter={setFilter} />
         <Button
-          variant="contained"
+          variant="outlined"
           color="error"
           startIcon={<DeleteIcon />}
           onClick={deleteSelectedClasses}
