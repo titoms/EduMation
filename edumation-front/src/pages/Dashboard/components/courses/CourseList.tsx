@@ -56,26 +56,29 @@ const CoursesList: React.FC<CoursesListProps> = ({ filter }) => {
   if (!courses.length) return <div>No courses available.</div>;
 
   return (
-    <div className="mt-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {courses.map((course) => (
-          <CourseCard
-            key={course._id}
-            course={course}
-            onDelete={handleOpenDelete}
+    <>
+      <h3 className="text-2xl">Courses :</h3>
+      <div className="mt-8">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {courses.map((course) => (
+            <CourseCard
+              key={course._id}
+              course={course}
+              onDelete={handleOpenDelete}
+            />
+          ))}
+        </div>
+        {selectedCourseId && (
+          <DeleteConfirmationModal
+            open={openDeleteModal}
+            onClose={handleCloseDelete}
+            onDelete={() => handleCourseDelete()}
+            itemId={selectedCourseId}
+            confirmationMessage="Are you sure you want to delete this course?"
           />
-        ))}
+        )}
       </div>
-      {selectedCourseId && (
-        <DeleteConfirmationModal
-          open={openDeleteModal}
-          onClose={handleCloseDelete}
-          onDelete={() => handleCourseDelete()}
-          itemId={selectedCourseId}
-          confirmationMessage="Are you sure you want to delete this course?"
-        />
-      )}
-    </div>
+    </>
   );
 };
 

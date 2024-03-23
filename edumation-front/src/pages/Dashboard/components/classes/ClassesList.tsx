@@ -118,7 +118,7 @@ const ClassesList = () => {
         </Button>
       </div>
 
-      <h2 className="text-xl my-2">Available Classes :</h2>
+      <h3 className="text-2xl">Available Classes :</h3>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-8">
         {filteredClasses.map((group) => (
           <ClassCard
