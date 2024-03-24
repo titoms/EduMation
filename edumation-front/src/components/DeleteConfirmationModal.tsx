@@ -4,8 +4,8 @@ import { Modal, Box, Button } from '@mui/material';
 interface DeleteConfirmationModalProps {
   open: boolean;
   onClose: () => void;
-  onDelete: (itemId: string) => Promise<void>;
-  itemId: string;
+  onDelete: (itemIds: string | string[]) => Promise<void>;
+  itemId: string | null;
   confirmationMessage: string;
 }
 
@@ -28,7 +28,11 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
 }) => {
   const handleDelete = async () => {
     try {
-      await onDelete(itemId);
+      if (Array.isArray(itemId)) {
+        await Promise.all(itemId.map((id) => onDelete(id)));
+      } else {
+        await onDelete(itemId);
+      }
     } catch (error) {
       console.error('Error during deletion:', error);
     }

@@ -141,6 +141,28 @@ const UserTransfer: React.FC<UserTransferProps> = ({
     onNewClassUserChange(newClassUsersList.map((user) => user._id!));
   };
 
+  const handleAddAllUsers = () => {
+    const allAvailableUsers = columns.AvailableUsers.list;
+    const updatedNewClassUsers = [
+      ...columns.NewClassUsers.list,
+      ...allAvailableUsers,
+    ];
+
+    setColumns({
+      AvailableUsers: {
+        ...columns.AvailableUsers,
+        list: [],
+      },
+      NewClassUsers: {
+        ...columns.NewClassUsers,
+        list: updatedNewClassUsers,
+      },
+    });
+
+    // Update parent component with new class users IDs
+    onNewClassUserChange(updatedNewClassUsers.map((user) => user._id));
+  };
+
   const handleRemoveAllUsers = () => {
     const updatedAvailableUsersList = [
       ...columns.AvailableUsers.list,
@@ -177,6 +199,9 @@ const UserTransfer: React.FC<UserTransferProps> = ({
                 key={col.id}
                 onRemoveStudent={
                   col.id === 'NewClassUsers' ? handleRemoveUser : undefined
+                }
+                onAddAllStudents={
+                  col.id === 'AvailableUsers' ? handleAddAllUsers : undefined
                 }
                 onRemoveAllStudents={handleRemoveAllUsers}
               />

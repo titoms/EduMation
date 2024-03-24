@@ -3,6 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { styled } from '@stitches/react';
 import { DraggableItem } from './DraggableItem';
 import { User } from '../../../services/Types';
+import { Button } from '@mui/material';
 
 interface ColumnProps {
   col: {
@@ -10,7 +11,8 @@ interface ColumnProps {
     list: User[];
   };
   onRemoveStudent?: (studentId: string) => void;
-  onRemoveAllStudents?: (columnId: string) => void;
+  onAddAllStudents?: () => void;
+  onRemoveAllStudents?: () => void;
 }
 
 const StyledColumn = styled('div', {
@@ -44,6 +46,7 @@ const StyledSearch = styled('input', {
 export const DraggableColumn: React.FC<ColumnProps> = ({
   col: { list, id },
   onRemoveStudent,
+  onAddAllStudents,
   onRemoveAllStudents,
 }) => {
   const [searchFilter, setSearchFilter] = useState('');
@@ -71,7 +74,15 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
               placeholder="Search students..."
               onChange={handleSearchChange}
             />
-            {(id === 'NewClassStudents' || id === 'NewClassUsers') && (
+            {id === 'AvailableUsers' && onAddAllStudents && (
+              <div
+                className="flex justify-end text-blue-500 cursor-pointer"
+                onClick={onAddAllStudents}
+              >
+                Add all
+              </div>
+            )}
+            {id === 'NewClassUsers' && onRemoveAllStudents && (
               <div
                 className="flex justify-end text-red-500 cursor-pointer"
                 onClick={() => onRemoveAllStudents?.(id)}
@@ -85,9 +96,7 @@ export const DraggableColumn: React.FC<ColumnProps> = ({
                 student={student}
                 index={index}
                 onRemove={() => onRemoveStudent?.(student._id!)}
-                showRemoveIcon={
-                  id === 'NewClassStudents' || id === 'NewClassUsers'
-                }
+                showRemoveIcon={id === 'NewClassUsers'}
               />
             ))}
             {provided.placeholder}
