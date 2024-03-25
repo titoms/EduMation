@@ -183,7 +183,8 @@ const IndividualQuizz = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">
                   {' '}
-                  {quizzData.questions.length} Questions
+                  {quizzData.questions.length} Questions - Finalscore :{' '}
+                  {quizzData.finalScore}
                 </h2>
                 <div className="mt-4 flex justify-end items-end">
                   <IconButton onClick={handleEditToggle} aria-label="edit">

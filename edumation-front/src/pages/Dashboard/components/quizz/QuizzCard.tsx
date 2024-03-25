@@ -31,6 +31,7 @@ const QuizzCard: React.FC<QuizzCardProps> = ({ quiz, onOpenDelete }) => {
         </p>
       </RouterLink>
       <p className="my-4 font-semibold">{quiz.questions.length} Questions :</p>
+      <p className="my-4">Score : {quiz.finalScore}</p>
       <ul>
         {quiz.questions.slice(0, 1).map((question, index) => (
           <li key={index} className="mt-2">

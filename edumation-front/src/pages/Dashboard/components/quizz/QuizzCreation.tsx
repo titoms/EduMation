@@ -86,9 +86,11 @@ const QuizzCreation: React.FC = () => {
 
   const finishQuizz = async () => {
     try {
+      const finalScore = quiz.questions.length;
       const formattedQuiz = {
         title: quiz.title,
         description: quiz.description,
+        finalScore,
         questions: quiz.questions.map(
           ({ questionText, options, correctAnswer }) => ({
             questionText,

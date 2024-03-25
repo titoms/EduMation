@@ -23,6 +23,7 @@ exports.createQuizz = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       questions: req.body.questions,
+      finalScore: req.body.finalScore,
       timeLimit: req.body.timeLimit,
     });
     const savedQuiz = await newQuiz.save();
