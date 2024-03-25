@@ -53,6 +53,7 @@ export interface Quiz {
     options: string[];
     correctAnswer: number;
   }[];
+  finalScore?: number;
   timeLimit?: number;
 }
 

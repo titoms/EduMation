@@ -19,6 +19,7 @@ const quizSchema = new mongoose.Schema(
         correctAnswer: Number,
       },
     ],
+    finalScore: Number,
     timeLimit: Number,
   },
   { timestamps: true }

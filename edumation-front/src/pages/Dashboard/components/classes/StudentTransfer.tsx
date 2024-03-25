@@ -149,6 +149,29 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
     );
   };
 
+  const handleAddAllUsers = () => {
+    const allAvailableStudents = columns.AvailableStudents.list;
+    const updatedNewClassStudents = [
+      ...columns.NewClassStudents.list,
+      ...allAvailableStudents,
+    ];
+
+    setColumns({
+      AvailableStudents: {
+        ...columns.AvailableStudents,
+        list: [],
+      },
+      NewClassStudents: {
+        ...columns.NewClassStudents,
+        list: updatedNewClassStudents,
+      },
+    });
+
+    onNewClassStudentsChange(
+      updatedNewClassStudents.map((student) => student._id)
+    );
+  };
+
   const handleRemoveAllUsers = () => {
     const updatedAvailableUsersList = [
       ...columns.AvailableStudents.list,
@@ -187,6 +210,9 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
                   col.id === 'NewClassStudents'
                     ? handleRemoveStudent
                     : undefined
+                }
+                onAddAllStudents={
+                  col.id === 'AvailableStudents' ? handleAddAllUsers : undefined
                 }
                 onRemoveAllStudents={handleRemoveAllUsers}
               />
