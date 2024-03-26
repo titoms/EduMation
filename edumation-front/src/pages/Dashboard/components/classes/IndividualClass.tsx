@@ -96,10 +96,10 @@ const IndividualClass: React.FC = () => {
                 classData.studentsIds.map((student) => (
                   <div
                     key={student._id}
-                    className="my-8 border-b border-b-gray-400 pb-2"
+                    className="my-8 border-b border-b-gray-600 pb-2"
                   >
                     <img
-                      className="w-8 h-8 rounded-full mr-2 inline"
+                      className="w-6 h-6 rounded-full  inline"
                       src={
                         student.profileImage
                           ? student.profileImage
