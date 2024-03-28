@@ -50,20 +50,44 @@ const IndividualQuizz = () => {
     setEditedQuizz(quizzData); // Reset edits
   };
 
-  const handleChange = (e, index, type) => {
-    if (!editedQuizz) return;
-    let newQuizz = { ...editedQuizz };
-    if (type === 'title') {
-      newQuizz.title = e.target.value;
-    } else if (type === 'description') {
-      newQuizz.description = e.target.value;
-    } else if (type === 'questionText') {
-      newQuizz.questions[index].questionText = e.target.value;
-    } else if (type === 'option') {
-      const { optionIndex, value } = e.target;
-      newQuizz.questions[index].options[optionIndex] = value;
-    }
-    setEditedQuizz(newQuizz);
+  const handleChange = (e, questionIndex, type, optionIndex) => {
+    setEditedQuizz((prevEditedQuizz) => {
+      if (!prevEditedQuizz) return prevEditedQuizz;
+
+      // Clone the edited quiz to avoid direct mutation
+      let newQuizz = { ...prevEditedQuizz };
+
+      // Handle updates based on the type of change
+      if (type === 'title') {
+        newQuizz.title = e.target.value;
+      } else if (type === 'description') {
+        newQuizz.description = e.target.value;
+      } else if (type === 'questionText' && typeof questionIndex === 'number') {
+        // Clone the questions array and update the specific question
+        const newQuestions = [...newQuizz.questions];
+        newQuestions[questionIndex] = {
+          ...newQuestions[questionIndex],
+          questionText: e.target.value,
+        };
+        newQuizz.questions = newQuestions;
+      } else if (
+        type === 'option' &&
+        typeof questionIndex === 'number' &&
+        typeof optionIndex === 'number'
+      ) {
+        // Clone the questions array and its options then update the specific option
+        const newQuestions = [...newQuizz.questions];
+        const newOptions = [...newQuestions[questionIndex].options];
+        newOptions[optionIndex] = e.target.value; // Assuming you're directly passing the new value
+        newQuestions[questionIndex] = {
+          ...newQuestions[questionIndex],
+          options: newOptions,
+        };
+        newQuizz.questions = newQuestions;
+      }
+
+      return newQuizz;
+    });
   };
 
   const handleSaveQuizz = async () => {
@@ -142,7 +166,7 @@ const IndividualQuizz = () => {
                       fullWidth
                       multiline
                       value={editedQuizz?.questions[index].questionText || ''}
-                      onChange={(e) => handleChange(e, null, 'questionText')}
+                      onChange={(e) => handleChange(e, index, 'questionText')}
                     />
                     <ul className="ml-2 my-4">
                       {question.options.map((option, optionIndex) => (
@@ -164,7 +188,9 @@ const IndividualQuizz = () => {
                                 optionIndex
                               ] || ''
                             }
-                            onChange={(e) => handleChange(e, null, 'option')}
+                            onChange={(e) =>
+                              handleChange(e, index, 'option', optionIndex)
+                            }
                           />
                         </>
                       ))}
