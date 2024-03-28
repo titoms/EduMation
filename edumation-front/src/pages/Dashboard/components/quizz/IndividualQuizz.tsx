@@ -118,7 +118,6 @@ const IndividualQuizz = () => {
         ...prevEditedQuizz.questions,
         { ...newQuestionTemplate, id: prevEditedQuizz.questions.length + 1 },
       ];
-      console.log(updatedQuestions);
       return { ...prevEditedQuizz, questions: updatedQuestions };
     });
   };

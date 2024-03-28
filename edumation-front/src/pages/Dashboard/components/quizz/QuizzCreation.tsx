@@ -99,7 +99,6 @@ const QuizzCreation: React.FC = () => {
           })
         ),
       };
-      console.log(formattedQuiz);
       await QuizzService.createQuizz(formattedQuiz);
       toast.success('Quiz created successfully');
       navigate('/dashboard/quizz');
