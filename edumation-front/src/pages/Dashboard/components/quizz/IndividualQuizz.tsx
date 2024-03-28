@@ -5,11 +5,12 @@ import QuizzService from '../../../../services/QuizzService';
 import { Quiz } from '../../../../services/Types';
 import axios from 'axios';
 import UserSkeleton from '../../../../components/ui/skeletons/UserSkeleton';
-import { IconButton, TextField } from '@mui/material';
+import { Button, IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
 
 const IndividualQuizz = () => {
@@ -103,6 +104,25 @@ const IndividualQuizz = () => {
     }
   };
 
+  const addQuestionOnEditMode = () => {
+    const newQuestionTemplate = {
+      questionText: '',
+      options: ['', '', '', ''],
+      correctAnswer: 0,
+    };
+
+    setEditedQuizz((prevEditedQuizz) => {
+      if (!prevEditedQuizz) return prevEditedQuizz;
+
+      const updatedQuestions = [
+        ...prevEditedQuizz.questions,
+        { ...newQuestionTemplate, id: prevEditedQuizz.questions.length + 1 },
+      ];
+      console.log(updatedQuestions);
+      return { ...prevEditedQuizz, questions: updatedQuestions };
+    });
+  };
+
   if (!quizzData || loading) return <UserSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
@@ -151,11 +171,11 @@ const IndividualQuizz = () => {
                 margin="normal"
                 multiline
                 value={editedQuizz?.description || ''}
-                onChange={(e) => handleChange(e, null, 'description')}
+                onChange={(e) => handleChange(e, null, 'description', null)}
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
-                {quizzData.questions.map((question, index) => (
+                {editedQuizz?.questions.map((question, index) => (
                   <div
                     key={index}
                     className="mt-4 p-4 bg-gray-100 dark:bg-slate-600 rounded-md flex flex-col justify-center"
@@ -196,7 +216,38 @@ const IndividualQuizz = () => {
                       ))}
                     </ul>
                   </div>
-                ))}
+                ))}{' '}
+              </div>
+              <div className="flex items-center justify-center mt-4">
+                <Button
+                  startIcon={<AddIcon />}
+                  onClick={addQuestionOnEditMode}
+                  variant="outlined"
+                  color="primary"
+                  className=""
+                >
+                  Add Question{' '}
+                </Button>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button
+                  startIcon={<SaveIcon />}
+                  onClick={handleSaveQuizz}
+                  variant="outlined"
+                  color="success"
+                  className=""
+                >
+                  Save Quizz{' '}
+                </Button>
+                <Button
+                  startIcon={<CancelIcon />}
+                  onClick={handleCancelEdit}
+                  variant="outlined"
+                  color="primary"
+                  className=""
+                >
+                  Cancel{' '}
+                </Button>
               </div>
             </div>
           </div>
