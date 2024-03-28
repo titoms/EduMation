@@ -48,7 +48,6 @@ const UserTransfer: React.FC<UserTransferProps> = ({
               !initialUser.some((initialUser) => initialUser._id === user._id)
           );
         }
-
         setColumns({
           AvailableUsers: {
             id: 'AvailableUsers',

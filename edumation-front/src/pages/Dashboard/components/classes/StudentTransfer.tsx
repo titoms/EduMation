@@ -52,7 +52,6 @@ const StudentTransfer: React.FC<StudentTransferProps> = ({
               )
           );
         }
-
         setColumns({
           AvailableStudents: {
             id: 'AvailableStudents',

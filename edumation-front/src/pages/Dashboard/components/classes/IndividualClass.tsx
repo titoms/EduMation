@@ -74,7 +74,7 @@ const IndividualClass: React.FC = () => {
       <div className="bg-gray-200 dark:bg-slate-800 p-4 rounded-xl mt-4">
         <h2 className="text-2xl font-semibold">{classData.name}</h2>
 
-        <form onSubmit={handleUpdateGroup}>
+        <form>
           <div className="my-2">
             <TextField
               fullWidth
@@ -133,13 +133,17 @@ const IndividualClass: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex gap-4 justify-end">
-            <BackButton title="Cancel" icon={false} />
-            <Button type="submit" variant="contained" startIcon={<Edit />}>
-              Update
-            </Button>
-          </div>
         </form>
+        <div className="flex gap-4 justify-end mt-4">
+          <BackButton title="Cancel" icon={false} />
+          <Button
+            onClick={handleUpdateGroup}
+            variant="contained"
+            startIcon={<Edit />}
+          >
+            Update
+          </Button>
+        </div>
       </div>
     </>
   );

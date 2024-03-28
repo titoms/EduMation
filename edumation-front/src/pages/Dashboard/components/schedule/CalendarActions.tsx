@@ -126,7 +126,7 @@ const CalendarActions = ({ onCalendarActionsUpdate }) => {
         )} */}
           <h3 className="text-lg">Add Users to this schedule :</h3>
           <UserTransfer
-            // initialUser={linkedUsers}
+            initialUser={linkedUsers}
             onNewClassUserChange={handleNewClassUsersChange}
           />
           <div className="my-4">
