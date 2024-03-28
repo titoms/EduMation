@@ -66,6 +66,7 @@ const IndividualQuizz = () => {
       } else if (type === 'questionText' && typeof questionIndex === 'number') {
         // Clone the questions array and update the specific question
         const newQuestions = [...newQuizz.questions];
+        newQuizz.finalScore = newQuestions.length;
         newQuestions[questionIndex] = {
           ...newQuestions[questionIndex],
           questionText: e.target.value,
@@ -76,10 +77,9 @@ const IndividualQuizz = () => {
         typeof questionIndex === 'number' &&
         typeof optionIndex === 'number'
       ) {
-        // Clone the questions array and its options then update the specific option
         const newQuestions = [...newQuizz.questions];
         const newOptions = [...newQuestions[questionIndex].options];
-        newOptions[optionIndex] = e.target.value; // Assuming you're directly passing the new value
+        newOptions[optionIndex] = e.target.value;
         newQuestions[questionIndex] = {
           ...newQuestions[questionIndex],
           options: newOptions,
